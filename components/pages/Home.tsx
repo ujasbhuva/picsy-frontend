@@ -52,7 +52,7 @@ const Home: React.FC<HomePageProps> = ({ userInfo }) => {
     })
 
     setTotalResult(data?.data?.total_results)
-    setImages((preval) => { return [...preval, ...arr] })
+    setImages((preval) => { return start ? [...preval, ...arr] : arr })
     setOffset((preval) => { return preval + data?.data?.messages?.length })
   }
 
@@ -125,7 +125,7 @@ const Home: React.FC<HomePageProps> = ({ userInfo }) => {
 
       <div className='w-full my-10'>
         <ResponsiveMasonry
-          columnsCountBreakPoints={{ 0: 1, 400: 2, 750: 3, 900: 4, 1300: 5 }}
+          columnsCountBreakPoints={{ 0: 2, 400: 2, 750: 3, 900: 4, 1300: 5 }}
         >
           <Masonry gutter='10px'>
             {
