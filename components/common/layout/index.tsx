@@ -23,7 +23,7 @@ export default function Layout ({
 
       {/* <Header /> */}
       <main
-        className={`flex flex-col items-center min-h-[100vh] px-[4rem] pb-[4rem] mobile:px-[1rem]`}
+        className={`flex flex-col items-center min-h-[100vh] px-5 pb-[4rem] mobile:px-3`}
       >
         {children}
       </main>
