@@ -39,17 +39,6 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
             <Dialog.Overlay className='fixed inset-0 backdrop-blur-md transition-opacity' />
           </Transition.Child>
           <span
@@ -85,11 +74,11 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         alt={data.content}
                         className={'w-full border-b-[3px] border-orange-500'}
                       />
-                      <div className='p-6 mobile:p-4 flex flex-col text-orange-100 gap-2 bg-[#311808] '>
-                        <p className='text-orange-200 text-xl mobile:text-lg'>
+                      <div className='p-6 mobile:p-4 flex flex-col text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100'>
+                        <p className='dark:text-orange-200 text-orange-900 text-xl mobile:text-lg'>
                           {prompt}
                         </p>
-                        <p className=' text-orange-500 text-lg font-bold'>
+                        <p className=' dark:text-orange-500 text-orange-500 text-lg font-bold'>
                           Dimensions: {data?.width} X {data?.height}
                         </p>
                         <div className='flex gap-2 items-center'>
@@ -102,7 +91,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             </div>
                           ) : (
                             <div
-                              className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-[#311808] text-orange-500 rounded-xl'
+                              className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 dark:bg-[#311808] dark:text-orange-500 text-orange-100 rounded-xl'
                               onClick={() => {
                                 navigator.clipboard.writeText(prompt)
                                 setCopied(true)
@@ -118,7 +107,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             </div>
                           )}
                           <div
-                            className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-[#311808] text-orange-500 rounded-xl'
+                            className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 dark:bg-[#311808] dark:text-orange-500 text-orange-100 rounded-xl'
                             onClick={downloadImage}
                           >
                             <FolderArrowDownIcon className='w-6 h-6 ' />{' '}
