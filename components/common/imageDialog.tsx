@@ -72,7 +72,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         height={data.height}
                         width={data.width}
                         alt={data.content}
-                        className={'w-full border-b-[3px] border-orange-500'}
+                        className={'w-full border-b-[3px] mobile:border-b-[1px] border-orange-500'}
                       />
                       <div className='p-6 mobile:p-4 flex flex-col text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100'>
                         <p className='dark:text-orange-200 text-orange-900 text-xl mobile:text-md'>
@@ -91,7 +91,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             </div>
                           ) : (
                             <div
-                              className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 dark:bg-[#311808] dark:text-orange-500 text-orange-100 rounded-xl'
+                              className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 dark:bg-[#311808] dark:text-orange-500 text-orange-100 rounded-xl mobile:px-2'
                               onClick={() => {
                                 navigator.clipboard.writeText(prompt)
                                 setCopied(true)
