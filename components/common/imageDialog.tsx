@@ -75,15 +75,15 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         className={'w-full border-b-[3px] border-orange-500'}
                       />
                       <div className='p-6 mobile:p-4 flex flex-col text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100'>
-                        <p className='dark:text-orange-200 text-orange-900 text-xl mobile:text-lg'>
+                        <p className='dark:text-orange-200 text-orange-900 text-xl mobile:text-md'>
                           {prompt}
                         </p>
-                        <p className=' dark:text-orange-500 text-orange-500 text-lg font-bold'>
+                        <p className=' dark:text-orange-500 text-orange-500 text-lg mobile:text-md font-bold'>
                           Dimensions: {data?.width} X {data?.height}
                         </p>
                         <div className='flex gap-2 items-center'>
                           {copied ? (
-                            <div className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 text-white rounded-xl'>
+                            <div className='cursor-pointer flex items-center gap-1 px-4 py-2 border border-orange-500 bg-orange-500 text-white rounded-xl mobile:px-2'>
                               <>
                                 <CheckCircleIcon className='w-6 h-6' />
                                 Prompt copied
