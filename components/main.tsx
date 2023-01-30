@@ -23,7 +23,6 @@ const Main: React.FC<MainProps> = ({ Component, pageProps }) => {
           </div>
         )}
       </Toaster>
-      ;
       <Component {...pageProps} />
     </>
   )
