@@ -1,24 +1,15 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { UserInfo } from "../../api/users";
-import { GlobalState } from "../../store/reducers";
-import { connect, useDispatch } from "react-redux";
-import axios from "axios";
+import { getImagesThroughNextAPI } from "../../api/images";
+import { useDispatch } from "react-redux";
 import Loader from "../common/loader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Image from "next/image";
-import {
-  ChevronDoubleDownIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
 
-interface HomePageProps {
-  userInfo: UserInfo;
-}
-
-const Home: React.FC<HomePageProps> = ({ userInfo }) => {
+const Home: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState<string>("");
@@ -32,37 +23,17 @@ const Home: React.FC<HomePageProps> = ({ userInfo }) => {
   const getData = async (start?: boolean) => {
     try {
       setIsLoading(true);
-      let pageOffset = start ? `&offset=${offset}` : "";
-      const data = await axios.get(
-        `https://discord.com/api/v9/guilds/662267976984297473/messages/search?content=${searchText}${pageOffset}`,
-        {
-          headers: {
-            accept: "*/*",
-            authorization: process.env.NEXT_PUBLIC_AUTH_TOKEN,
-            // "x-super-properties": process.env.NEXT_PUBLIC_SUPER_PROPERTY,
-          },
-        }
-      );
-      let fetchImages = data?.data?.messages ?? [];
-      let arr: any[] = [];
-      fetchImages.forEach((data: any) => {
-        if (data.length > 0) {
-          data.forEach((ele: any) => {
-            if (ele.attachments.length > 0) {
-              ele.attachments.forEach((item: any) => {
-                arr.push({ ...item, content: ele?.content });
-              });
-            }
-          });
-        }
+      const data = await getImagesThroughNextAPI({
+        searchText: searchText,
+        offset: start ? offset : undefined,
       });
-
-      setTotalResult(data?.data?.total_results);
+      setTotalResult(data?.total);
+      const arr = data?.images;
       setImages((preval) => {
         return start ? [...preval, ...arr] : arr;
       });
-      setOffset((preval) => {
-        return preval + data?.data?.messages?.length;
+      setOffset(() => {
+        return start ? offset + arr?.length : arr?.length;
       });
     } catch (err: any) {
       toast.error("Sorry, we cannot proceed your request");
@@ -240,10 +211,4 @@ const Home: React.FC<HomePageProps> = ({ userInfo }) => {
   );
 };
 
-const mapStateToPros = (state: GlobalState) => {
-  return {
-    userInfo: state.main.userInfo,
-  };
-};
-
-export default connect(mapStateToPros)(Home);
+export default Home;
