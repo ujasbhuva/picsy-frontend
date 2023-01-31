@@ -1,9 +1,8 @@
-import { UserInfo } from "../../api/images";
 
 export const SET_USER_INFO: string = "SET_USER_INFO";
 export const SET_CREDIT: string = "SET_CREDIT";
 
-export const setUserInfo = (data: UserInfo) => {
+export const setUserInfo = (data: any) => {
   return { type: SET_USER_INFO, payload: data };
 };
 
