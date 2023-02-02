@@ -19,7 +19,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     .replaceAll(/<.*>/g, "");
 
   const downloadImage = () => {
-    saveAs(data?.url, "orange.jpg"); // Put your image url here.
+    saveAs(data?.proxy_url, "orange.jpg");
   };
 
   return (
