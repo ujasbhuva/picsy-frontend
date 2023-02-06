@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getImagesThroughNextAPI } from "../../api/images";
-import { useDispatch } from "react-redux";
+import {
+  getImagesThroughNextAPI,
+  iImage,
+  iImagePayload,
+} from "../../apiHelper/images";
 import Loader from "../common/loader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Image from "next/image";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
+import baseImages from "../../data.json";
 
-const Home: React.FC = () => {
+interface HmpageProps {
+  imageId?: string;
+}
+
+const Home: React.FC<HmpageProps> = ({ imageId }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState<string>("");
   const [totalResult, setTotalResult] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
@@ -19,6 +26,30 @@ const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<any[]>([]);
+
+  useEffect(() => {
+    const img =
+      baseImages &&
+      baseImages?.filter(
+        (data: iImagePayload) => data.id.toString() === imageId
+      );
+    if (img.length > 0) {
+      setIsOpenDialog(true);
+      setCurrentImage(img[0]);
+    }
+  }, [imageId]);
+
+  useEffect(() => {
+    const arr =
+      baseImages &&
+      baseImages.length > 0 &&
+      baseImages
+        .reverse()
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 800);
+
+    setImages(arr);
+  }, [baseImages]);
 
   const getData = async (start?: boolean) => {
     try {
@@ -133,39 +164,42 @@ const Home: React.FC = () => {
 
       <div className="w-full my-10">
         <ResponsiveMasonry
-          columnsCountBreakPoints={{ 0: 2, 400: 2, 750: 3, 900: 4, 1300: 6 }}
+          columnsCountBreakPoints={{ 0: 2, 400: 2, 750: 3, 900: 4, 1300: 6, 1500:7, 1800: 8 }}
         >
           <Masonry gutter="10px">
-            {images &&
-              images.length > 0 &&
-              images.map((data: any, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="relative cursor-ponter"
-                    onClick={() => {
-                      setIsOpenDialog(true);
-                      setCurrentImage(data);
-                    }}
-                  >
-                    <Image
-                      className="w-full object-cover rounded-xl "
-                      src={data?.proxy_url}
-                      alt={"prompt"}
-                      placeholder="blur"
-                      blurDataURL={`/apple-touch-icon.png`}
-                      unoptimized
-                      width={100}
-                      height={200}
-                    />
-                    {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
-                  </div>
-                );
-              })}
+            {images.map((data: any, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className="relative cursor-ponter"
+                  onClick={() => {
+                    setIsOpenDialog(true);
+                    setCurrentImage(data);
+                  }}
+                >
+                  <Image
+                    className="w-full object-cover rounded-xl"
+                    src={
+                      data.images.sort(
+                        (a: iImage, b: iImage) =>
+                          Number(b.upscaled) - Number(a.upscaled)
+                      )[0]?.proxy_url
+                    }
+                    alt={data.content.slice(0, 50)}
+                    // placeholder="blur"
+                    // blurDataURL={`/apple-touch-icon.png`}
+                    unoptimized
+                    width={100}
+                    height={200}
+                  />
+                  {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
+                </div>
+              );
+            })}
           </Masonry>
         </ResponsiveMasonry>
       </div>
-      {images.length > 0 && (
+      {/* {images.length > 0 && (
         <button
           className="text-orange-100 cursor-pointer flex items-center p-3 px-5 bg-[#311808] rounded-full"
           onClick={() => {
@@ -199,7 +233,7 @@ const Home: React.FC = () => {
             </svg>
           )}
         </button>
-      )}
+      )} */}
       {isOpenDialog && (
         <ImageDialog
           isOpen={isOpenDialog}
