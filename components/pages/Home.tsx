@@ -25,7 +25,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
   const [currentImage, setCurrentImage] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<iImagePayload[]>([]);
 
   useEffect(() => {
     const img =
@@ -40,9 +40,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
   }, [imageId]);
 
   useEffect(() => {
-    const arr =
-      baseImages &&
-      baseImages.length > 0 &&
+    const arr : iImagePayload[] =
       baseImages
         .reverse()
         .sort(() => Math.random() - 0.5)
