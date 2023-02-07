@@ -27,18 +27,18 @@ const Home: React.FC<HmpageProps> = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<iImagePayload[]>([]);
 
-  useEffect(() => {
-    const { imageId: imgId } = router.query;
-    console.log(typeof imgId);
-    const img = baseImages.filter(
-      (data: iImagePayload) => data.id === parseInt(imgId ?? "")
-    );
-    console.log(img);
-    if (img.length > 0) {
-      setCurrentImage(img[0]);
-      setIsOpenDialog(true);
-    }
-  }, [router, baseImages]);
+  // useEffect(() => {
+  //   const { imageId: imgId } = router.query;
+  //   console.log(typeof imgId);
+  //   const img = baseImages.filter(
+  //     (data: iImagePayload) => data.id === parseInt(imgId ? imgId  : "")
+  //   );
+  //   console.log(img);
+  //   if (img.length > 0) {
+  //     setCurrentImage(img[0]);
+  //     setIsOpenDialog(true);
+  //   }
+  // }, [router, baseImages]);
 
   useEffect(() => {
     const arr: iImagePayload[] = baseImages
