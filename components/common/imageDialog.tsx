@@ -60,6 +60,8 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     setCurrentIndex(setIndex);
     setCurrentImage(data.images[setIndex]);
   };
+console.log(size.width);
+console.log(currentImage?.width);
 
   return (
     <>
@@ -88,7 +90,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               &#8203;
             </span>
             <div className="fixed inset-0 overflow-y-auto font-satoshi">
-              <div className="flex min-h-full items-center justify-center p-4 px-16 mobile:p-2 text-center">
+              <div className="flex min-h-full items-center justify-center p-10 px-16 mobile:p-2 text-center">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -98,7 +100,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-100px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className={`relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 mobile:w-full mobile:max-h-full max-h-[calc(100vh-10px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all w-[calc(100%-${size.width-currentImage.width}px)]`}>
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {
@@ -106,10 +108,10 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                       }}
                     />
                     <div className="inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto">
-                      <div className="relative flex mobile:flex-col lg:flex-col h-full w-full items-center ">
-                        <div className="w-8/12 mobile:w-full flex flex-col items-center p-0">
+                      <div className=" flex mobile:flex-col lg:flex-col h-full w-full items-center ">
+                        <div className="relative w-[70%] mobile:w-full flex flex-col items-center p-0">
                           <Image
-                            className="absolute w-full object-cover h-full transition blur-xl"
+                            className="absolute w-full object-cover h-full transition blur-md"
                             src={currentImage.proxy_url}
                             alt={data.content}
                             width={currentImage.width}
@@ -120,7 +122,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             ${
                               currentImage.width > currentImage.height
                                 ? "min-h-full"
-                                : "h-[calc(100vh-160px)]"
+                                : "h-[calc(100vh-100px)]"
                             }
                             `}
                             src={currentImage.proxy_url}
@@ -129,12 +131,10 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             height={currentImage.height}
                           />
                         </div>
-                        <div className="w-4/12 z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
-                          <div className="">
-                            <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[15]">
-                              {prompt}
-                            </p>
-                          </div>
+                        <div className="w-[40%] z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
+                          <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[15]">
+                            {prompt}
+                          </p>
                           <div className="flex flex-col gap-2 items-center w-full">
                             {data.images && data.images.length > 1 && (
                               <div className="z-90 flex items-center justify-between w-full my-3">
