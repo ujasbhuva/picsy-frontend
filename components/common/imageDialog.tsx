@@ -97,7 +97,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-[80%] mobile:w-full mobile:max-w-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-auto mobile:w-full mobile:max-w-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {

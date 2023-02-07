@@ -162,9 +162,9 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
 
       <div className="w-full my-10">
         <ResponsiveMasonry
-          columnsCountBreakPoints={{ 0: 2, 400: 2, 750: 3, 900: 4, 1300: 6, 1500:7, 1800: 8 }}
+          columnsCountBreakPoints={{ 0: 1, 400: 2, 750: 3, 900: 4, 1300: 6, 1500:7, 1800: 8 }}
         >
-          <Masonry gutter="10px">
+          <Masonry gutter="3px">
             {images.map((data: any, index: number) => {
               return (
                 <div
@@ -176,7 +176,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
                   }}
                 >
                   <Image
-                    className="w-full object-cover rounded-xl"
+                    className="w-full object-cover rounded-lg"
                     src={
                       data.images.sort(
                         (a: iImage, b: iImage) =>
@@ -187,8 +187,14 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
                     // placeholder="blur"
                     // blurDataURL={`/apple-touch-icon.png`}
                     unoptimized
-                    width={100}
-                    height={200}
+                    width={data.images.sort(
+                      (a: iImage, b: iImage) =>
+                        Number(b.upscaled) - Number(a.upscaled)
+                    )[0]?.width}
+                    height={data.images.sort(
+                      (a: iImage, b: iImage) =>
+                        Number(b.upscaled) - Number(a.upscaled)
+                    )[0]?.height}
                   />
                   {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
                 </div>
