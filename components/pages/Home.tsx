@@ -86,28 +86,30 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
         />
         <div className="flex flex-col ml-5">
           <h1
-            className="text-[2.5rem] cursor-pointer font-[300] text-light dark:text-orange-100 text-orange-900 text-medium mobile:text-[2rem]"
+            className="flex items-end text-[3rem] cursor-pointer font-[500] dark:text-orange-100 text-orange-900 mobile:text-[2rem]"
             onClick={() => {
               router.push("/");
             }}
           >
-            AI Art Search
+            Picsy 
+            {/* <p className="text-lg m-2">{"(Art search)"}</p> */}
           </h1>
-          <p className="text-lg mobile:mt-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
-            Search images generated in{" "}
+          <div className="flex items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
+            <p>The</p> 
             <a
               className="dark:text-orange-500 text-orange-400 ring-0 outline-0"
               href="https://midjourney.com/home/"
               target={"_blank"}
             >
-              midjourney
+              MIDJOURNEY
             </a>{" "}
-          </p>
+            <p>Image Browser</p>
+          </div>
         </div>
       </div>
       <div className="w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:mt-8">
-        <input
-          className="w-full p-3 dark:bg-[#311808] bg-orange-100 rounded-xl border-0 outline-0 focus:ring-1 focus:ring-orange-500 dark:text-orange-200 text-orange-700 placeholder-[#8B4000] "
+        {/* <input
+          className=" mb-16 mobile:mb-8 w-full p-3 dark:bg-[#311808] bg-orange-100 rounded-xl border-0 outline-0 focus:ring-1 focus:ring-orange-500 dark:text-orange-200 text-orange-700 placeholder-[#8B4000] "
           placeholder="Search images"
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
@@ -118,7 +120,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
               getData(false);
             }
           }}
-        />
+        /> */}
         {searchText && (
           <div className="flex gap-1 absolute mr-2 dark:bg-[#311808] bg-orange-100 itams-center">
             <button disabled={isLoading}>
