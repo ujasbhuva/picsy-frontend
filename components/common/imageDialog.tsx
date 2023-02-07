@@ -97,7 +97,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-auto mobile:w-full mobile:max-w-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 sm:max-w-[60%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {
@@ -118,7 +118,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         </div>
                         <div className="z-10 flex self-stretch justify-between flex-col items-start w-2/5 mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
                           <div className="">
-                            <p className="my-3 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full line-clamp-[17]">
+                            <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[17]">
                               {prompt}
                             </p>
                             <p className=" dark:text-orange-700 text-orange-700 text-lg mobile:text-md">
