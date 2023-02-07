@@ -40,12 +40,16 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
   }, [imageId]);
 
   useEffect(() => {
-    const arr : iImagePayload[] =
-      baseImages
-        .reverse()
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 800);
-
+    const arr: iImagePayload[] = baseImages
+      .filter((data: iImagePayload) => {
+        if (data.images.filter((data: iImage) => data.upscaled).length > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .sort(() => Math.random() - 2)
+      .slice(0, 800);
     setImages(arr);
   }, [baseImages]);
 
@@ -162,7 +166,15 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
 
       <div className="w-full my-10">
         <ResponsiveMasonry
-          columnsCountBreakPoints={{ 0: 1, 400: 2, 750: 3, 900: 4, 1300: 6, 1500:7, 1800: 8 }}
+          columnsCountBreakPoints={{
+            0: 1,
+            400: 2,
+            750: 3,
+            900: 4,
+            1300: 6,
+            1500: 7,
+            1800: 8,
+          }}
         >
           <Masonry gutter="3px">
             {images.map((data: any, index: number) => {
@@ -181,26 +193,35 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
                       data.images.sort(
                         (a: iImage, b: iImage) =>
                           Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.proxy_url + `?width=${data.images.sort(
-                        (a: iImage, b: iImage) =>
-                          Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.width/2}&height=${data.images.sort(
-                        (a: iImage, b: iImage) =>
-                          Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.height/2}`
+                      )[0]?.proxy_url +
+                      `?width=${
+                        data.images.sort(
+                          (a: iImage, b: iImage) =>
+                            Number(b.upscaled) - Number(a.upscaled)
+                        )[0]?.width / 2
+                      }&height=${
+                        data.images.sort(
+                          (a: iImage, b: iImage) =>
+                            Number(b.upscaled) - Number(a.upscaled)
+                        )[0]?.height / 2
+                      }`
                     }
                     alt={data.content.slice(0, 50)}
                     // placeholder="blur"
                     // blurDataURL={`/apple-touch-icon.png`}
                     unoptimized
-                    width={data.images.sort(
-                      (a: iImage, b: iImage) =>
-                        Number(b.upscaled) - Number(a.upscaled)
-                    )[0]?.width/2}
-                    height={data.images.sort(
-                      (a: iImage, b: iImage) =>
-                        Number(b.upscaled) - Number(a.upscaled)
-                    )[0]?.height/2}
+                    width={
+                      data.images.sort(
+                        (a: iImage, b: iImage) =>
+                          Number(b.upscaled) - Number(a.upscaled)
+                      )[0]?.width / 2
+                    }
+                    height={
+                      data.images.sort(
+                        (a: iImage, b: iImage) =>
+                          Number(b.upscaled) - Number(a.upscaled)
+                      )[0]?.height / 2
+                    }
                   />
                   {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
                 </div>

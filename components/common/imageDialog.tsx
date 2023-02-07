@@ -97,7 +97,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-[70%] sm:max-w-[70%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-[80%] sm:max-w-[80%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {
@@ -109,7 +109,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         <div className="w-3/5 mobile:w-full flex flex-col items-center py-auto">
                             <div className="w-full h-full absolute left-0 top-0 bg-c-bg/50 " />
                             <img
-                              className="w-auto object-cover max-h-[calc(100vh-160px)] transition"
+                              className="w-auto object-contain h-[calc(100vh-160px)] transition"
                               src={currentImage.proxy_url}
                               alt={data.content}
                               width={currentImage.width}
@@ -118,10 +118,10 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         </div>
                         <div className="z-10 flex self-stretch justify-between flex-col items-start w-2/5 mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
                           <div className="">
-                            <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[17]">
+                            <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[15]">
                               {prompt}
                             </p>
-                            <p className=" dark:text-orange-700 text-orange-700 text-lg mobile:text-md">
+                            <p className=" dark:text-orange-700 text-orange-700 text-lg mobile:text-sm">
                               Dimensions:{" "}
                               <strong>
                                 {currentImage?.width} X {currentImage?.height}
@@ -146,7 +146,18 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                       return (
                                         <img
                                           key={index}
-                                          src={ele.proxy_url}
+                                          src={ele.proxy_url +
+                                            `?width=${
+                                              data.images.sort(
+                                                (a: iImage, b: iImage) =>
+                                                  Number(b.upscaled) - Number(a.upscaled)
+                                              )[0]?.width / 4
+                                            }&height=${
+                                              data.images.sort(
+                                                (a: iImage, b: iImage) =>
+                                                  Number(b.upscaled) - Number(a.upscaled)
+                                              )[0]?.height / 4
+                                            }`}
                                           className={`w-20 m-2 object-cover mobile:w-16 cursor-pointer rounded-lg ${
                                             currentImage?.url === ele.url
                                               ? "ring-1 ring-orange-500"
