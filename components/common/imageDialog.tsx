@@ -97,7 +97,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 sm:max-w-[60%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-[70%] sm:max-w-[70%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {
@@ -105,11 +105,11 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                       }}
                     />
                     <div className="inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto">
-                      <div className="flex mobile:flex-col lg:flex-col h-full w-full items-center bg-[#311808]">
+                      <div className="flex mobile:flex-col lg:flex-col h-full w-full items-center bg-[#311808]  bg-gradient-to-br from-orange-400 via-orange-200 to-orange-600">
                         <div className="w-3/5 mobile:w-full flex flex-col items-center py-auto">
                             <div className="w-full h-full absolute left-0 top-0 bg-c-bg/50 " />
                             <img
-                              className="w-full h-full  transition lg:h-full lg:contain lg:absolute lg:left-0 lg:top-0"
+                              className="w-auto object-cover max-h-[calc(100vh-160px)] transition"
                               src={currentImage.proxy_url}
                               alt={data.content}
                               width={currentImage.width}
@@ -140,7 +140,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                 >
                                   <ChevronLeftIcon className="w-8 h-8" />
                                 </button>
-                                <div className="flex w-full items-center justify-start overflow-x-scroll scrollbar-hide">
+                                <div className="flex w-full items-center justify-start content-center overflow-x-scroll scrollbar-hide">
                                   {data.images.map(
                                     (ele: any, index: number) => {
                                       return (

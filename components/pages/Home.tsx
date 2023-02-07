@@ -181,7 +181,13 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
                       data.images.sort(
                         (a: iImage, b: iImage) =>
                           Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.proxy_url
+                      )[0]?.proxy_url + `?width=${data.images.sort(
+                        (a: iImage, b: iImage) =>
+                          Number(b.upscaled) - Number(a.upscaled)
+                      )[0]?.width/2}&height=${data.images.sort(
+                        (a: iImage, b: iImage) =>
+                          Number(b.upscaled) - Number(a.upscaled)
+                      )[0]?.height/2}`
                     }
                     alt={data.content.slice(0, 50)}
                     // placeholder="blur"
@@ -190,11 +196,11 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
                     width={data.images.sort(
                       (a: iImage, b: iImage) =>
                         Number(b.upscaled) - Number(a.upscaled)
-                    )[0]?.width}
+                    )[0]?.width/2}
                     height={data.images.sort(
                       (a: iImage, b: iImage) =>
                         Number(b.upscaled) - Number(a.upscaled)
-                    )[0]?.height}
+                    )[0]?.height/2}
                   />
                   {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
                 </div>
