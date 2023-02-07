@@ -94,7 +94,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
             Picsy 
             {/* <p className="text-lg m-2">{"(Art search)"}</p> */}
           </h1>
-          <div className="flex items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
+          <div className="flex whitespace-nowrap items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
             <p>The</p> 
             <a
               className="dark:text-orange-500 text-orange-400 ring-0 outline-0"
