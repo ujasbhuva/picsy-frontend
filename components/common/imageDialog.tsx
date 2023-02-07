@@ -107,14 +107,14 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                     <div className="inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto">
                       <div className="flex mobile:flex-col lg:flex-col h-full w-full items-center bg-[#311808]  bg-gradient-to-br from-orange-400 via-orange-200 to-orange-600">
                         <div className="w-3/5 mobile:w-full flex flex-col items-center py-auto">
-                            <div className="w-full h-full absolute left-0 top-0 bg-c-bg/50 " />
-                            <img
-                              className="w-auto object-contain h-[calc(100vh-160px)] transition"
-                              src={currentImage.proxy_url}
-                              alt={data.content}
-                              width={currentImage.width}
-                              height={currentImage.height}
-                            />
+                          <div className="w-full h-full absolute left-0 top-0 bg-c-bg/50 " />
+                          <img
+                            className="w-auto object-contain mobile:h-full h-[calc(100vh-160px)] transition"
+                            src={currentImage.proxy_url}
+                            alt={data.content}
+                            width={currentImage.width}
+                            height={currentImage.height}
+                          />
                         </div>
                         <div className="z-10 flex self-stretch justify-between flex-col items-start w-2/5 mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
                           <div className="">
@@ -146,18 +146,22 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                       return (
                                         <img
                                           key={index}
-                                          src={ele.proxy_url +
+                                          src={
+                                            ele.proxy_url +
                                             `?width=${
                                               data.images.sort(
                                                 (a: iImage, b: iImage) =>
-                                                  Number(b.upscaled) - Number(a.upscaled)
+                                                  Number(b.upscaled) -
+                                                  Number(a.upscaled)
                                               )[0]?.width / 4
                                             }&height=${
                                               data.images.sort(
                                                 (a: iImage, b: iImage) =>
-                                                  Number(b.upscaled) - Number(a.upscaled)
+                                                  Number(b.upscaled) -
+                                                  Number(a.upscaled)
                                               )[0]?.height / 4
-                                            }`}
+                                            }`
+                                          }
                                           className={`w-20 m-2 object-cover mobile:w-16 cursor-pointer rounded-lg ${
                                             currentImage?.url === ele.url
                                               ? "ring-1 ring-orange-500"
