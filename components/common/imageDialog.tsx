@@ -129,6 +129,7 @@ console.log(currentImage?.width);
                             alt={data.content}
                             width={currentImage.width}
                             height={currentImage.height}
+                            priority={true}
                           />
                         </div>
                         <div className="w-[40%] z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">

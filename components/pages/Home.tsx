@@ -17,7 +17,7 @@ interface HmpageProps {
   imageId?: string;
 }
 
-const Home: React.FC<HmpageProps> = ({ imageId }) => {
+const Home: React.FC<HmpageProps> = () => {
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
   const [totalResult, setTotalResult] = useState<number>(0);
@@ -28,16 +28,17 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
   const [images, setImages] = useState<iImagePayload[]>([]);
 
   useEffect(() => {
-    const img =
-      baseImages &&
-      baseImages?.filter(
-        (data: iImagePayload) => data.id.toString() === imageId
-      );
+    const { imageId: imgId } = router.query;
+    console.log(typeof imgId);
+    const img = baseImages.filter(
+      (data: iImagePayload) => data.id === parseInt(imgId)
+    );
+    console.log(img);
     if (img.length > 0) {
-      setIsOpenDialog(true);
       setCurrentImage(img[0]);
+      setIsOpenDialog(true);
     }
-  }, [imageId]);
+  }, [router, baseImages]);
 
   useEffect(() => {
     const arr: iImagePayload[] = baseImages
@@ -91,11 +92,11 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
               router.push("/");
             }}
           >
-            Picsy 
+            Picsy
             {/* <p className="text-lg m-2">{"(Art search)"}</p> */}
           </h1>
           <div className="flex whitespace-nowrap items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
-            <p>The</p> 
+            <p>The</p>
             <a
               className="dark:text-orange-500 text-orange-400 ring-0 outline-0"
               href="https://midjourney.com/home/"
