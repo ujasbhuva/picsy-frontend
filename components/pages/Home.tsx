@@ -48,7 +48,7 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
           return false;
         }
       })
-      .sort(() => Math.random() - 2)
+      .sort(() => Math.random() - 0.5)
       .slice(0, 800);
     setImages(arr);
   }, [baseImages]);
