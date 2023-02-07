@@ -171,12 +171,12 @@ const Home: React.FC<HmpageProps> = ({ imageId }) => {
             400: 2,
             750: 3,
             900: 4,
-            1300: 6,
+            1300: 5,
             1500: 7,
             1800: 8,
           }}
         >
-          <Masonry gutter="3px">
+          <Masonry gutter="5px">
             {images.map((data: any, index: number) => {
               return (
                 <div

@@ -10,6 +10,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import { iImage } from "../../apiHelper/images";
+import Image from "next/image";
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState<any>({
@@ -52,7 +53,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     .replaceAll(/<.*>/g, "");
 
   const downloadImage = () => {
-    saveAs(currentImage?.url ?? "", "orange.jpg"); // Put your image url here.
+    saveAs(currentImage?.proxy_url ?? "", "orange.jpg"); // Put your image url here.
   };
 
   const changeImage = (setIndex: number) => {
@@ -87,7 +88,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               &#8203;
             </span>
             <div className="fixed inset-0 overflow-y-auto font-satoshi">
-              <div className="flex min-h-full items-center justify-center p-4 mobile:p-2 text-center">
+              <div className="flex min-h-full items-center justify-center p-4 px-16 mobile:p-2 text-center">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -97,7 +98,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 max-w-[80%] sm:max-w-[80%] lg:max-w-[70%] mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-150px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="relative flex flex-col itme-center justify-center rounded-3xl border-4 border-orange-900 mobile:border-2 mobile:w-full mobile:max-w-full mobile:max-h-full max-h-[calc(100vh-100px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all">
                     <XMarkIcon
                       className="w-10 h-10 text-orange-700 absolute right-0 top-0 cursor-pointer z-10"
                       onClick={() => {
@@ -105,27 +106,33 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                       }}
                     />
                     <div className="inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto">
-                      <div className="flex mobile:flex-col lg:flex-col h-full w-full items-center bg-[#311808]  bg-gradient-to-br from-orange-400 via-orange-200 to-orange-600">
-                        <div className="w-3/5 mobile:w-full flex flex-col items-center py-auto">
-                          <div className="w-full h-full absolute left-0 top-0 bg-c-bg/50 " />
-                          <img
-                            className="w-auto object-contain mobile:h-full h-[calc(100vh-160px)] transition"
+                      <div className="relative flex mobile:flex-col lg:flex-col h-full w-full items-center ">
+                        <div className="w-8/12 mobile:w-full flex flex-col items-center p-0">
+                          <Image
+                            className="absolute w-full object-cover h-full transition blur-xl"
+                            src={currentImage.proxy_url}
+                            alt={data.content}
+                            width={currentImage.width}
+                            height={currentImage.height}
+                          />
+                          <Image
+                            className={`z-10 w-auto object-contain mobile:h-full transition
+                            ${
+                              currentImage.width > currentImage.height
+                                ? "min-h-full"
+                                : "h-[calc(100vh-160px)]"
+                            }
+                            `}
                             src={currentImage.proxy_url}
                             alt={data.content}
                             width={currentImage.width}
                             height={currentImage.height}
                           />
                         </div>
-                        <div className="z-10 flex self-stretch justify-between flex-col items-start w-2/5 mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
+                        <div className="w-4/12 z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 border-l-[3px] mobile:border-t-[1px] mobile:border-l-0 border-orange-900 mobile:p-4 text-orange-100 gap-2 dark:bg-[#311808] bg-orange-100">
                           <div className="">
                             <p className="my-3 mobile:my-1 dark:text-orange-200 text-orange-900 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[15]">
                               {prompt}
-                            </p>
-                            <p className=" dark:text-orange-700 text-orange-700 text-lg mobile:text-sm">
-                              Dimensions:{" "}
-                              <strong>
-                                {currentImage?.width} X {currentImage?.height}
-                              </strong>
                             </p>
                           </div>
                           <div className="flex flex-col gap-2 items-center w-full">
@@ -187,7 +194,13 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                 </button>
                               </div>
                             )}
-                            <div className="flex gap-2 items-center w-full">
+                            <p className=" dark:text-orange-500 text-orange-500 text-lg mobile:text-sm">
+                              Dimensions:{" "}
+                              <strong>
+                                {currentImage?.width} X {currentImage?.height}
+                              </strong>
+                            </p>
+                            <div className="grid grid-cols-2 gap-2 items-center w-full">
                               {copied ? (
                                 <div className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-orange-700 bg-orange-700 text-white rounded-xl mobile:px-2">
                                   <>
