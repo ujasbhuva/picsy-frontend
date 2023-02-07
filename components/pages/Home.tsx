@@ -31,7 +31,7 @@ const Home: React.FC<HmpageProps> = () => {
     const { imageId: imgId } = router.query;
     console.log(typeof imgId);
     const img = baseImages.filter(
-      (data: iImagePayload) => data.id === parseInt(imgId)
+      (data: iImagePayload) => data.id === parseInt(imgId ?? "")
     );
     console.log(img);
     if (img.length > 0) {
