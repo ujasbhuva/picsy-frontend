@@ -79,15 +79,15 @@ const Home: React.FC<HmpageProps> = () => {
   return (
     <>
       {isLoading && <Loader loading={isLoading} />}
-      <div className="flex items-center mt-10 mobile:mt-6">
+      <div className="flex items-center justify-center mt-10 mobile:mt-6">
         <img
           src={"/android-chrome-512x512.png"}
           alt="Orange"
-          className="object-cover h-[120px]"
+          className="object-cover h-[120px] mobile:h-[100px]"
         />
         <div className="flex flex-col ml-5">
           <h1
-            className="flex items-end text-[3rem] cursor-pointer font-[500] dark:text-orange-100 text-orange-900 mobile:text-[2rem]"
+            className="flex items-end text-[3rem] cursor-pointer font-[500] dark:text-orange-100 text-orange-900 mobile:text-[1.5rem]"
             onClick={() => {
               router.push("/");
             }}
@@ -95,16 +95,18 @@ const Home: React.FC<HmpageProps> = () => {
             Picsy
             {/* <p className="text-lg m-2">{"(Art search)"}</p> */}
           </h1>
-          <div className="flex whitespace-nowrap items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
-            <p>The</p>
+          <div className="items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
+            <p>#1 Searching tool for {" "}
+            {/* <span>*/}
             <a
               className="dark:text-orange-500 text-orange-400 ring-0 outline-0"
               href="https://midjourney.com/home/"
               target={"_blank"}
-            >
-              MIDJOURNEY
-            </a>{" "}
-            <p>Image Browser</p>
+              > 
+              Midjourney
+           </a>{" "}
+                {/*</span> */}
+            generated art</p>
           </div>
         </div>
       </div>
