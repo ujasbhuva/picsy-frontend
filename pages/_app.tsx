@@ -38,6 +38,23 @@ export default function App(props: any) {
                   `,
         }}
       />
+
+      <Script
+        async
+        crossOrigin="anonymous"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+      />
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+       	(adsbygoogle = window.adsbygoogle || []).push({
+         	google_ad_client: "ca-pub-3599010507595948",
+         	enable_page_level_ads: true
+         	});
+        	`,
+        }}
+        />
+
       <Provider store={store}>
         <Main {...props} />
       </Provider>
