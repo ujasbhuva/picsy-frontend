@@ -19,6 +19,7 @@ export default function Layout ({
         {title && <title>{title}</title>}
         {description && <meta name='description' content={description} />}
         <link rel='icon' href='/favicon.ico' />
+        <meta name="msvalidate.01" content="223D9979439CC0D3878A9B5736BC49F9" />
       </Head>
 
       {/* <Header /> */}
