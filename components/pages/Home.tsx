@@ -8,10 +8,11 @@ import {
 import Loader from "../common/loader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Image from "next/image";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
 import baseImages from "../../data.json";
+import { Disclosure } from "@headlessui/react";
 
 interface HmpageProps {
   imageId?: string;
@@ -50,7 +51,7 @@ const Home: React.FC<HmpageProps> = () => {
         }
       })
       .sort(() => Math.random() - 0.5)
-      .slice(0, 800);
+      .slice(0, 1000);
     setImages(arr);
   }, [baseImages]);
 
@@ -79,35 +80,38 @@ const Home: React.FC<HmpageProps> = () => {
   return (
     <>
       {isLoading && <Loader loading={isLoading} />}
-      <div className="flex items-center justify-center mt-10 mobile:mt-6">
-        <img
-          src={"/android-chrome-512x512.png"}
-          alt="Orange"
-          className="object-cover h-[120px] mobile:h-[100px]"
-        />
-        <div className="flex flex-col ml-5">
-          <h1
-            className="flex items-end text-[3rem] cursor-pointer font-[500] dark:text-orange-100 text-orange-900 mobile:text-[1.5rem]"
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            Picsy
-            {/* <p className="text-lg m-2">{"(Art search)"}</p> */}
-          </h1>
-          <div className="items-center text-md mobile:mt-1 gap-1 mobile:text-sm dark:text-orange-200 text-orange-700 ">
-            <p>#1 Searching tool for {" "}
-            {/* <span>*/}
+      <div className="flex flex-col items-start mt-10 mobile:mt-6">
+        <div className="flex items-center">
+          <img
+            src={"/android-chrome-512x512.png"}
+            alt="Orange"
+            className="object-cover h-[50px] mobile:h-[40px]"
+          />
+          <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
+            <h1
+              className="text-[3rem] mobile:text-[2rem] font-[500]"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Picsy
+              {/* <p className="text-lg m-2">{"(1rt search)"}</p> */}
+            </h1>
+          </div>
+        </div>
+        <div className="items-center text-blue-1 mobile:mt-1 gap-1">
+          <p className="text-lg mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
+            #1 Searching tool for {/* <span>*/}
             <a
-              className="dark:text-orange-500 text-orange-400 ring-0 outline-0"
+              className="text underline underline-offset-4 ring-0 outline-0"
               href="https://midjourney.com/home/"
               target={"_blank"}
-              > 
+            >
               Midjourney
-           </a>{" "}
-                {/*</span> */}
-            generated art</p>
-          </div>
+            </a>{" "}
+            {/*</span> */}
+            generated art
+          </p>
         </div>
       </div>
       <div className="w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:mt-8">
@@ -164,7 +168,7 @@ const Home: React.FC<HmpageProps> = () => {
         )}
       </div>
       {totalResult && totalResult > 0 ? (
-        <p className="mt-4 dark:text-orange-200 text-orange-700">
+        <p className="mt-4 text-blue-2">
           {totalResult} Results found
         </p>
       ) : null}
@@ -277,6 +281,55 @@ const Home: React.FC<HmpageProps> = () => {
           data={currentImage}
         />
       )}
+      <div className="w-full flex flex-col items-center border-t border-white">
+        <div className="max-w-xl mobile:max-w-full">
+          {/* <h2 className="text-2xl font-[500] my-4">FAQs</h2> */}
+          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+            Powerful image searching tool for Midjourney Images
+          </h3>
+          <p className="text-lg mobile:text-sm text-white">
+            Picsy is an image searching tool for Midjourney generated arts, that
+            provides an inteface to search and download the images it for
+            general purposes including research, education, and personal
+            experience. Picsy holds data of more than 6 millon images with
+            different kind of genres.
+          </p>
+          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+            What is Midjourney?
+          </h3>
+          <p className="text-lg mobile:text-sm text-white">
+            Midjourney is an independent research lab that has invented an
+            artificial intelligence program with the same name to produce images
+            from verbal portrayals, similar to{" "}
+            <a href="https://openai.com/" target={"_blank"}>
+              OpenAI
+            </a>
+            's <a href="">DALL-E-2</a> and <a>Stable Diffusion</a>. People make
+            artworks with AI model using{" "}
+            <a href="https://midjourney.com/auth/signin/" target={"_blank"}>
+              Discord
+            </a>
+            's Midjourney bot commands. It is inferred that the underlying
+            technology is based on Stable Diffusion. The tool is at present in
+            open beta, which began on July 12, 2022. The group at Midjourney is
+            headed by David Holz, who was a co-founder of Leap Motion. . It is
+            speculated that the underlying technology is based on Stable
+            Diffusion.
+          </p>
+          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+            What is Generative AI?
+          </h3>
+          <p className="text-lg mobile:text-sm text-white">
+            Generative Artificial Intelligence (AI) is a term used for the
+            algorithms that are utilized to develop new information resembling
+            human-generated sources, such as sound, coding, photographs, text,
+            models and videos. This technology is trained with preexisting
+            content and data, allowing for various applications like natural
+            language interpretation, computer vision, metaverse, and voice
+            synthesis.
+          </p>
+        </div>
+      </div>
     </>
   );
 };

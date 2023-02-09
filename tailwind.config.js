@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 const colors = {
-  dark: '#2d3748',
-  medium: '#4a5568',
-  light: '#718096'
+  'black-1': '#020a12',
+  'black-2': '#081829',
+  "blue-1": "#a2d8fa",
+  "blue-2": "#5F85DB",
+  "blue-link": "#02c8f0"
 }
 
 module.exports = {

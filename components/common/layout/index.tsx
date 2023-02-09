@@ -14,7 +14,7 @@ export default function Layout ({
   children: ReactNode
 }) {
   return (
-    <div className={`font-satoshi relative dark:bg-none bg-gradient-to-r from-orange-300 via-orange-200 to-yellow-300`}>
+    <div className={`font-satoshi bg-black-1 relative`}>
       <Head>
         {title && <title>{title}</title>}
         {description && <meta name='description' content={description} />}

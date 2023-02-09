@@ -20,15 +20,17 @@ const store = configureStore({
 export default function App(props: any) {
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-KNQGMWCWXP"
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {process.env.NEXT_PUBLIC_ENV === "prod" && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-KNQGMWCWXP"
+          />
+          <Script
+            id="google-analytics"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
@@ -36,25 +38,26 @@ export default function App(props: any) {
                       page_path: window.location.pathname,
                     });
                   `,
-        }}
-      />
+            }}
+          />
 
-      <Script
-        async
-        crossOrigin="anonymous"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      />
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: `
+          <Script
+            async
+            crossOrigin="anonymous"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          />
+          <Script
+            dangerouslySetInnerHTML={{
+              __html: `
        	(adsbygoogle = window.adsbygoogle || []).push({
          	google_ad_client: "ca-pub-3599010507595948",
          	enable_page_level_ads: true
          	});
         	`,
-        }}
-        />
-
+            }}
+          />
+        </>
+      )}
       <Provider store={store}>
         <Main {...props} />
       </Provider>
