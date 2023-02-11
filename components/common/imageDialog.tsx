@@ -1,9 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import {
+  ArrowDownCircleIcon,
   CheckCircleIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronUpIcon,
+  DocumentDuplicateIcon,
   FolderArrowDownIcon,
+  InformationCircleIcon,
   Square2StackIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
@@ -36,6 +41,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [totalImages, setTotalImages] = useState(0);
   const [currentImage, setCurrentImage] = useState<iImage>();
+  const [showInfo, setShowInfo] = useState<boolean>(false);
   const size = useWindowSize();
 
   useEffect(() => {
@@ -61,6 +67,46 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     setCurrentImage(data.images[setIndex]);
   };
 
+  const handleClose = () => {
+    setShowInfo(false);
+    setIsOpen(false);
+  };
+
+  const rederOptionImage = () => {
+    return (
+      <>
+        {data.images.map((ele: any, index: number) => {
+          return (
+            <img
+              key={index}
+              src={
+                ele.proxy_url +
+                `?width=${
+                  data.images.sort(
+                    (a: iImage, b: iImage) =>
+                      Number(b.upscaled) - Number(a.upscaled)
+                  )[0]?.width / 4
+                }&height=${
+                  data.images.sort(
+                    (a: iImage, b: iImage) =>
+                      Number(b.upscaled) - Number(a.upscaled)
+                  )[0]?.height / 4
+                }`
+              }
+              className={`w-16 m-[6px] object-cover mobile:w-16 cursor-pointer rounded-lg ${
+                currentImage?.url === ele.url ? "ring-2 ring-blue-2" : ""
+              }`}
+              onClick={() => {
+                changeImage(index);
+              }}
+              alt={index.toString()}
+            />
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <>
       {currentImage && (
@@ -68,7 +114,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
           <Dialog
             as="div"
             className="relative z-10"
-            onClose={() => setIsOpen(false)}
+            onClose={() => handleClose()}
           >
             <Transition.Child
               as={Fragment}
@@ -79,7 +125,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 backdrop-blur-md transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 backdrop-blur-lg transition-opacity" />
             </Transition.Child>
             <span
               className="hidden sm:inline-block sm:align-middle sm:h-screen"
@@ -87,8 +133,8 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             >
               &#8203;
             </span>
-            <div className="fixed inset-0 overflow-y-auto font-satoshi">
-              <div className="flex min-h-full items-center justify-center p-10 px-16 mobile:p-2 text-center">
+            <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-3 font-satoshi">
+              <div className="relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -99,43 +145,116 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel
-                    className={`relative flex flex-col itme-center justify-center rounded-2xl bg-gradient-to-r from-blue-2 to-teal-700 mobile:w-full mobile:max-h-full max-h-[calc(100vh-10px)] transform overflow-auto scrollbar-hide text-left align-middle shadow-xl transition-all w-[calc(100%-${
-                      size.width-currentImage?.width
-                    }px)]`}
+                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group`}
                   >
-                    <div className="relative p-1 mobile:p-0.5 rounded-xl">
-                      <XMarkIcon
-                        className="w-10 h-10 text-teal-700 absolute right-1 top-1 cursor-pointer z-10"
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                      />
-                      <div className="rounded-xl mobile:rounded-[14px] inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto shadow-inner shadow-gray-600">
-                        <div className="flex  mobile:flex-col lg:flex-col h-full w-full items-center ">
-                          <div className={`relative mobile:w-full flex flex-col items-center p-0 ${currentImage.width > currentImage.height ? " w-[75%] " : " w-full "}`}>
-                            <Image
-                            className="absolute w-full object-cover h-full scale-125 mobile:scale-0 transition blur-md"
-                            src={currentImage.proxy_url}
-                            alt={data.content}
-                            width={currentImage.width}
-                            height={currentImage.height}
-                          />
-                            <Image
-                              className={`z-10 w-auto object-contain mobile:h-full transition
-                            ${
-                              currentImage.width > currentImage.height
-                                ? "min-h-full"
-                                : "h-[calc(100vh-100px)]"
-                            }
-                            `}
-                              src={currentImage.proxy_url}
-                              alt={data.content}
-                              width={currentImage.width}
-                              height={currentImage.height}
-                              priority={true}
-                            />
+                    {/* <XMarkIcon
+                      className="w-10 h-10 text-blue-2 absolute right-1 top-1 cursor-pointer z-10"
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                    /> */}
+                    <div className="relative flex flex-col ">
+                      <div className="relative flex flex-col items-center ">
+                        <Image
+                          className={`w-auto object-contain rounded-2xl  mobile:h-auto transition h-[calc(100vh-170px)]`}
+                          src={currentImage.proxy_url}
+                          alt={data.content}
+                          width={currentImage.width}
+                          height={currentImage.height}
+                          priority={true}
+                        />
+                        <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
+                          <p className="text-lg mobile:text-sm px-2">
+                            {currentImage?.width} X {currentImage?.height}
+                          </p>
+                        </div>
+                      </div>
+                      {showInfo && (
+                        <div className="relative flex px-3 m-1 bg-none">
+                          <p className="w-[400px] mobile:w-[calc(100%-30px)] text-start my-2.5 mobile:my-2 text-lg mobile:text-md line-clamp-[1] mobile:line-clamp-[2]">
+                            {prompt}
+                          </p>
+                          <div className="absolute right-0 bottom-0">
+                            <button
+                              className="ring-0 outline-0 rounded-full p-1.5 mobile:p-1=0.5 bg-white bg-opacity-30"
+                              onClick={() => {
+                                navigator.clipboard.writeText(prompt);
+                                setCopied(true);
+                                setTimeout(() => {
+                                  setCopied(false);
+                                }, 1500);
+                              }}
+                            >
+                              {copied ? (
+                                <CheckCircleIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+                                ) : (
+                                <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+                              )}
+                            </button>
                           </div>
-                          <div className="w-[35%] z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 ml-[3px] mobile:ml-0 mobile:border-t-[1px] mobile:border-l-0 border-blue-2 mobile:p-4  gap-2 bg-black-2">
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-full mobile:whitespace-normal whitespace-pre-line flex text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
+                      <div className="flex flex-col self-stretch items-center justify-between h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
+                        <div className="flex flex-col mobile:flex-row items-center w-full mobile:my-3">
+                          {data.images && data.images.length > 1 && (
+                            <div className="z-90 items-center mobile:flex justify-between w-full">
+                              <button
+                                disabled={currentIndex === 0}
+                                className={
+                                  "outline-0 ring-0 text-blue-1 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer p-0"
+                                }
+                                onClick={() => changeImage(currentIndex - 1)}
+                              >
+                                <div className="mobile:hidden block">
+                                  <ChevronUpIcon className=" w-8 h-8" />
+                                </div>
+                                <div className="hidden mobile:block">
+                                  <ChevronLeftIcon className=" w-8 h-8" />
+                                </div>
+                              </button>
+                              <div className="flex flex-col mobile:flex-row items-center justify-start content-center max-h-[calc(100vh-500px)] overflow-scroll scrollbar-hide">
+                                {rederOptionImage()}
+                              </div>
+                              <button
+                                disabled={currentIndex === totalImages - 1}
+                                className={
+                                  "outline-0 ring-0 text-blue-1 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                                }
+                                onClick={() => changeImage(currentIndex + 1)}
+                              >
+                                <div className="mobile:hidden block">
+                                  <ChevronDownIcon className=" w-8 h-8" />
+                                </div>
+                                <div className="hidden mobile:block">
+                                  <ChevronRightIcon className=" w-8 h-8" />
+                                </div>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mobile:my-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row gap-1 px-2">
+                          <button
+                            className="ring-0 outline-0 w-fit cursor-pointer rounded-full p-1 mobile:p-0.5 hover:text-white text-gray-200 bg-white bg-opacity-30"
+                            onClick={() => {
+                              setShowInfo(!showInfo);
+                            }}
+                          >
+                            <InformationCircleIcon className="w-10 h-10 mobile:w-8 mobile:h-8" />
+                          </button>
+                          <button
+                            className="ring-0 outline-0 w-fit cursor-pointer rounded-full p-1 mobile:p-0.5 hover:text-white text-gray-200 bg-white bg-opacity-30"
+                            onClick={downloadImage}
+                          >
+                            <ArrowDownCircleIcon className="w-10 h-10 mobile:w-8 mobile:h-8" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="rounded-xl mobile:rounded-[14px] inline-block align-bottom text-left transform transition-all min-h-fit overflow-auto shadow-gray-600">
+                        <div className="flex content-center overflow-hidden justify-center mobile:flex-col lg:flex-col h-full w-full items-center "> */}
+                    {/* <div className="rounded-xl w-[20%] z-10 flex self-stretch justify-between flex-col items-start mobile:w-full pt-8 p-6 mobile:ml-0 mobile:border-t-[1px] mobile:border-l-0 border-blue-2 mobile:p-4  gap-2 ">
                             <p className="my-3 mobile:my-1 text-blue-1 text-md mobile:text-md w-full mobile:line-clamp-[9] line-clamp-[15]">
                               {prompt}
                             </p>
@@ -210,7 +329,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                               </p>
                               <div className="grid grid-cols-2 gap-2 items-center w-full mt-3">
                                 {copied ? (
-                                  <div className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-black-2 shadow-inner shadow-black transition text-black-2 bg-blue-1 rounded-xl mobile:px-2">
+                                  <div className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-black-2 shadow-black transition text-black-2 bg-blue-1 rounded-xl mobile:px-2">
                                     <>
                                       <CheckCircleIcon className="w-6 h-6" />
                                       Prompt copied
@@ -218,7 +337,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                   </div>
                                 ) : (
                                   <div
-                                    className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-blue-2 shadow-inner shadow-black bg-black-2 text-blue-2 rounded-xl mobile:px-2"
+                                    className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-blue-2 shadow-black bg-black-2 text-blue-2 rounded-xl mobile:px-2"
                                     onClick={() => {
                                       navigator.clipboard.writeText(prompt);
                                       setCopied(true);
@@ -234,19 +353,17 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                                   </div>
                                 )}
                                 <div
-                                  className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-blue-2 shadow-inner shadow-black bg-black-2 text-blue-2 rounded-xl"
+                                  className="cursor-pointer w-full flex items-center justify-center gap-1 px-2 py-2 border border-blue-2 shadow-black bg-black-2 text-blue-2 rounded-xl"
                                   onClick={downloadImage}
                                 >
                                   <FolderArrowDownIcon className="w-6 h-6 " />{" "}
-                                  Download
                                 </div>
                               </div>
                             </div>
-                            {/* <input className='p-3 rounded-xl' value={prompt}/> */}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                          </div> */}
+
+                    {/* </div>
+                      </div> */}
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
