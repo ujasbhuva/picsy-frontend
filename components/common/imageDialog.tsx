@@ -186,7 +186,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                               }}
                             >
                               {copied ? (
-                                <CheckCircleIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+                                <CheckCircleIcon className="text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6" />
                                 ) : (
                                 <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
                               )}
