@@ -133,7 +133,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             >
               &#8203;
             </span>
-            <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-3 font-satoshi">
+            <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi">
               <div className="relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center">
                 <Transition.Child
                   as={Fragment}
@@ -234,7 +234,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             </div>
                           )}
                         </div>
-                        <div className="mobile:my-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row gap-1 px-2">
+                        <div className="mobile:mb-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row gap-1 px-2">
                           <button
                             className="ring-0 outline-0 w-fit cursor-pointer rounded-full p-1 mobile:p-0.5 hover:text-white text-gray-200 bg-white bg-opacity-30"
                             onClick={() => {
