@@ -243,7 +243,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 backdrop-blur-lg transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 backdrop-blur-lg bg-black bg-opacity-60 transition-opacity" />
             </Transition.Child>
             <span
               className="hidden sm:inline-block sm:align-middle sm:h-screen"
