@@ -30,12 +30,9 @@ const Home: React.FC<HmpageProps> = () => {
 
   useEffect(() => {
     const { imageId: imgId } = router.query;
-    if (imgId) {
-      const img = baseImages && Array.isArray(baseImages) && baseImages.filter((data: iImagePayload) => {
-        console.log(data.id.toString() === "1071492594984558783");
-        if (data.id.toString() === imgId.toString()) {
-          return true
-        }
+    if (imgId && baseImages && Array.isArray(baseImages)) {
+      const img = baseImages.filter((data: iImagePayload) => {
+        data.id.toString() === imgId.toString();
       });
       if (img.length > 0) {
         setCurrentImage(img[0]);
