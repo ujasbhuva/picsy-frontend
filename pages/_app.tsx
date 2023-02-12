@@ -20,7 +20,6 @@ const store = configureStore({
 export default function App(props: any) {
   return (
     <>
-      {process.env.NEXT_PUBLIC_ENV === "prod" && (
         <>
           <Script
             strategy="afterInteractive"
@@ -57,7 +56,6 @@ export default function App(props: any) {
             }}
           />
         </>
-      )}
       <Provider store={store}>
         <Main {...props} />
       </Provider>
