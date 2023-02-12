@@ -32,7 +32,11 @@ const Home: React.FC<HmpageProps> = () => {
     const { imageId: imgId } = router.query;
     if (imgId && baseImages && Array.isArray(baseImages)) {
       const img = baseImages.filter((data: iImagePayload) => {
-        data.id.toString() === imgId.toString();
+        if (data.id.toString() === imgId.toString()) {
+          return true;
+        } else {
+          return false;
+        }
       });
       if (img.length > 0) {
         setCurrentImage(img[0]);
