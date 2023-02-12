@@ -118,7 +118,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               <div className="relative flex bg-white bg-opacity-30 mobile:bg-opacity-0 rounded-2xl flex-col p-4 mobile:p-3 bg-none overflow-hidden mobile:w-full">
                 {currentImage && (
                   <p
-                    className={`mobile:w-full mobile:text-white text-gray-900 text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
+                    className={`mobile:w-full mobile:text-white text-white text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
                       currentImage?.width > currentImage?.height
                         ? "w-[12rem]"
                         : "w-[16rem]"
