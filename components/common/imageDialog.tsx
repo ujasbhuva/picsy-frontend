@@ -125,16 +125,6 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                     }`}
                   >
                     {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
-                    {prompt}
                   </p>
                 )}
               </div>
