@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowDownCircleIcon,
+  ArrowDownIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -9,6 +10,7 @@ import {
   DocumentDuplicateIcon,
   FolderArrowDownIcon,
   InformationCircleIcon,
+  LinkIcon,
   Square2StackIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
@@ -106,7 +108,37 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
       </>
     );
   };
-
+  const PromptSection = () => {
+    return (
+      <div className="w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 mr-[19rem] text-gold-500 max-h-[calc(100vh-300px)]">
+        <div className="flex flex-col bg-white bg-opacity-20 p-2 rounded-2xl self-stretch items-center justify-between max-h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
+          <div className="relative flex flex-col p-2 bg-none overflow-hidden">
+            <p className="w-[16rem] mobile:w-[calc(100%-30px)] text-start text-lg mobile:text-md line-clamp-[15] mobile:line-clamp-[4]">
+              {prompt}
+            </p>
+            <div className="w-full flex justify-end">
+              <button
+                className="ring-0 outline-0 rounded-full"
+                onClick={() => {
+                  navigator.clipboard.writeText(prompt);
+                  setCopied(true);
+                  setTimeout(() => {
+                    setCopied(false);
+                  }, 1500);
+                }}
+              >
+                {copied ? (
+                  <CheckCircleIcon className="text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6" />
+                ) : (
+                  <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <>
       {currentImage && (
@@ -133,7 +165,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             >
               &#8203;
             </span>
-            <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi">
+            <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi ">
               <div className="relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center">
                 <Transition.Child
                   as={Fragment}
@@ -145,7 +177,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel
-                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group`}
+                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-500px)] mobile:max-w-full`}
                   >
                     {/* <XMarkIcon
                       className="w-10 h-10 text-blue-2 absolute right-1 top-1 cursor-pointer z-10"
@@ -153,48 +185,23 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         setIsOpen(false);
                       }}
                     /> */}
-                    <div className="relative flex flex-col ">
-                      <div className="relative flex flex-col items-center ">
-                        <Image
-                          className={`w-auto object-contain rounded-2xl  mobile:h-auto transition h-[calc(100vh-170px)]`}
-                          src={currentImage.proxy_url}
-                          alt={data.content}
-                          width={currentImage.width}
-                          height={currentImage.height}
-                          priority={true}
-                        />
-                        <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
-                          <p className="text-lg mobile:text-sm px-2">
-                            {currentImage?.width} X {currentImage?.height}
-                          </p>
-                        </div>
+                    <div className="block mobile:hidden">{PromptSection()}</div>
+                    <div className="relative flex flex-col items-center ">
+                      <Image
+                        className={`w-auto object-contain rounded-2xl mobile:h-auto transition h-[calc(100vh-170px)]`}
+                        src={currentImage.proxy_url}
+                        alt={data.content}
+                        width={currentImage.width}
+                        height={currentImage.height}
+                        priority={true}
+                      />
+                      <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
+                        <p className="text-lg mobile:text-sm px-2">
+                          {currentImage?.width} X {currentImage?.height}
+                        </p>
                       </div>
-                      {showInfo && (
-                        <div className="relative flex px-3 m-1 bg-none">
-                          <p className="w-[400px] mobile:w-[calc(100%-30px)] text-start my-2.5 mobile:my-2 text-lg mobile:text-md line-clamp-[1] mobile:line-clamp-[2]">
-                            {prompt}
-                          </p>
-                          <div className="absolute right-0 bottom-0">
-                            <button
-                              className="ring-0 outline-0 rounded-full p-1.5 mobile:p-1=0.5 bg-white bg-opacity-30"
-                              onClick={() => {
-                                navigator.clipboard.writeText(prompt);
-                                setCopied(true);
-                                setTimeout(() => {
-                                  setCopied(false);
-                                }, 1500);
-                              }}
-                            >
-                              {copied ? (
-                                <CheckCircleIcon className="text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6" />
-                                ) : (
-                                <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      )}
                     </div>
+                    <div className="hidden mobile:block">{PromptSection()}</div>
                     <div className="w-full mobile:whitespace-normal whitespace-pre-line flex text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
                       <div className="flex flex-col self-stretch items-center justify-between h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
                         <div className="flex flex-col mobile:flex-row items-center w-full mobile:my-3">
@@ -234,21 +241,14 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             </div>
                           )}
                         </div>
-                        <div className="mobile:mb-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row gap-1 px-2">
-                          <button
-                            className="ring-0 outline-0 w-fit cursor-pointer rounded-full p-1 mobile:p-0.5 hover:text-white text-gray-200 bg-white bg-opacity-30"
-                            onClick={() => {
-                              setShowInfo(!showInfo);
-                            }}
+                        <div className="mobile:mb-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row px-2">
+                          <div
+                            className="flex flex-col mobile:flex-row gap-2 ring-0 outline-0 rounded-full text-white"
                           >
-                            <InformationCircleIcon className="w-10 h-10 mobile:w-8 mobile:h-8" />
-                          </button>
-                          <button
-                            className="ring-0 outline-0 w-fit cursor-pointer rounded-full p-1 mobile:p-0.5 hover:text-white text-gray-200 bg-white bg-opacity-30"
-                            onClick={downloadImage}
-                          >
-                            <ArrowDownCircleIcon className="w-10 h-10 mobile:w-8 mobile:h-8" />
-                          </button>
+                            <LinkIcon className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full" 
+                            onClick={()=>{navigator.clipboard.writeText(`https://picsy.art/image/${data.id}`)}}/>
+                            <ArrowDownIcon className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full" />
+                          </div>
                         </div>
                       </div>
                     </div>

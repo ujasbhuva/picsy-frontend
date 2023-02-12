@@ -28,18 +28,21 @@ const Home: React.FC<HmpageProps> = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<iImagePayload[]>([]);
 
-  // useEffect(() => {
-  //   const { imageId: imgId } = router.query;
-  //   console.log(typeof imgId);
-  //   const img = baseImages.filter(
-  //     (data: iImagePayload) => data.id === parseInt(imgId ? imgId  : "")
-  //   );
-  //   console.log(img);
-  //   if (img.length > 0) {
-  //     setCurrentImage(img[0]);
-  //     setIsOpenDialog(true);
-  //   }
-  // }, [router, baseImages]);
+  useEffect(() => {
+    const { imageId: imgId } = router.query;
+    if (imgId) {
+      const img = baseImages && Array.isArray(baseImages) && baseImages.filter((data: iImagePayload) => {
+        console.log(data.id.toString() === "1071492594984558783");
+        if (data.id.toString() === imgId.toString()) {
+          return true
+        }
+      });
+      if (img.length > 0) {
+        setCurrentImage(img[0]);
+        setIsOpenDialog(true);
+      }
+    }
+  }, [router, baseImages]);
 
   useEffect(() => {
     const arr: iImagePayload[] = baseImages
@@ -168,9 +171,7 @@ const Home: React.FC<HmpageProps> = () => {
         )}
       </div>
       {totalResult && totalResult > 0 ? (
-        <p className="mt-4 text-blue-2">
-          {totalResult} Results found
-        </p>
+        <p className="mt-4 text-blue-2">{totalResult} Results found</p>
       ) : null}
 
       <div className="w-full my-10">
