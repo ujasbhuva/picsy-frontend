@@ -35,10 +35,10 @@ function useWindowSize() {
 
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [totalImages, setTotalImages] = useState(0);
   const [currentImage, setCurrentImage] = useState<iImage>();
-  const [showInfo, setShowInfo] = useState<boolean>(false);
   const size = useWindowSize();
 
   useEffect(() => {
@@ -65,7 +65,6 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   };
 
   const handleClose = () => {
-    setShowInfo(false);
     setIsOpen(false);
   };
 
@@ -106,33 +105,52 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
 
   const PromptSection = () => {
     return (
-      <div className="w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 mr-[19rem] text-gold-500 max-h-[calc(100vh-300px)]">
-        <div className="flex flex-col bg-white bg-opacity-20 p-2 rounded-2xl self-stretch items-center justify-between max-h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
-          <div className="relative flex flex-col p-2 bg-none overflow-hidden">
-            <p className="w-[16rem] mobile:w-[calc(100%-30px)] text-start text-lg mobile:text-md line-clamp-[15] mobile:line-clamp-[4]">
-              {prompt}
-            </p>
-            <div className="w-full flex justify-end">
-              <button
-                className="ring-0 outline-0 rounded-full"
-                onClick={() => {
-                  navigator.clipboard.writeText(prompt);
-                  setCopied(true);
-                  setTimeout(() => {
-                    setCopied(false);
-                  }, 1500);
-                }}
-              >
-                {copied ? (
-                  <CheckCircleIcon className="text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6" />
-                ) : (
-                  <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+      <>
+        {currentImage && (
+          <div
+            className={`w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 ${
+              currentImage?.width > currentImage?.height
+                ? "mr-[15rem] "
+                : "mr-[19rem]"
+            }`}
+          >
+            <div className="flex flex-col shadow-inner self-stretch items-center mobile:h-auto mobile:w-full">
+              <div className="relative flex bg-white bg-opacity-30 mobile:bg-opacity-0 rounded-2xl flex-col p-4 mobile:p-3 bg-none overflow-hidden mobile:w-full">
+                {currentImage && (
+                  <p
+                    className={`mobile:w-full text-gray-900 text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
+                      currentImage?.width > currentImage?.height
+                        ? "w-[12rem]"
+                        : "w-[16rem]"
+                    }`}
+                  >
+                    {prompt}
+                  </p>
                 )}
-              </button>
+              </div>
+              <div className="w-full flex justify-center mt-3 mobile:mr-2 mobile:mt-0 mobile:mb-2 mobile:justify-end">
+                <button
+                  className="w-full flex justify-center items-center rounded-xl mobile:w-fit mobile:px-4 mobile:rounded-xl p-2 py-1 bg-white bg-opacity-20 gap-2 ring-0 outline-0"
+                  onClick={() => {
+                    navigator.clipboard.writeText(prompt);
+                    setCopied(true);
+                    setTimeout(() => {
+                      setCopied(false);
+                    }, 1500);
+                  }}
+                >
+                  {copied ? (
+                    <CheckCircleIcon className="text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6" />
+                  ) : (
+                    <DocumentDuplicateIcon className="w-8 h-8 mobile:w-6 mobile:h-6" />
+                  )}
+                  <span className="mobile:hidden">Copy Prompt</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        )}
+      </>
     );
   };
 
@@ -140,15 +158,26 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     return (
       <div className="mobile:mb-2 mobile:w-full mobile:justify-end flex flex-col mobile:flex-row px-2">
         <div className="flex flex-col mobile:flex-row gap-2 ring-0 outline-0 rounded-full text-white">
-          <LinkIcon
+          {linkCopied ? (
+            <CheckCircleIcon className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none text-blue-1 bg-white bg-opacity-40 mobile:border-none border-white rounded-full" />
+          ) : (
+            <LinkIcon
+              className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `https://picsy.art/image/${data.id}`
+                );
+                setLinkCopied(true);
+                setTimeout(() => {
+                  setLinkCopied(false);
+                }, 1500);
+              }}
+            />
+          )}
+          <ArrowDownIcon
             className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full"
-            onClick={() => {
-              navigator.clipboard.writeText(
-                `https://picsy.art/image/${data.id}`
-              );
-            }}
+            onClick={downloadImage}
           />
-          <ArrowDownIcon className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full" />
         </div>
       </div>
     );
@@ -162,15 +191,15 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             <button
               disabled={currentIndex === 0}
               className={
-                "outline-0 ring-0 text-blue-1 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer p-0"
+                "mb-2 outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center rounded-t-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-xl mobile:rounded-l-none mobile:h-full mobile:w-fit "
               }
               onClick={() => changeImage(currentIndex - 1)}
             >
               <div className="mobile:hidden block">
-                <ChevronUpIcon className=" w-8 h-8" />
+                <ChevronUpIcon className=" w-6 h-6" />
               </div>
               <div className="hidden mobile:block">
-                <ChevronLeftIcon className=" w-8 h-8" />
+                <ChevronLeftIcon className=" w-6 h-6" />
               </div>
             </button>
             <div className="flex flex-col mobile:flex-row items-center justify-start content-center max-h-[calc(100vh-500px)] overflow-scroll scrollbar-hide">
@@ -179,15 +208,15 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             <button
               disabled={currentIndex === totalImages - 1}
               className={
-                "outline-0 ring-0 text-blue-1 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                "mt-2 outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center rounded-b-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-xl mobile:rounded-r-none mobile:h-full mobile:w-fit "
               }
               onClick={() => changeImage(currentIndex + 1)}
             >
               <div className="mobile:hidden block">
-                <ChevronDownIcon className=" w-8 h-8" />
+                <ChevronDownIcon className=" w-6 h-6" />
               </div>
               <div className="hidden mobile:block">
-                <ChevronRightIcon className=" w-8 h-8" />
+                <ChevronRightIcon className=" w-6 h-6" />
               </div>
             </button>
           </div>
@@ -234,12 +263,14 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel
-                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-500px)] mobile:max-w-full`}
+                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full`}
                   >
-                    <div className="block mobile:hidden">{PromptSection()}</div>
                     <div className="relative flex flex-col items-center ">
+                      <div className="mobile:hidden absolute left-0 h-full justify-between flex flex-col items-center">
+                        {PromptSection()}
+                      </div>
                       <Image
-                        className={`w-auto object-contain rounded-2xl mobile:h-auto transition h-[calc(100vh-170px)]`}
+                        className={`w-auto object-contain rounded-2xl mobile:h-auto transition max-h-[calc(100vh-170px)]`}
                         src={currentImage.proxy_url}
                         alt={data.content}
                         width={currentImage.width}
@@ -251,9 +282,13 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                           {currentImage?.width} X {currentImage?.height}
                         </p>
                       </div>
+                      <div className="mobile:hidden absolute right-[-90px] h-full justify-between flex flex-col items-center">
+                        {ImageOptions()}
+                        {ActionButton()}
+                      </div>
                     </div>
                     <div className="hidden mobile:block">{PromptSection()}</div>
-                    <div className="w-full mobile:whitespace-normal whitespace-pre-line flex text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
+                    <div className="hidden mobile:block w-full mobile:whitespace-normal whitespace-pre-line text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
                       <div className="flex flex-col self-stretch items-center justify-between h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
                         {ImageOptions()}
                         {ActionButton()}
