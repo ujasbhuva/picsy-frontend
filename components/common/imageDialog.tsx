@@ -91,7 +91,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                 }`
               }
               className={`w-16 m-[6px] object-cover mobile:w-16 cursor-pointer rounded-lg ${
-                currentImage?.url === ele.url ? "ring-2 ring-blue-2" : ""
+                currentImage?.url === ele.url ? "ring-2 ring-blue-1" : ""
               }`}
               onClick={() => {
                 changeImage(index);
