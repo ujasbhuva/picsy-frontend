@@ -118,12 +118,22 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               <div className="relative flex bg-white bg-opacity-30 mobile:bg-opacity-0 rounded-2xl flex-col p-4 mobile:p-3 bg-none overflow-hidden mobile:w-full">
                 {currentImage && (
                   <p
-                    className={`mobile:w-full text-gray-900 text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
+                    className={`mobile:w-full mobile:text-white text-gray-900 text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
                       currentImage?.width > currentImage?.height
                         ? "w-[12rem]"
                         : "w-[16rem]"
                     }`}
                   >
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
+                    {prompt}
                     {prompt}
                   </p>
                 )}
@@ -252,7 +262,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               &#8203;
             </span>
             <div className="fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi ">
-              <div className="relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center">
+              <div className="relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center mobile:items-start">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -263,7 +273,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel
-                    className={`relative flex mobile:flex-col itme-center justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full`}
+                    className={`relative flex mobile:flex-col mobile:justify-start justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full`}
                   >
                     <div className="relative flex flex-col items-center ">
                       <div className="mobile:hidden absolute left-0 h-full justify-between flex flex-col items-center">
