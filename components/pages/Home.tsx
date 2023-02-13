@@ -85,11 +85,11 @@ const Home: React.FC<HmpageProps> = () => {
     <>
       {isLoading && <Loader loading={isLoading} />}
       <div className="flex flex-col items-start mt-10 mobile:mt-6">
-        <div className="flex items-center">
+        <div className="flex flex-col justify-center">
           <img
             src={"/android-chrome-512x512.png"}
             alt="Orange"
-            className="object-cover h-[50px] mobile:h-[40px]"
+            className="object-cover h-[150px] mobile:h-[40px]"
           />
           <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
             <h1
@@ -98,7 +98,7 @@ const Home: React.FC<HmpageProps> = () => {
                 router.push("/");
               }}
             >
-              Picsy
+              
               {/* <p className="text-lg m-2">{"(1rt search)"}</p> */}
             </h1>
           </div>
