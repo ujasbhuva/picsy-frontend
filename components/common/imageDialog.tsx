@@ -8,6 +8,7 @@ import {
   ChevronUpIcon,
   DocumentDuplicateIcon,
   LinkIcon,
+  XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { Fragment, useEffect, useState } from "react";
 import { saveAs } from "file-saver";
@@ -266,6 +267,12 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                     className={`relative flex mobile:flex-col mobile:justify-start justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full`}
                   >
                     <div className="relative flex flex-col items-center ">
+                    <XMarkIcon
+                      className="w-8 h-8 text-white opacity-50 absolute right-1 top-1 cursor-pointer z-10"
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                    />
                       <div className="mobile:hidden absolute left-0 h-full justify-between flex flex-col items-center">
                         {PromptSection()}
                       </div>
@@ -276,6 +283,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         width={currentImage.width}
                         height={currentImage.height}
                         priority={true}
+                        unoptimized
                       />
                       <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
                         <p className="text-lg mobile:text-sm px-2">
