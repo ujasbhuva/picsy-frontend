@@ -87,24 +87,25 @@ const Home: React.FC<HmpageProps> = () => {
       <div className="flex flex-col items-start mt-10 mobile:mt-6">
         <div className="flex flex-col justify-center">
           <img
-            src={"/android-chrome-512x512.png"}
+            src={"/full-logo.svg"}
             alt="Orange"
-            className="object-cover h-[150px] mobile:h-[40px]"
+            className="object-cover h-[80px] mobile:h-[40px]"
+            onClick={() => {
+              router.push("/");
+            }}
           />
-          <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
+          {/* <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
             <h1
               className="text-[3rem] mobile:text-[2rem] font-[500]"
               onClick={() => {
                 router.push("/");
               }}
             >
-              
-              {/* <p className="text-lg m-2">{"(1rt search)"}</p> */}
             </h1>
-          </div>
+          </div> */}
         </div>
         <div className="items-center text-blue-1 mobile:mt-1 gap-1">
-          <p className="text-lg mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
+          <h1 className="text-lg mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
             #1 Searching tool for {/* <span>*/}
             <a
               className="text underline underline-offset-4 ring-0 outline-0"
@@ -114,8 +115,8 @@ const Home: React.FC<HmpageProps> = () => {
               Midjourney
             </a>{" "}
             {/*</span> */}
-            generated art
-          </p>
+            generated images
+          </h1>
         </div>
       </div>
       <div className="w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:mt-8">
@@ -290,7 +291,7 @@ const Home: React.FC<HmpageProps> = () => {
             Powerful image searching tool for Midjourney Images
           </h3>
           <p className="text-lg mobile:text-sm text-white">
-            Picsy is an image searching tool for Midjourney generated arts, that
+            Picsy is an image searching tool for Midjourney generated images, that
             provides an inteface to search and download the images it for
             general purposes including research, education, and personal
             experience. Picsy holds data of more than 6 millon images with
