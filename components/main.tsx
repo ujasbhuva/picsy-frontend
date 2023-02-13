@@ -17,7 +17,7 @@ const Main: React.FC<MainProps> = ({ Component, pageProps }) => {
     <>
       <Toaster position='bottom-left'>
         {t => (
-          <div className='bg-orange-500 text-white px-4 py-2 gap-2 rounded-lg flex items-center'>
+          <div className='bg-blue-2 text-white px-4 py-2 gap-2 rounded-lg flex items-center'>
             <CheckCircleIcon className='w-6 h-6' />
             {resolveValue(t.message, t)}
           </div>

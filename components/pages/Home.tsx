@@ -88,7 +88,7 @@ const Home: React.FC<HmpageProps> = () => {
         <div className="flex flex-col justify-center">
           <img
             src={"/full-logo.svg"}
-            alt="Orange"
+            alt="Picsy"
             className="object-cover h-[80px] mobile:h-[40px]"
             onClick={() => {
               router.push("/");
@@ -235,7 +235,6 @@ const Home: React.FC<HmpageProps> = () => {
                       )[0]?.height / 2
                     }
                   />
-                  {/* <img src={data?.proxy_url} className="object-cover rounded-xl drop-shadow shadow-orange-100" /> */}
                 </div>
               );
             })}
@@ -291,8 +290,8 @@ const Home: React.FC<HmpageProps> = () => {
             Powerful image searching tool for Midjourney Images
           </h3>
           <p className="text-lg mobile:text-sm text-white">
-            Picsy is an image searching tool for Midjourney generated images, that
-            provides an inteface to search and download the images it for
+            Picsy is an image searching tool for Midjourney generated images,
+            that provides an inteface to search and download the images it for
             general purposes including research, education, and personal
             experience. Picsy holds data of more than 6 millon images with
             different kind of genres.
