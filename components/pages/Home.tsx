@@ -46,6 +46,19 @@ const Home: React.FC<HmpageProps> = () => {
   }, [router, baseImages]);
 
   useEffect(() => {
+    if (!searchText) {
+      getData();
+    }
+  }, [baseImages]);
+
+  //  const handleScroll = (e: any) => {
+  //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+  //     if (bottom) {
+  //       getData()
+  //      }
+  //   }
+
+  const getBase = () => {
     const arr: iImagePayload[] = baseImages
       .filter((data: iImagePayload) => {
         if (data.images.filter((data: iImage) => data.upscaled).length > 0) {
@@ -57,27 +70,29 @@ const Home: React.FC<HmpageProps> = () => {
       .sort(() => Math.random() - 0.5)
       .slice(0, 1000);
     setImages(arr);
-  }, [baseImages]);
+  };
 
   const getData = async (start?: boolean) => {
-    try {
-      setIsLoading(true);
-      const data = await getImagesThroughNextAPI({
-        searchText: searchText,
-        offset: start ? offset : undefined,
-      });
-      setTotalResult(data?.total);
-      const arr = data?.images;
-      setImages((preval) => {
-        return start ? [...preval, ...arr] : arr;
-      });
-      setOffset(() => {
-        return start ? offset + arr?.length : arr?.length;
-      });
-    } catch (err: any) {
-      toast.error("Sorry, we cannot proceed your request");
-    } finally {
-      setIsLoading(false);
+    if (searchText) {
+      try {
+        setIsLoading(true);
+        const data = await getImagesThroughNextAPI({
+          query: searchText,
+        });
+        const arr = data?.images;
+        setImages((preval) => {
+          return start ? [...preval, ...arr] : arr;
+        });
+        setOffset(() => {
+          return start ? offset + arr?.length : arr?.length;
+        });
+      } catch (err: any) {
+        toast.error("Sorry, we cannot proceed your request");
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      getBase();
     }
   };
 
@@ -119,9 +134,9 @@ const Home: React.FC<HmpageProps> = () => {
           </h1>
         </div>
       </div>
-      <div className="w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:mt-8">
-        {/* <input
-          className=" mb-16 mobile:mb-8 w-full p-3 dark:bg-[#311808] bg-orange-100 rounded-xl border-0 outline-0 focus:ring-1 focus:ring-orange-500 dark:text-orange-200 text-orange-700 placeholder-[#8B4000] "
+      <div className="mb-16 w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:my-8">
+        <input
+          className=" w-full p-3 bg-blue-2 bg-opacity-20 rounded-xl border-0 outline-0 focus:ring-2 focus:ring-opacity-40 focus:ring-blue-2"
           placeholder="Search images"
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
@@ -132,9 +147,9 @@ const Home: React.FC<HmpageProps> = () => {
               getData(false);
             }
           }}
-        /> */}
+        />
         {searchText && (
-          <div className="flex gap-1 absolute mr-2 dark:bg-[#311808] bg-orange-100 itams-center">
+          <div className="flex gap-1 absolute mr-2 itams-center">
             <button disabled={isLoading}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +157,7 @@ const Home: React.FC<HmpageProps> = () => {
                 viewBox="0 0 25 25"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="cursor-pointer text-orange-500 h-7 w-7"
+                className="cursor-pointer h-7 w-7 opacity-50 hover:opacity-80"
                 onClick={() => getData(false)}
               >
                 <path
@@ -159,7 +174,7 @@ const Home: React.FC<HmpageProps> = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="cursor-pointer text-orange-500 h-7 w-7"
+                className="cursor-pointer h-7 w-7 opacity-50 hover:opacity-80"
                 onClick={() => setSearchText("")}
               >
                 <path
@@ -176,7 +191,7 @@ const Home: React.FC<HmpageProps> = () => {
         <p className="mt-4 text-blue-2">{totalResult} Results found</p>
       ) : null}
 
-      <div className="w-full my-10">
+      <div className="w-full mb-10 mt-3">
         <ResponsiveMasonry
           columnsCountBreakPoints={{
             0: 1,
@@ -241,9 +256,9 @@ const Home: React.FC<HmpageProps> = () => {
           </Masonry>
         </ResponsiveMasonry>
       </div>
-      {/* {images.length > 0 && (
+      {images.length > 0 && (
         <button
-          className="text-orange-100 cursor-pointer flex items-center p-3 px-5 bg-[#311808] rounded-full"
+          className="text-orange-100 cursor-pointer flex items-center py-2 px-5 bg-black-3 rounded-lg mb-10"
           onClick={() => {
             getData(true);
           }}
@@ -275,7 +290,7 @@ const Home: React.FC<HmpageProps> = () => {
             </svg>
           )}
         </button>
-      )} */}
+      )}
       {isOpenDialog && (
         <ImageDialog
           isOpen={isOpenDialog}

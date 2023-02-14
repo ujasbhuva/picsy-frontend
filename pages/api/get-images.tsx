@@ -1,34 +1,13 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-async function userInfoRoute(req: NextApiRequest, res: NextApiResponse<any>) {
-  const { searchText, offset } = await req.body;
-  let pageOffset = offset ? `&offset=${offset}` : "";
+async function getImages(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
-    const data = await axios.get(
-      `https://discord.com/api/v9/guilds/662267976984297473/messages/search?content=${searchText}${pageOffset}`,
-      {
-        headers: {
-          accept: "*/*",
-          authorization:
-            process.env.NEXT_PUBLIC_AUTH_TOKEN,
-        },
-      }
-    );
-    let fetchImages = data.data.messages ?? [];
-      let arr: any[] = [];
-      fetchImages.forEach((data: any) => {
-        if (data.length > 0) {
-          data.forEach((ele: any) => {
-            if (ele.attachments.length > 0) {
-              ele.attachments.forEach((item: any) => {
-                arr.push({ ...item, content: ele?.content });
-              });
-            }
-          });
-        }
-      });
-    res.send({images : arr, total : data.data.total_results ?? 0});
+    const URL = process.env.NEXT_PUBLIC_API_URL + "search";
+    const data = await axios.post(URL,req.body);    
+    let fetchImages = data.data.data ?? [];
+    const images = fetchImages.map((data: any)=>{return {...data._source}})
+    res.send({ images: images, total: data.data.total_results ?? 0 });
   } catch (error: any) {
     res
       .status(error?.response?.status ?? 500)
@@ -36,4 +15,4 @@ async function userInfoRoute(req: NextApiRequest, res: NextApiResponse<any>) {
   }
 }
 
-export default userInfoRoute;
+export default getImages;

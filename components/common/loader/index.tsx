@@ -23,8 +23,9 @@ const Loader = ({ loading }: any) => {
     return (
         <LoadingBar
             height={3}
-            color='#F87315'
+            color='#5F85DB'
             progress={progress}
+            shadow={true}
             onLoaderFinished={() => setProgress(0)}
         />
     )
