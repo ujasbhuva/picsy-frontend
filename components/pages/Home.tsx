@@ -8,11 +8,10 @@ import {
 import Loader from "../common/loader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Image from "next/image";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
 import baseImages from "../../data.json";
-import { Disclosure } from "@headlessui/react";
 
 interface HmpageProps {
   imageId?: string;
