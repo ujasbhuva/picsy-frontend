@@ -130,7 +130,7 @@ const Home: React.FC<HmpageProps> = () => {
           <h1 className="text-lg mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
             #1 Searching tool for {/* <span>*/}
             <a
-              className="text underline underline-offset-4 ring-0 outline-0"
+              className="underline underline-offset-2 decoration-blue-2 ring-0 outline-0"
               href="https://midjourney.com/home/"
               target={"_blank"}
             >
