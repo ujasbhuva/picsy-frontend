@@ -155,7 +155,7 @@ const Home: React.FC<HmpageProps> = () => {
           }}
         />
         {searchText && (
-          <div className="flex gap-1 absolute mr-2 itams-center">
+          <div className="flex absolute mr-2 itams-center bg-black-2 ">
             <button disabled={isLoading}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@ const Home: React.FC<HmpageProps> = () => {
                 viewBox="0 0 25 25"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="cursor-pointer h-7 w-7 opacity-50 hover:opacity-80"
+                className="cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10"
                 onClick={() => getData(false)}
               >
                 <path
@@ -180,7 +180,7 @@ const Home: React.FC<HmpageProps> = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="cursor-pointer h-7 w-7 opacity-50 hover:opacity-80"
+                className="cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10"
                 onClick={() => setSearchText("")}
               >
                 <path
