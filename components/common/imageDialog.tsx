@@ -112,7 +112,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             className={`w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 ${
               currentImage?.width > currentImage?.height
                 ? "mr-[15rem] "
-                : "mr-[19rem]"
+                : "mr-[17rem]"
             }`}
           >
             <div className="flex flex-col shadow-inner self-stretch items-center mobile:h-auto mobile:w-full">
@@ -122,7 +122,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                     className={`mobile:w-full mobile:text-white text-white text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
                       currentImage?.width > currentImage?.height
                         ? "w-[12rem]"
-                        : "w-[16rem]"
+                        : "w-[14rem]"
                     }`}
                   >
                     {prompt}

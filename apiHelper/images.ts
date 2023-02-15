@@ -17,6 +17,7 @@ export interface iImagePayload {
 
 export const getImagesThroughNextAPI = (data?: {
   query?: string;
+  search_after?: string;
 }): Promise<any> => {
   return new Promise((resolve, reject) => {
     axios({

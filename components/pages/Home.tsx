@@ -74,23 +74,30 @@ const Home: React.FC<HmpageProps> = () => {
 
   const getData = async (start?: boolean) => {
     if (searchText) {
-      try {
-        setIsLoading(true);
-        const data = await getImagesThroughNextAPI({
-          query: searchText,
-        });
-        const arr = data?.images;
-        setImages((preval) => {
-          return start ? [...preval, ...arr] : arr;
-        });
-        setOffset(() => {
-          return start ? offset + arr?.length : arr?.length;
-        });
-      } catch (err: any) {
-        toast.error("Sorry, we cannot proceed your request");
-      } finally {
-        setIsLoading(false);
-      }
+    try {
+      const inputs = start
+        ? {
+            query: searchText,
+            search_after: images[images.length - 1].id.toString(),
+          }
+        : {
+            query: searchText,
+          };
+
+      setIsLoading(true);
+      const data = await getImagesThroughNextAPI(inputs);
+      const arr = data?.images;
+      setImages((preval) => {
+        return start ? [...preval, ...arr] : arr;
+      });
+      setOffset(() => {
+        return start ? offset + arr?.length : arr?.length;
+      });
+    } catch (err: any) {
+      toast.error("Sorry, we cannot proceed your request");
+    } finally {
+      setIsLoading(false);
+    }
     } else {
       getBase();
     }
