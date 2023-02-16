@@ -12,6 +12,7 @@ import {
   CheckCircleIcon,
   ChevronDownIcon,
   DocumentDuplicateIcon,
+  PhotoIcon,
 } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
@@ -253,9 +254,14 @@ const Home: React.FC<HmpageProps> = () => {
                     width={current?.width / 2}
                     height={current?.height / 2}
                   />
+                  {data.images.length > 1 && <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1">
+                    <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
+                      <PhotoIcon className="w-6 h-6" />x {data.images.length}
+                    </p>
+                  </div>}
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
                     <p className="text-sm mobile:text-sm px-2">
-                      {current?.width} X {current?.height}
+                      {current?.width} x {current?.height}
                     </p>
                   </div>
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
