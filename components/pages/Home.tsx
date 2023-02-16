@@ -255,7 +255,7 @@ const Home: React.FC<HmpageProps> = () => {
                   />
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
                     <p className="text-sm mobile:text-sm px-2">
-                      {current?.width} X {current[0]?.height}
+                      {current?.width} X {current?.height}
                     </p>
                   </div>
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
