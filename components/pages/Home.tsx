@@ -254,7 +254,8 @@ const Home: React.FC<HmpageProps> = () => {
                     width={current?.width / 2}
                     height={current?.height / 2}
                   />
-                  {data.images.length > 1 && <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1">
+                  {data.images.length > 1 && 
+                  <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
                     <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
                       <PhotoIcon className="w-6 h-6" />x {data.images.length}
                     </p>

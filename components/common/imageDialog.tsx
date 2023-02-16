@@ -75,7 +75,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                 }`
               }
               className={`w-16 m-[6px] object-cover mobile:w-16 cursor-pointer rounded-lg ${
-                currentImage?.url === ele.url ? "ring-2 ring-blue-1" : ""
+                currentImage?.url === ele.url ? "ring-2 ring-blue-2" : ""
               }`}
               onClick={() => {
                 setLoadedSecond(false);
@@ -271,11 +271,6 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         </>
                       )}
                       <div className="relative w-full h-full rounded-2xl bg-white bg-opacity-5 flex justify-center items-center">
-                        {/* {!loaded && (
-                          <div className="absolute flex items-center p-40 ">
-                            <div className="animate-spin rounded-full border-b-teal-500  border-r-teal-500 border-t-blue-2 border-l-blue-2" />
-                          </div>
-                        )} */}
                         {(!loaded || !loadedSecond) && (
                           <CommonLoader
                             parentClassName="absolute p-40 "
