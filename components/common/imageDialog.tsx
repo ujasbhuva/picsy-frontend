@@ -16,33 +16,14 @@ import { iImage } from "../../apiHelper/images";
 import Image from "next/image";
 import { CommonLoader } from "./loader/CommonLoader";
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState<any>({
-    width: undefined,
-    height: undefined,
-  });
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return windowSize;
-}
-
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [loadedSecond, setLoadedSecond] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [totalImages, setTotalImages] = useState(0);
   const [currentImage, setCurrentImage] = useState<iImage>();
-  const size = useWindowSize();
 
   useEffect(() => {
     if (data && data.images.length > 0) {
@@ -97,6 +78,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                 currentImage?.url === ele.url ? "ring-2 ring-blue-1" : ""
               }`}
               onClick={() => {
+                setLoadedSecond(false);
                 changeImage(index);
               }}
               alt={index.toString()}
@@ -294,7 +276,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                             <div className="animate-spin rounded-full border-b-teal-500  border-r-teal-500 border-t-blue-2 border-l-blue-2" />
                           </div>
                         )} */}
-                        {!loaded && (
+                        {(!loaded || !loadedSecond) && (
                           <CommonLoader
                             parentClassName="absolute p-40 "
                             childClassName="h-20 w-20 border-2"
@@ -311,6 +293,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                           unoptimized
                           onLoadingComplete={() => {
                             setLoaded(true);
+                            setLoadedSecond(true);
                           }}
                         />
                       </div>
