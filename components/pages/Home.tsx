@@ -57,7 +57,7 @@ const Home: React.FC<HmpageProps> = () => {
     if (!searchText) {
       getData();
     }
-  }, [baseImages]);
+  }, [baseImages, searchText]);
 
   //  const handleScroll = (e: any) => {
   //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -119,13 +119,14 @@ const Home: React.FC<HmpageProps> = () => {
     <>
       {isLoading && <Loader loading={isLoading} />}
       <div className="flex flex-col items-start mt-10 mobile:mt-6">
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center cursor-pointer">
           <img
             src={"/full-logo.svg"}
             alt="Picsy"
             className="object-cover h-[80px] mobile:h-[40px]"
             onClick={() => {
-              router.push("/");
+              setSearchText("")
+              router.reload()
             }}
           />
           {/* <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
