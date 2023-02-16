@@ -266,7 +266,7 @@ const Home: React.FC<HmpageProps> = () => {
                   </div>
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
                     <button
-                      className="z-[9999] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                      className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
                       onClick={(e) => {
                         e.preventDefault();
                         navigator.clipboard.writeText(data.prompt);
@@ -283,7 +283,7 @@ const Home: React.FC<HmpageProps> = () => {
                       )}
                     </button>
                     <button
-                      className="z-[9999] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                      className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
                       onClick={() => downloadImage(current.proxy_url)}
                     >
                       <ArrowDownIcon className="cursor-pointer w-5 h-5" />
