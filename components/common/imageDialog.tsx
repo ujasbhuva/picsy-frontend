@@ -134,7 +134,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               </div>
               <div className="w-full flex justify-center mt-3 mobile:mr-2 mobile:mt-0 mobile:mb-2 mobile:justify-end">
                 <button
-                  className="w-full flex justify-center items-center rounded-xl mobile:w-fit mobile:px-4 mobile:rounded-xl p-2 py-1 bg-white bg-opacity-20 gap-2 ring-0 outline-0"
+                  className="w-full text-white flex justify-center items-center rounded-xl mobile:w-fit mobile:px-4 mobile:rounded-xl p-2 py-1 bg-white bg-opacity-20 gap-2 ring-0 outline-0"
                   onClick={() => {
                     navigator.clipboard.writeText(prompt);
                     setCopied(true);

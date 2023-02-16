@@ -154,7 +154,7 @@ const Home: React.FC<HmpageProps> = () => {
       </div>
       <div className="mb-16 w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:my-8">
         <input
-          className=" w-full p-3 bg-blue-2 bg-opacity-20 rounded-xl border-0 outline-0 focus:ring-2 focus:ring-opacity-40 focus:ring-blue-2"
+          className=" w-full p-3 text-white bg-blue-2 bg-opacity-20 rounded-xl border-0 outline-0 focus:ring-2 focus:ring-opacity-40 focus:ring-blue-2"
           placeholder="Search images"
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
@@ -167,7 +167,7 @@ const Home: React.FC<HmpageProps> = () => {
           }}
         />
         {searchText && (
-          <div className="flex absolute mr-2 itams-center bg-black-2 ">
+          <div className="flex absolute mr-2 itams-center text-white bg-black-2 ">
             <button disabled={isLoading}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
