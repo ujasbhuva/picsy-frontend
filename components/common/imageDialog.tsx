@@ -14,6 +14,7 @@ import { Fragment, useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import { iImage } from "../../apiHelper/images";
 import Image from "next/image";
+import { CommonLoader } from "./loader/CommonLoader";
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState<any>({
@@ -37,6 +38,7 @@ function useWindowSize() {
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [totalImages, setTotalImages] = useState(0);
   const [currentImage, setCurrentImage] = useState<iImage>();
@@ -51,13 +53,14 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   }, [data]);
 
   const prompt = data.content
+    .replaceAll("- Upscaled by", "")
     .replaceAll("*", "")
     .replaceAll(/ *\([^)]*\) */g, "")
     .replaceAll(/ - .*@.*/g, "")
     .replaceAll(/<.*>/g, "");
 
   const downloadImage = () => {
-    saveAs(currentImage?.proxy_url ?? "", "orange.jpg"); // Put your image url here.
+    saveAs(currentImage?.proxy_url ?? "", "picsy.png"); // Put your image url here.
   };
 
   const changeImage = (setIndex: number) => {
@@ -226,6 +229,11 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     );
   };
 
+  const toBase64 = (str: string) =>
+    typeof window === "undefined"
+      ? Buffer.from(str).toString("base64")
+      : window.btoa(str);
+
   return (
     <>
       {currentImage && (
@@ -267,41 +275,72 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                     className={`relative flex mobile:flex-col mobile:justify-start justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full`}
                   >
                     <div className="relative flex flex-col items-center ">
-                    <XMarkIcon
-                      className="w-8 h-8 text-white opacity-50 absolute right-1 top-1 cursor-pointer z-10"
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    />
-                      <div className="mobile:hidden absolute left-0 h-full justify-between flex flex-col items-center">
-                        {PromptSection()}
+                      {loaded && (
+                        <>
+                          <XMarkIcon
+                            className="w-8 h-8 text-white opacity-50 absolute right-1 top-1 cursor-pointer z-10"
+                            onClick={() => {
+                              setIsOpen(false);
+                            }}
+                          />
+                          <div className="mobile:hidden absolute left-0 h-full justify-between flex flex-col items-center">
+                            {PromptSection()}
+                          </div>
+                        </>
+                      )}
+                      <div className="relative w-full h-full rounded-2xl bg-white bg-opacity-20 flex justify-center items-center">
+                        {/* {!loaded && (
+                          <div className="absolute flex items-center p-40 ">
+                            <div className="animate-spin rounded-full border-b-teal-500  border-r-teal-500 border-t-blue-2 border-l-blue-2" />
+                          </div>
+                        )} */}
+                        {!loaded && (
+                          <CommonLoader
+                            parentClassName="absolute p-40 "
+                            childClassName="h-20 w-20 border-2"
+                          />
+                        )}
+                        <Image
+                          className={`eas-in-out duration-500 w-auto object-contain rounded-2xl mobile:h-auto transition max-h-[calc(100vh-170px)]`}
+                          src={currentImage.proxy_url}
+                          alt={data.content.replaceAll("- Upscaled by", "")}
+                          width={currentImage.width}
+                          height={currentImage.height}
+                          priority={true}
+                          blurDataURL={currentImage.proxy_url}
+                          unoptimized
+                          onLoadingComplete={() => {
+                            setLoaded(true);
+                          }}
+                        />
                       </div>
-                      <Image
-                        className={`w-auto object-contain rounded-2xl mobile:h-auto transition max-h-[calc(100vh-170px)]`}
-                        src={currentImage.proxy_url}
-                        alt={data.content}
-                        width={currentImage.width}
-                        height={currentImage.height}
-                        priority={true}
-                        unoptimized
-                      />
-                      <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
-                        <p className="text-lg mobile:text-sm px-2">
-                          {currentImage?.width} X {currentImage?.height}
-                        </p>
-                      </div>
-                      <div className="mobile:hidden absolute right-[-90px] h-full justify-between flex flex-col items-center">
-                        {ImageOptions()}
-                        {ActionButton()}
-                      </div>
+                      {loaded && (
+                        <>
+                          <div className="absolute opacity-0 group-hover:opacity-90 gap-1 w-full text-end bottom-1">
+                            <p className="text-lg mobile:text-sm px-2">
+                              {currentImage?.width} X {currentImage?.height}
+                            </p>
+                          </div>
+                          <div className="mobile:hidden absolute right-[-90px] h-full justify-between flex flex-col items-center">
+                            {ImageOptions()}
+                            {ActionButton()}
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <div className="hidden mobile:block">{PromptSection()}</div>
-                    <div className="hidden mobile:block w-full mobile:whitespace-normal whitespace-pre-line text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
-                      <div className="flex flex-col self-stretch items-center justify-between h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
-                        {ImageOptions()}
-                        {ActionButton()}
-                      </div>
-                    </div>
+                    {loaded && (
+                      <>
+                        <div className="hidden mobile:block">
+                          {PromptSection()}
+                        </div>
+                        <div className="hidden mobile:block w-full mobile:whitespace-normal whitespace-pre-line text-center justify-end absolute mobile:justify-center mobile:relative mobile:ml-0 ml-40 text-gold-500 max-h-[calc(100vh-300px)]">
+                          <div className="flex flex-col self-stretch items-center justify-between h-[calc(100vh-170px)] mobile:h-auto mobile:w-full">
+                            {ImageOptions()}
+                            {ActionButton()}
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </Dialog.Panel>
                 </Transition.Child>
               </div>

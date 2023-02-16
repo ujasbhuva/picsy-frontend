@@ -5,13 +5,20 @@ import {
   iImage,
   iImagePayload,
 } from "../../apiHelper/images";
-import Loader from "../common/loader";
+import Loader from "../common/loader/GlobalLoader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import Image from "next/image";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowDownIcon,
+  CheckCircleIcon,
+  ChevronDownIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
 import { toast } from "react-hot-toast";
 import baseImages from "../../data.json";
+import { saveAs } from "file-saver";
+import { CommonLoader } from "../common/loader/CommonLoader";
+import Image from "next/image";
 
 interface HmpageProps {
   imageId?: string;
@@ -26,6 +33,7 @@ const Home: React.FC<HmpageProps> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<iImagePayload[]>([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const { imageId: imgId } = router.query;
@@ -73,33 +81,37 @@ const Home: React.FC<HmpageProps> = () => {
 
   const getData = async (start?: boolean) => {
     if (searchText) {
-    try {
-      const inputs = start
-        ? {
-            query: searchText,
-            search_after: images[images.length - 1].id.toString(),
-          }
-        : {
-            query: searchText,
-          };
+      try {
+        const inputs = start
+          ? {
+              query: searchText,
+              search_after: images[images.length - 1].id.toString(),
+            }
+          : {
+              query: searchText,
+            };
 
-      setIsLoading(true);
-      const data = await getImagesThroughNextAPI(inputs);
-      const arr = data?.images;
-      setImages((preval) => {
-        return start ? [...preval, ...arr] : arr;
-      });
-      setOffset(() => {
-        return start ? offset + arr?.length : arr?.length;
-      });
-    } catch (err: any) {
-      toast.error("Sorry, we cannot proceed your request");
-    } finally {
-      setIsLoading(false);
-    }
+        setIsLoading(true);
+        const data = await getImagesThroughNextAPI(inputs);
+        const arr = data?.images;
+        setImages((preval) => {
+          return start ? [...preval, ...arr] : arr;
+        });
+        setOffset(() => {
+          return start ? offset + arr?.length : arr?.length;
+        });
+      } catch (err: any) {
+        toast.error("Sorry, we cannot proceed your request");
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       getBase();
     }
+  };
+
+  const downloadImage = (url: string) => {
+    saveAs(url, "picsy.png"); // Put your image url here.
   };
 
   return (
@@ -211,51 +223,66 @@ const Home: React.FC<HmpageProps> = () => {
         >
           <Masonry gutter="5px">
             {images.map((data: any, index: number) => {
+              const current = data.images.sort(
+                (a: iImage, b: iImage) =>
+                  Number(b.upscaled) - Number(a.upscaled)
+              )[0];
               return (
-                <div
-                  key={index}
-                  className="relative cursor-ponter"
-                  onClick={() => {
-                    setIsOpenDialog(true);
-                    setCurrentImage(data);
-                  }}
-                >
+                <div key={index} className="relative cursor-ponter group">
                   <Image
+                    onClick={() => {
+                      setIsOpenDialog(true);
+                      setCurrentImage(data);
+                    }}
                     className="w-full object-cover rounded-lg"
                     src={
-                      data.images.sort(
-                        (a: iImage, b: iImage) =>
-                          Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.proxy_url +
-                      `?width=${
-                        data.images.sort(
-                          (a: iImage, b: iImage) =>
-                            Number(b.upscaled) - Number(a.upscaled)
-                        )[0]?.width / 2
-                      }&height=${
-                        data.images.sort(
-                          (a: iImage, b: iImage) =>
-                            Number(b.upscaled) - Number(a.upscaled)
-                        )[0]?.height / 2
+                      current?.proxy_url +
+                      `?width=${current?.width / 2}&height=${
+                        current?.height / 2
                       }`
                     }
-                    alt={data.content.slice(0, 50)}
+                    alt={data.content
+                      .replaceAll("- Upscaled by", "")
+                      .slice(0, 50)}
                     // placeholder="blur"
-                    // blurDataURL={`/apple-touch-icon.png`}
+                    // blurDataURL={current?.proxy_url +
+                    //   `?width=${current?.width / 5}&height=${
+                    //     current?.height / 5
+                    //   }`}
                     unoptimized
-                    width={
-                      data.images.sort(
-                        (a: iImage, b: iImage) =>
-                          Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.width / 2
-                    }
-                    height={
-                      data.images.sort(
-                        (a: iImage, b: iImage) =>
-                          Number(b.upscaled) - Number(a.upscaled)
-                      )[0]?.height / 2
-                    }
+                    width={current?.width / 2}
+                    height={current?.height / 2}
                   />
+                  <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
+                    <p className="text-sm mobile:text-sm px-2">
+                      {current?.width} X {current[0]?.height}
+                    </p>
+                  </div>
+                  <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
+                    <button
+                      className="z-[9999] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigator.clipboard.writeText(data.prompt);
+                        setCopied(true);
+                        setTimeout(() => {
+                          setCopied(false);
+                        }, 500);
+                      }}
+                    >
+                      {copied ? (
+                        <CheckCircleIcon className="text-blue-1 w-5 h-5" />
+                      ) : (
+                        <DocumentDuplicateIcon className="w-5 h-5" />
+                      )}
+                    </button>
+                    <button
+                      className="z-[9999] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                      onClick={() => downloadImage(current.proxy_url)}
+                    >
+                      <ArrowDownIcon className="cursor-pointer w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -264,7 +291,7 @@ const Home: React.FC<HmpageProps> = () => {
       </div>
       {images.length > 0 && (
         <button
-          className="text-orange-100 cursor-pointer flex items-center py-2 px-5 bg-black-3 rounded-lg mb-10"
+          className="text-white cursor-pointer flex items-center py-2 px-5 bg-blue-2 bg-opacity-40 rounded-xl mb-10"
           onClick={() => {
             getData(true);
           }}
@@ -274,26 +301,10 @@ const Home: React.FC<HmpageProps> = () => {
           {!isLoading ? (
             <ChevronDownIcon className="w-6 h-6" />
           ) : (
-            <svg
-              className="ml-2 animate-spin h-5 w-5 text-pink-0"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
+            <CommonLoader
+              parentClassName="ml-2 flex w-full items-end"
+              childClassName=" h-6 w-6 border-2"
+            />
           )}
         </button>
       )}
