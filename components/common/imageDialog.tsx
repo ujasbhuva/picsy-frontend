@@ -288,7 +288,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                           </div>
                         </>
                       )}
-                      <div className="relative w-full h-full rounded-2xl bg-white bg-opacity-20 flex justify-center items-center">
+                      <div className="relative w-full h-full rounded-2xl bg-white bg-opacity-5 flex justify-center items-center">
                         {/* {!loaded && (
                           <div className="absolute flex items-center p-40 ">
                             <div className="animate-spin rounded-full border-b-teal-500  border-r-teal-500 border-t-blue-2 border-l-blue-2" />
