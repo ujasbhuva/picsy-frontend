@@ -9,6 +9,7 @@ import Loader from "../common/loader/GlobalLoader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import {
   ArrowDownIcon,
+  ArrowUpIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   DocumentDuplicateIcon,
@@ -35,6 +36,24 @@ const Home: React.FC<HmpageProps> = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<iImagePayload[]>([]);
   const [copied, setCopied] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    });
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const { imageId: imgId } = router.query;
@@ -125,8 +144,8 @@ const Home: React.FC<HmpageProps> = () => {
             alt="Picsy"
             className="object-cover h-[80px] mobile:h-[40px]"
             onClick={() => {
-              setSearchText("")
-              router.reload()
+              setSearchText("");
+              router.reload();
             }}
           />
           {/* <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
@@ -255,12 +274,13 @@ const Home: React.FC<HmpageProps> = () => {
                     width={current?.width / 2}
                     height={current?.height / 2}
                   />
-                  {data.images.length > 1 && 
-                  <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
-                    <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
-                      <PhotoIcon className="w-6 h-6" />x {data.images.length}
-                    </p>
-                  </div>}
+                  {data.images.length > 1 && (
+                    <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
+                      <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
+                        <PhotoIcon className="w-6 h-6" />x {data.images.length}
+                      </p>
+                    </div>
+                  )}
                   <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
                     <p className="text-sm mobile:text-sm px-2">
                       {current?.width} x {current?.height}
@@ -372,6 +392,14 @@ const Home: React.FC<HmpageProps> = () => {
           </p>
         </div>
       </div>
+      {showButton && (
+        <button
+          onClick={scrollToTop}
+          className="z-[5] fixed mobile:bottom-3 mobile:right-3 bottom-10 right-10 bg-gradient-to-br from-blue-2 to-teal-600 rounded-full p-2 mobile:p-1 shadow-lg shadow-black"
+        >
+          <ArrowUpIcon className="w-8 h-8 " />
+        </button>
+      )}
     </>
   );
 };
