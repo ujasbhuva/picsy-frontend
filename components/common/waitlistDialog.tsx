@@ -9,7 +9,6 @@ const WaitlistDialog = ({ isOpen, setIsOpen }: any) => {
   const [email, setEmail] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [joined, setJoined] = useState<boolean>(false);
-  console.log(Cookies.get("___joined"));
 
   useEffect(() => {
     Cookies.get("___joined") === "1" ? setJoined(true) : setJoined(false);
