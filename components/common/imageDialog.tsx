@@ -78,7 +78,9 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                 currentImage?.url === ele.url ? "ring-2 ring-blue-2" : ""
               }`}
               onClick={() => {
-                setLoadedSecond(false);
+                if (currentImage?.url !== ele.url) {
+                  setLoadedSecond(false);
+                }
                 changeImage(index);
               }}
               alt={index.toString()}
