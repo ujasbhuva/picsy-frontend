@@ -13,6 +13,7 @@ import {
   CheckCircleIcon,
   ChevronDownIcon,
   DocumentDuplicateIcon,
+  EnvelopeIcon,
   PhotoIcon,
 } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
@@ -392,6 +393,12 @@ const Home: React.FC<HmpageProps> = () => {
           </p>
         </div>
       </div>
+      <a
+        href="mailto:admin@picsy.art"
+        className="flex items-center gap-1 px-3 z-[5] fixed mobile:bottom-3 mobile:left-3 bottom-6 left-6 bg-gradient-to-br from-blue-2 to-teal-600 rounded-lg p-2 mobile:p-1 shadow-lg shadow-black"
+      >
+        <EnvelopeIcon className="w-8 h-8 mobile:w-6 mobile:h-6" /> Contact Us
+      </a>
       {showButton && (
         <button
           onClick={scrollToTop}
