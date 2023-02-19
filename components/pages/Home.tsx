@@ -14,6 +14,7 @@ import {
   ChevronDownIcon,
   DocumentDuplicateIcon,
   EnvelopeIcon,
+  FaceFrownIcon,
   PhotoIcon,
 } from "@heroicons/react/20/solid";
 import ImageDialog from "../common/imageDialog";
@@ -227,96 +228,106 @@ const Home: React.FC<HmpageProps> = () => {
           </div>
         )}
       </div>
-      {totalResult && totalResult > 0 ? (
-        <p className="mt-4 text-blue-2">{totalResult} Results found</p>
-      ) : null}
+      {/* {totalResult && totalResult > 0 ? (
+        <p className="mt-4 text-blue-2">{totalResult} Results found,</p>
+      ) : null} */}
 
       <div className="w-full mb-10 mt-3">
-        <ResponsiveMasonry
-          columnsCountBreakPoints={{
-            0: 1,
-            400: 2,
-            750: 3,
-            900: 4,
-            1300: 5,
-            1500: 7,
-            1800: 8,
-          }}
-        >
-          <Masonry gutter="5px">
-            {images.map((data: any, index: number) => {
-              const current = data.images.sort(
-                (a: iImage, b: iImage) =>
-                  Number(b.upscaled) - Number(a.upscaled)
-              )[0];
-              return (
-                <div key={index} className="relative cursor-ponter group">
-                  <Image
-                    onClick={() => {
-                      setIsOpenDialog(true);
-                      setCurrentImage(data);
-                    }}
-                    className="w-full object-cover rounded-lg"
-                    src={
-                      current?.proxy_url +
-                      `?width=${current?.width / 2}&height=${
-                        current?.height / 2
-                      }`
-                    }
-                    alt={data.content
-                      .replaceAll("- Upscaled by", "")
-                      .slice(0, 50)}
-                    // placeholder="blur"
-                    // blurDataURL={current?.proxy_url +
-                    //   `?width=${current?.width / 5}&height=${
-                    //     current?.height / 5
-                    //   }`}
-                    unoptimized
-                    width={current?.width / 2}
-                    height={current?.height / 2}
-                  />
-                  {data.images.length > 1 && (
-                    <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
-                      <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
-                        <PhotoIcon className="w-6 h-6" />x {data.images.length}
+        {images?.length > 0 ? (
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{
+              0: 1,
+              400: 2,
+              750: 3,
+              900: 4,
+              1300: 5,
+              1500: 7,
+              1800: 8,
+            }}
+          >
+            <Masonry gutter="5px">
+              {images.map((data: any, index: number) => {
+                const current = data.images.sort(
+                  (a: iImage, b: iImage) =>
+                    Number(b.upscaled) - Number(a.upscaled)
+                )[0];
+                return (
+                  <div key={index} className="relative cursor-ponter group">
+                    <Image
+                      onClick={() => {
+                        setIsOpenDialog(true);
+                        setCurrentImage(data);
+                      }}
+                      className="w-full object-cover rounded-lg"
+                      src={
+                        current?.proxy_url +
+                        `?width=${current?.width / 2}&height=${
+                          current?.height / 2
+                        }`
+                      }
+                      alt={data.content
+                        .replaceAll("- Upscaled by", "")
+                        .slice(0, 50)}
+                      // placeholder="blur"
+                      // blurDataURL={current?.proxy_url +
+                      //   `?width=${current?.width / 5}&height=${
+                      //     current?.height / 5
+                      //   }`}
+                      unoptimized
+                      width={current?.width / 2}
+                      height={current?.height / 2}
+                    />
+                    {data.images.length > 1 && (
+                      <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
+                        <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
+                          <PhotoIcon className="w-6 h-6" />x{" "}
+                          {data.images.length}
+                        </p>
+                      </div>
+                    )}
+                    <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
+                      <p className="text-sm mobile:text-sm px-2">
+                        {current?.width} x {current?.height}
                       </p>
                     </div>
-                  )}
-                  <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
-                    <p className="text-sm mobile:text-sm px-2">
-                      {current?.width} x {current?.height}
-                    </p>
+                    <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
+                      <button
+                        className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigator.clipboard.writeText(data.prompt);
+                          setCopied(true);
+                          setTimeout(() => {
+                            setCopied(false);
+                          }, 500);
+                        }}
+                      >
+                        {copied ? (
+                          <CheckCircleIcon className="text-blue-1 w-5 h-5" />
+                        ) : (
+                          <DocumentDuplicateIcon className="w-5 h-5" />
+                        )}
+                      </button>
+                      <button
+                        className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+                        onClick={() => downloadImage(current.proxy_url)}
+                      >
+                        <ArrowDownIcon className="cursor-pointer w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
-                    <button
-                      className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigator.clipboard.writeText(data.prompt);
-                        setCopied(true);
-                        setTimeout(() => {
-                          setCopied(false);
-                        }, 500);
-                      }}
-                    >
-                      {copied ? (
-                        <CheckCircleIcon className="text-blue-1 w-5 h-5" />
-                      ) : (
-                        <DocumentDuplicateIcon className="w-5 h-5" />
-                      )}
-                    </button>
-                    <button
-                      className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
-                      onClick={() => downloadImage(current.proxy_url)}
-                    >
-                      <ArrowDownIcon className="cursor-pointer w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </Masonry>
-        </ResponsiveMasonry>
+                );
+              })}
+            </Masonry>
+          </ResponsiveMasonry>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center w-full h-full">
+            <p className="flex flex-col items-center text-2xl text-blue-2 my-40">
+              <FaceFrownIcon className="w-20 h-20" />
+              No results found! Try search something different
+            </p>
+          </div>
+        )}
       </div>
       {images.length > 0 && (
         <button
