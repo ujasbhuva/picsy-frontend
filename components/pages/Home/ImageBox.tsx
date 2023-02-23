@@ -58,13 +58,13 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         </div>
       )}
       <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
-        <p className="text-sm mobile:text-sm px-2">
+        <p className="text-sm mobile:text-[12px] px-2">
           {current?.width} x {current?.height}
         </p>
       </div>
       <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
         <button
-          className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+          className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
           onClick={(e) => {
             e.preventDefault();
             navigator.clipboard.writeText(data.prompt);
@@ -81,7 +81,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           )}
         </button>
         <button
-          className="relative z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
+          className="relative z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
           onClick={() => downloadImage(current.proxy_url)}
         >
           {downloading ? (
