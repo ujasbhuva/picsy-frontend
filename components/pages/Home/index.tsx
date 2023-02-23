@@ -236,7 +236,7 @@ const Home: React.FC<HmpageProps> = () => {
         {images?.length > 0 ? (
           <ResponsiveMasonry
             columnsCountBreakPoints={{
-              0: 1,
+              0: 2,
               400: 2,
               750: 3,
               900: 4,
