@@ -1,28 +1,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
+  getImageByID,
   getImagesThroughNextAPI,
   iImage,
   iImagePayload,
-} from "../../apiHelper/images";
-import Loader from "../common/loader/GlobalLoader";
+} from "../../../apiHelper/images";
+import Loader from "../../common/loader/GlobalLoader";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import {
-  ArrowDownIcon,
   ArrowUpIcon,
-  CheckCircleIcon,
   ChevronDownIcon,
-  DocumentDuplicateIcon,
   EnvelopeIcon,
-  FaceFrownIcon,
   PhotoIcon,
 } from "@heroicons/react/20/solid";
-import ImageDialog from "../common/imageDialog";
+import ImageDialog from "../../common/imageDialog";
 import { toast } from "react-hot-toast";
-import baseImages from "../../data.json";
-import { saveAs } from "file-saver";
-import { CommonLoader } from "../common/loader/CommonLoader";
-import Image from "next/image";
+import baseImages from "../../../data.json";
+import { CommonLoader } from "../../common/loader/CommonLoader";
+import ImageBox from "./ImageBox";
 
 interface HmpageProps {
   imageId?: string;
@@ -31,7 +27,6 @@ interface HmpageProps {
 const Home: React.FC<HmpageProps> = () => {
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
-  const [totalResult, setTotalResult] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,21 +52,19 @@ const Home: React.FC<HmpageProps> = () => {
     });
   };
 
-  useEffect(() => {
+  const getImage = async () => {
     const { imageId: imgId } = router.query;
-    if (imgId && baseImages && Array.isArray(baseImages)) {
-      const img = baseImages.filter((data: iImagePayload) => {
-        if (data.id.toString() === imgId.toString()) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (img.length > 0) {
+    if (imgId) {
+      const img = await getImageByID({ id: imgId as string });
+      if (img.data.length > 0) {
         setCurrentImage(img[0]);
         setIsOpenDialog(true);
       }
     }
+  };
+
+  useEffect(() => {
+    getImage();
   }, [router, baseImages]);
 
   useEffect(() => {
@@ -88,17 +81,28 @@ const Home: React.FC<HmpageProps> = () => {
   //   }
 
   const getBase = () => {
-    const arr: iImagePayload[] = baseImages
-      .filter((data: iImagePayload) => {
-        if (data.images.filter((data: iImage) => data.upscaled).length > 0) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 1000);
-    setImages(arr);
+    try {
+      setIsLoading(true);
+      const arr: iImagePayload[] = Array.isArray(baseImages)
+        ? baseImages
+            .filter((data: iImagePayload) => {
+              if (
+                data.images.filter((data: iImage) => data.upscaled).length > 0
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 1000)
+        : [];
+      setImages(arr);
+    } catch (err: any) {
+      toast.error("Sorry, we cannot proceed your request");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getData = async (start?: boolean) => {
@@ -130,10 +134,6 @@ const Home: React.FC<HmpageProps> = () => {
     } else {
       getBase();
     }
-  };
-
-  const downloadImage = (url: string) => {
-    saveAs(url, "picsy.png"); // Put your image url here.
   };
 
   return (
@@ -252,70 +252,13 @@ const Home: React.FC<HmpageProps> = () => {
                     Number(b.upscaled) - Number(a.upscaled)
                 )[0];
                 return (
-                  <div key={index} className="relative cursor-ponter group">
-                    <Image
-                      onClick={() => {
-                        setIsOpenDialog(true);
-                        setCurrentImage(data);
-                      }}
-                      className="w-full object-cover rounded-lg"
-                      src={
-                        current?.proxy_url +
-                        `?width=${current?.width / 2}&height=${
-                          current?.height / 2
-                        }`
-                      }
-                      alt={data.content
-                        .replaceAll("- Upscaled by", "")
-                        .slice(0, 50)}
-                      // placeholder="blur"
-                      // blurDataURL={current?.proxy_url +
-                      //   `?width=${current?.width / 5}&height=${
-                      //     current?.height / 5
-                      //   }`}
-                      unoptimized
-                      width={current?.width / 2}
-                      height={current?.height / 2}
-                    />
-                    {data.images.length > 1 && (
-                      <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
-                        <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
-                          <PhotoIcon className="w-6 h-6" />x{" "}
-                          {data.images.length}
-                        </p>
-                      </div>
-                    )}
-                    <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
-                      <p className="text-sm mobile:text-sm px-2">
-                        {current?.width} x {current?.height}
-                      </p>
-                    </div>
-                    <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
-                      <button
-                        className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigator.clipboard.writeText(data.prompt);
-                          setCopied(true);
-                          setTimeout(() => {
-                            setCopied(false);
-                          }, 500);
-                        }}
-                      >
-                        {copied ? (
-                          <CheckCircleIcon className="text-blue-1 w-5 h-5" />
-                        ) : (
-                          <DocumentDuplicateIcon className="w-5 h-5" />
-                        )}
-                      </button>
-                      <button
-                        className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-2 bg-white bg-opacity-30 hover:bg-opacity-50 gap-2 ring-0 outline-0"
-                        onClick={() => downloadImage(current.proxy_url)}
-                      >
-                        <ArrowDownIcon className="cursor-pointer w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
+                  <ImageBox
+                    key={index}
+                    setIsOpenDialog={setIsOpenDialog}
+                    setCurrentImage={setCurrentImage}
+                    data={data}
+                    current={current}
+                  />
                 );
               })}
             </Masonry>
@@ -323,7 +266,7 @@ const Home: React.FC<HmpageProps> = () => {
         ) : (
           <div className="flex flex-col items-center justify-center text-center w-full h-full">
             <p className="flex flex-col items-center text-2xl text-blue-2 my-40">
-              <FaceFrownIcon className="w-20 h-20" />
+              <PhotoIcon className="w-20 h-20 my-3" />
               No results found! Try search something different
             </p>
           </div>

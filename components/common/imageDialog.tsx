@@ -15,6 +15,7 @@ import { saveAs } from "file-saver";
 import { iImage } from "../../apiHelper/images";
 import Image from "next/image";
 import { CommonLoader } from "./loader/CommonLoader";
+import { uuid } from "uuidv4";
 
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false);
@@ -24,6 +25,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [totalImages, setTotalImages] = useState(0);
   const [currentImage, setCurrentImage] = useState<iImage>();
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     if (data && data.images.length > 0) {
@@ -41,7 +43,14 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     .replaceAll(/<.*>/g, "");
 
   const downloadImage = () => {
-    saveAs(currentImage?.proxy_url ?? "", "picsy.png"); // Put your image url here.
+    try {
+      setDownloading(true);
+      saveAs(currentImage?.proxy_url ?? "", "picsy_" + uuid() + ".png");
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setDownloading(false);
+    }
   };
 
   const changeImage = (setIndex: number) => {
