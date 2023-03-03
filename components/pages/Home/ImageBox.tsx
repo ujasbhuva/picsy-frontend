@@ -67,7 +67,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
           onClick={(e) => {
             e.preventDefault();
-            navigator.clipboard.writeText(data.prompt);
+            navigator.clipboard.writeText(data.content);
             setCopied(true);
             setTimeout(() => {
               setCopied(false);
