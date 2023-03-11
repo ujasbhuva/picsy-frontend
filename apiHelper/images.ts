@@ -2,7 +2,7 @@ import axios from "axios";
 
 export interface iImage {
   size: number;
-  proxy_url: string;
+  url: string;
   url: string;
   width: number;
   height: number;

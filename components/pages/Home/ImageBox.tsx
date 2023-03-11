@@ -35,7 +35,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         }}
         className="w-full object-cover rounded-lg"
         src={
-          current?.proxy_url +
+          current?.url +
           `?width=${current?.width / 4}&height=${current?.height / 4}`
         }
         alt={data.content.replaceAll("- Upscaled by", "").slice(0, 50)}
@@ -82,7 +82,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         </button>
         <button
           className="relative z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
-          onClick={() => downloadImage(current.proxy_url)}
+          onClick={() => downloadImage(current.url)}
         >
           {downloading ? (
             <CommonLoader

@@ -45,7 +45,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const downloadImage = () => {
     try {
       setDownloading(true);
-      saveAs(currentImage?.proxy_url ?? "", "picsy_" + uuid() + ".png");
+      saveAs(currentImage?.url ?? "", "picsy_" + uuid() + ".png");
     } catch (e) {
       console.log(e);
     } finally {
@@ -70,7 +70,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             <img
               key={index}
               src={
-                ele.proxy_url +
+                ele.url +
                 `?width=${
                   data.images.sort(
                     (a: iImage, b: iImage) =>
@@ -290,12 +290,12 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         )}
                         <Image
                           className={`eas-in-out duration-500 w-auto object-contain rounded-2xl mobile:h-auto transition max-h-[calc(100vh-170px)]`}
-                          src={currentImage.proxy_url}
+                          src={currentImage.url}
                           alt={data.content.replaceAll("- Upscaled by", "")}
                           width={currentImage.width}
                           height={currentImage.height}
                           priority={true}
-                          blurDataURL={currentImage.proxy_url}
+                          blurDataURL={currentImage.url}
                           unoptimized
                           onLoadingComplete={() => {
                             setLoaded(true);

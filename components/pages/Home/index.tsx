@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/20/solid";
 import ImageDialog from "../../common/imageDialog";
 import { toast } from "react-hot-toast";
-import baseImages from "../../../data.json";
+// import baseImages from "../../../data.json";
 import { CommonLoader } from "../../common/loader/CommonLoader";
 import ImageBox from "./ImageBox";
 
@@ -65,74 +65,46 @@ const Home: React.FC<HmpageProps> = () => {
 
   useEffect(() => {
     getImage();
-  }, [router, baseImages]);
+  }, [router]);
 
   useEffect(() => {
     if (!searchText) {
       getData();
     }
-  }, [baseImages, searchText]);
-
-  //  const handleScroll = (e: any) => {
-  //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-  //     if (bottom) {
-  //       getData()
-  //      }
-  //   }
-
-  const getBase = () => {
-    try {
-      setIsLoading(true);
-      const arr: iImagePayload[] = Array.isArray(baseImages)
-        ? baseImages
-            .filter((data: iImagePayload) => {
-              if (
-                data.images.filter((data: iImage) => data.upscaled).length > 0
-              ) {
-                return true;
-              } else {
-                return false;
-              }
-            })
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 1000)
-        : [];
-      setImages(arr);
-    } catch (err: any) {
-      toast.error("Sorry, we cannot proceed your request");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [searchText]);
 
   const getData = async (start?: boolean) => {
-    if (searchText) {
-      try {
-        const inputs = start
+    try {
+      let inputs = searchText
+        ? start
           ? {
               query: searchText,
               search_after: images[images.length - 1].id.toString(),
             }
           : {
               query: searchText,
-            };
-
-        setIsLoading(true);
-        const data = await getImagesThroughNextAPI(inputs);
-        const arr = data?.images;
-        setImages((preval) => {
-          return start ? [...preval, ...arr] : arr;
-        });
-        setOffset(() => {
-          return start ? offset + arr?.length : arr?.length;
-        });
-      } catch (err: any) {
-        toast.error("Sorry, we cannot proceed your request");
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      getBase();
+            }
+        : start
+        ? {
+            type: "random",
+            search_after: images[images.length - 1].id.toString(),
+          }
+        : {
+            type: "random",
+          };
+      setIsLoading(true);
+      const data = await getImagesThroughNextAPI(inputs);
+      const arr = data?.images;
+      setImages((preval: any) => {
+        return start ? [...preval, ...arr] : arr;
+      });
+      setOffset(() => {
+        return start ? offset + arr?.length : arr?.length;
+      });
+    } catch (err: any) {
+      toast.error("Sorry, we cannot proceed your request");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -264,12 +236,16 @@ const Home: React.FC<HmpageProps> = () => {
             </Masonry>
           </ResponsiveMasonry>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center w-full h-full">
-            <p className="flex flex-col items-center text-2xl text-blue-2 my-40">
-              <PhotoIcon className="w-20 h-20 my-3" />
-              No results found! Try search something different
-            </p>
-          </div>
+          <>
+            {!isLoading && (
+              <div className="flex flex-col items-center justify-center text-center w-full h-full">
+                <p className="flex flex-col items-center text-2xl text-blue-2 my-40">
+                  <PhotoIcon className="w-20 h-20 my-3" />
+                  No results found! Try search something different
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
       {images.length > 0 && (
