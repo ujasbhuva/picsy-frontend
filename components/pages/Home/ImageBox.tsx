@@ -27,7 +27,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
   };
 
   return (
-    <div className="relative cursor-ponter group">
+    <div className="relative cursor-ponter group text-white">
       <Image
         onClick={() => {
           setIsOpenDialog(true);

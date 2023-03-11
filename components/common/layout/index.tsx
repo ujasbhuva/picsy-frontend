@@ -29,7 +29,7 @@ export default function Layout({
       <div
         className={`sticky top-0 flex content-center z-[10] justify-center text-xl`}
       >
-        <div className="mobile:text-sm text-sm flex mobile:flex-col mobile:gap-0 gap-1 items-center bg-gradient-to-tr from-blue-2 to-teal-500 rounded-b-xl px-10 pb-1">
+        <div className="mobile:text-sm text-sm flex mobile:flex-col mobile:gap-0 gap-1 items-center bg-gradient-to-tr from-blue-2 to-teal-500 rounded-b-xl px-10 pb-1 text-white">
           <p>Launching Picsy's AI Image generation soon.</p>
           <span
             className="flex items-center gap-1 underline cursor-pointer"

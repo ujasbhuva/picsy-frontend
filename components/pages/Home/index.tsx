@@ -325,14 +325,14 @@ const Home: React.FC<HmpageProps> = () => {
       </div>
       <a
         href="mailto:admin@picsy.art"
-        className="flex items-center gap-1 px-3 z-[5] fixed mobile:bottom-3 mobile:left-3 bottom-6 left-6 bg-gradient-to-br from-blue-2 to-teal-600 rounded-lg p-2 mobile:p-1 shadow-lg shadow-black"
+        className="text-white flex items-center gap-1 px-3 z-[5] fixed mobile:bottom-3 mobile:left-3 bottom-6 left-6 bg-gradient-to-br from-blue-2 to-teal-600 rounded-lg p-2 mobile:p-1 shadow-lg shadow-black"
       >
         <EnvelopeIcon className="w-6 h-6" /> Contact Us
       </a>
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="z-[5] fixed mobile:bottom-3 mobile:right-3 bottom-10 right-10 bg-gradient-to-br from-blue-2 to-teal-600 rounded-full p-2 mobile:p-1 shadow-lg shadow-black"
+          className="text-white z-[5] fixed mobile:bottom-3 mobile:right-3 bottom-10 right-10 bg-gradient-to-br from-blue-2 to-teal-600 rounded-full p-2 mobile:p-1 shadow-lg shadow-black"
         >
           <ArrowUpIcon className="w-8 h-8 " />
         </button>
