@@ -3,7 +3,6 @@ import axios from "axios";
 export interface iImage {
   size: number;
   url: string;
-  url: string;
   width: number;
   height: number;
   upscaled: boolean;
