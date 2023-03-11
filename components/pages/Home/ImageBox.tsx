@@ -57,14 +57,14 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           </p>
         </div>
       )}
-      <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
+      {/* <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
         <p className="text-sm mobile:text-[12px] px-2">
           {current?.width} x {current?.height}
         </p>
-      </div>
+      </div> */}
       <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
         <button
-          className="z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
+          className="z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
           onClick={(e) => {
             e.preventDefault();
             navigator.clipboard.writeText(data.content);
@@ -75,22 +75,22 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           }}
         >
           {copied ? (
-            <CheckCircleIcon className="text-blue-1 w-5 h-5" />
+            <CheckCircleIcon className="text-blue-1 w-4 h-4" />
           ) : (
-            <DocumentDuplicateIcon className="w-5 h-5" />
+            <DocumentDuplicateIcon className="w-4 h-4" />
           )}
         </button>
         <button
-          className="relative z-[2] w-full flex justify-center items-center rounded-xl mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
+          className="relative z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
           onClick={() => downloadImage(current.url)}
         >
           {downloading ? (
             <CommonLoader
               parentClassName="float-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              childClassName="w-5 h-5 border-2"
+              childClassName="w-4 h-4 border-2"
             />
           ) : (
-            <ArrowDownIcon className="cursor-pointer w-5 h-5" />
+            <ArrowDownIcon className="cursor-pointer w-4 h-4" />
           )}
         </button>
       </div>
