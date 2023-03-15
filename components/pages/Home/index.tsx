@@ -28,6 +28,7 @@ interface HmpageProps {
 const Home: React.FC<HmpageProps> = () => {
   const router = useRouter();
 
+  const [IPv4, setIPv4] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [searchText, setSearchText] = useState<string>("");
   const [offset, setOffset] = useState<number>(0);
@@ -78,6 +79,7 @@ const Home: React.FC<HmpageProps> = () => {
   const getBrowser = async () => {
     const res = await axios.get("https://geolocation-db.com/json/");
     setCountry(res.data.country_name);
+    setIPv4(res.data.IPv4);
   };
 
   useEffect(() => {
@@ -92,10 +94,12 @@ const Home: React.FC<HmpageProps> = () => {
               query: searchText,
               search_after: images[images.length - 1].id.toString(),
               location: country,
+              ip: IPv4,
             }
-          : {
+            : {
               query: searchText,
               location: country,
+              ip: IPv4,
             }
         : start
         ? {
