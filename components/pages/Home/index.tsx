@@ -19,6 +19,7 @@ import { toast } from "react-hot-toast";
 // import baseImages from "../../../data.json";
 import { CommonLoader } from "../../common/loader/CommonLoader";
 import ImageBox from "./ImageBox";
+import axios from "axios";
 
 interface HmpageProps {
   imageId?: string;
@@ -26,13 +27,14 @@ interface HmpageProps {
 
 const Home: React.FC<HmpageProps> = () => {
   const router = useRouter();
+
+  const [country, setCountry] = useState<string>("");
   const [searchText, setSearchText] = useState<string>("");
   const [offset, setOffset] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
   const [images, setImages] = useState<iImagePayload[]>([]);
-  const [copied, setCopied] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -73,6 +75,15 @@ const Home: React.FC<HmpageProps> = () => {
     }
   }, [searchText]);
 
+  const getBrowser = async () => {
+    const res = await axios.get("https://geolocation-db.com/json/");
+    setCountry(res.data.country_name);
+  };
+
+  useEffect(() => {
+    getBrowser();
+  }, []);
+
   const getData = async (start?: boolean) => {
     try {
       let inputs = searchText
@@ -80,9 +91,11 @@ const Home: React.FC<HmpageProps> = () => {
           ? {
               query: searchText,
               search_after: images[images.length - 1].id.toString(),
+              location: country,
             }
           : {
               query: searchText,
+              location: country,
             }
         : start
         ? {

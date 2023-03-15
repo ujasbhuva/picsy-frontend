@@ -1,15 +1,21 @@
 import request from "../utils/request";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
-
-export const joinBetaWaitlist = (data?: { email?: string }): Promise<any> => {
+export const freeLogin = ({
+  browser_token,
+}: {
+  browser_token: string;
+}): Promise<any> => {
+  const data = {
+    browser_token: browser_token,
+  };
   return new Promise((resolve, reject) => {
     request({
-      url: baseURL + "join-beta",
+      url: "user/login",
       method: "post",
       data,
     })
       .then(({ data }) => {
+        // setToken(data.data.token ?? "");
         resolve(data);
       })
       .catch((err) => {

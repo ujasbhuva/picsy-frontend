@@ -3,8 +3,10 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/20/solid";
 import { NextComponentType, NextPage, NextPageContext } from "next";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { Toaster, resolveValue } from "react-hot-toast";
+import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
+import { freeLogin } from "../apiHelper/browser";
 
 export type NextPageWithLayout<P = {}> = NextPage<P, P> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -16,6 +18,11 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = ({ Component, pageProps }) => {
+  useEffect(() => {
+    getCurrentBrowserFingerPrint().then(async (fingerprint: string) => {
+      await freeLogin({ browser_token: fingerprint });
+    });
+  }, []);
   return (
     <>
       <Toaster position="bottom-left">
