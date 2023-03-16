@@ -7,6 +7,7 @@ import { ReactElement, ReactNode, useEffect } from "react";
 import { Toaster, resolveValue } from "react-hot-toast";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import { freeLogin } from "../apiHelper/browser";
+import axios from "axios";
 
 export type NextPageWithLayout<P = {}> = NextPage<P, P> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,9 +21,17 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({ Component, pageProps }) => {
   useEffect(() => {
     getCurrentBrowserFingerPrint().then(async (fingerprint: string) => {
-      await freeLogin({ browser_token: fingerprint });
+      const res = await axios.get("https://geolocation-db.com/json/");
+      let country = res.data.country_name;
+      let ip = res.data.IPv4;
+      await freeLogin({
+        browser_token: fingerprint,
+        client_country: country,
+        client_ip: ip,
+      });
     });
   }, []);
+
   return (
     <>
       <Toaster position="bottom-left">
