@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   ArrowDownIcon,
   CheckCircleIcon,
@@ -12,7 +12,6 @@ import { CommonLoader } from "../../common/loader/CommonLoader";
 
 const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
   const [copied, setCopied] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
   const downloadImage = (url: string) => {
@@ -27,7 +26,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
   };
 
   return (
-    <div className="relative cursor-ponter group text-white">
+    <div className="relative group text-white">
       <Image
         onClick={() => {
           setIsOpenDialog(true);
@@ -42,57 +41,49 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         unoptimized
         width={current?.width / 3}
         height={current?.height / 3}
-        onLoadingComplete={() => setLoaded(true)}
       />
-      {!loaded && (
-        <CommonLoader
-          parentClassName="float-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          childClassName="h-20 w-20 border-2"
-        />
-      )}
-      {data.images.length > 1 && (
-        <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
-          <p className="flex items-center gap-1 text-sm mobile:text-sm px-2">
-            <PhotoIcon className="w-6 h-6" />x {data.images.length}
-          </p>
+      <div className="w-full flex invisible justify-between mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
+        <div>
+          {data.images.length > 1 && (
+            <div className="flex invisible mobile:visible flex-row absolute top-1 left-0 group-hover:visible gap-1 mobile:hidden">
+              <p className="flex items-center gap-1 text-sm px-2">
+                <PhotoIcon className="w-4 h-4" />x {data.images.length}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      {/* <div className="flex invisible mobile:visible flex-row absolute bottom-1 left-1 group-hover:visible gap-1">
-        <p className="text-sm mobile:text-[12px] px-2">
-          {current?.width} x {current?.height}
-        </p>
-      </div> */}
-      <div className="flex invisible mobile:visible flex-row absolute bottom-1 right-1 group-hover:visible gap-1">
-        <button
-          className="z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
-          onClick={(e) => {
-            e.preventDefault();
-            navigator.clipboard.writeText(data.content);
-            setCopied(true);
-            setTimeout(() => {
-              setCopied(false);
-            }, 500);
-          }}
-        >
-          {copied ? (
-            <CheckCircleIcon className="text-blue-1 w-4 h-4" />
-          ) : (
-            <DocumentDuplicateIcon className="w-4 h-4" />
-          )}
-        </button>
-        <button
-          className="relative z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
-          onClick={() => downloadImage(current.url)}
-        >
-          {downloading ? (
-            <CommonLoader
-              parentClassName="float-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              childClassName="w-4 h-4 border-2"
-            />
-          ) : (
-            <ArrowDownIcon className="cursor-pointer w-4 h-4" />
-          )}
-        </button>
+        <div className="flex gap-1">
+          <button
+            className="z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
+            onClick={(e) => {
+              e.preventDefault();
+              navigator.clipboard.writeText(data.content);
+              setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 500);
+            }}
+          >
+            {copied ? (
+              <CheckCircleIcon className="text-blue-1 w-4 h-4" />
+            ) : (
+              <DocumentDuplicateIcon className="w-4 h-4" />
+            )}
+          </button>
+          <button
+            className="relative z-[2] w-full flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0"
+            onClick={() => downloadImage(current.url)}
+          >
+            {downloading ? (
+              <CommonLoader
+                parentClassName="float-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                childClassName="w-4 h-4 border-2"
+              />
+            ) : (
+              <ArrowDownIcon className="cursor-pointer w-4 h-4" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
