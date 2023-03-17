@@ -32,7 +32,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           setIsOpenDialog(true);
           setCurrentImage(data);
         }}
-        className="w-full object-cover rounded-lg"
+        className="w-full object-cover"
         src={
           current?.url +
           `?width=${current?.width / 4}&height=${current?.height / 4}`

@@ -314,8 +314,12 @@ const Home: React.FC<HmpageProps> = () => {
             <a href="https://openai.com/" target={"_blank"}>
               OpenAI
             </a>
-            's <a href="">DALL-E-2</a> and <a>Stable Diffusion</a>. People make
-            artworks with AI model using{" "}
+            's{" "}
+            <a href="https://openai.com/product/dall-e-2" target={"_blank"}>
+              DALL-E-2
+            </a>{" "}
+            and <a>Stable Diffusion</a>. People make artworks with AI model
+            using{" "}
             <a href="https://midjourney.com/auth/signin/" target={"_blank"}>
               Discord
             </a>
