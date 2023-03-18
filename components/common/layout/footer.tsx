@@ -1,4 +1,4 @@
-import { HeartIcon } from "@heroicons/react/20/solid";
+import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import React, { Component } from "react";
 
@@ -23,22 +23,16 @@ class Footer extends Component {
                   <Link href="/blog">
                     <div className="text-blue-2 hover:text-blue-1">Blogs</div>
                   </Link>
-                  {/* <Link href="/blog">
-                    <div className="text-blue-2 hover:text-blue-1">Twitter</div>
-                  </Link>
-                  <Link href="/privacy-policy">
-                    <div className="text-blue-2 hover:text-blue-1">Reddit</div>
-                  </Link> */}
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className='flex text-sm mt-3 mobile:ml-2'>
-            <div>&#169; 2022 MyComp. All rights reserved.</div>
-            <div className='ml-2 text-rb-1'>
-              <Link href={'/sitemap'}>Sitemap</Link>
-            </div>
-          </div> */}
+          <a
+            href="mailto:contact@picsy.art"
+            className="my-4 w-fit text-white flex items-center gap-1 px-3 z-[5] mobile:bottom-3 mobile:left-3 bottom-6 left-6 bg-gradient-to-br from-blue-2 to-teal-600 rounded-lg mobile:px-2 mobile:py-1 shadow-lg shadow-black text-sm"
+          >
+            <EnvelopeIcon className="w-6 h-6" /> Contact Us
+          </a>
         </div>
       </div>
     );

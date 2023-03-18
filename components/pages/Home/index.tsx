@@ -294,7 +294,7 @@ const Home: React.FC<HmpageProps> = () => {
         />
       )}
       <div className="w-full flex flex-col gap-4 items-start px-40 tablet:px-10 mobile:px-4">
-        <div className="max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5">
+        <div className="w-1/2 mobile:w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5">
           <Link
             href={"/blog/generative-ai-for-images-a-revolutionary-innovation"}
           >
@@ -303,15 +303,15 @@ const Home: React.FC<HmpageProps> = () => {
                 "https://api.picsy.art/image/990816855088328734/1075328060997517322/birdlg_neural_network_chatbot_603f9e9b-c34f-4538-b59d-1fc9d559dd10.png"
               }
               height={200}
-              width={350}
+              width={300}
               alt="Image by picsy"
-              className="object-cover w-full h-80 rounded-xl tablet:h-60"
+              className="object-cover w-full h-80 rounded-xl tablet:h-60 mobile:w-full"
             />
             <div className="pt-3">
               <h2 className="text-2xl mobile:text-md text-blue-1 font-[500] mb-4">
                 Generative AI for Images - A Revolutionary Innovation
               </h2>
-              <p className="text-gray-300 text-md mobile:text-sm">
+              <p className="text-gray-300 text-md mobile:text-sm w-auto mobile:w-full">
                 Generative AI for images, also known as GANs, is a rapidly
                 evolving field that has made a significant impact on the
                 creative industry.
@@ -370,12 +370,6 @@ const Home: React.FC<HmpageProps> = () => {
           </p>
         </div>
       </div>
-      <a
-        href="mailto:admin@picsy.art"
-        className="text-white flex items-center gap-1 px-3 z-[5] fixed mobile:bottom-3 mobile:left-3 bottom-6 left-6 bg-gradient-to-br from-blue-2 to-teal-600 rounded-lg p-2 mobile:p-1 shadow-lg shadow-black"
-      >
-        <EnvelopeIcon className="w-6 h-6" /> Contact Us
-      </a>
       {showButton && (
         <button
           onClick={scrollToTop}
