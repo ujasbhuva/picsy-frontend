@@ -293,7 +293,7 @@ const Home: React.FC<HmpageProps> = () => {
           data={currentImage}
         />
       )}
-      <div className="w-full flex flex-col gap-4 items-start px-40 tablet:px-10">
+      <div className="w-full flex flex-col gap-4 items-start px-40 tablet:px-10 mobile:px-4">
         <div className="max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5">
           <Link
             href={"/blog/generative-ai-for-images-a-revolutionary-innovation"}
