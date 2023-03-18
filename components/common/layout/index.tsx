@@ -26,7 +26,7 @@ export default function Layout({
       </Head>
 
       {/* <Header /> */}
-      <div
+      {/* <div
         className={`sticky top-0 flex content-center z-[10] justify-center text-xl`}
       >
         <div className="mobile:text-sm text-sm flex mobile:flex-col mobile:gap-0 gap-1 items-center bg-gradient-to-tr from-blue-2 to-teal-500 rounded-b-xl px-10 pb-1 text-white">
@@ -41,14 +41,14 @@ export default function Layout({
             <UserPlusIcon className="w-5 h-5" />
           </span>
         </div>
-      </div>
+      </div> */}
       <main
         className={`flex flex-col items-center min-h-[100vh] px-5 pb-[4rem] mobile:px-3`}
       >
         {children}
       </main>
-      {/* <Footer /> */}
-      <WaitlistDialog isOpen={openWaitList} setIsOpen={setOpenWaitList} />
+      <Footer />
+      {/* <WaitlistDialog isOpen={openWaitList} setIsOpen={setOpenWaitList} /> */}
     </div>
   );
 }

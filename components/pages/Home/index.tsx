@@ -20,6 +20,8 @@ import { toast } from "react-hot-toast";
 import { CommonLoader } from "../../common/loader/CommonLoader";
 import ImageBox from "./ImageBox";
 import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
 
 interface HmpageProps {
   imageId?: string;
@@ -96,7 +98,7 @@ const Home: React.FC<HmpageProps> = () => {
               location: country,
               ip: IPv4,
             }
-            : {
+          : {
               query: searchText,
               location: country,
               ip: IPv4,
@@ -150,7 +152,7 @@ const Home: React.FC<HmpageProps> = () => {
           </div> */}
         </div>
         <div className="items-center text-blue-1 mobile:mt-1 gap-1">
-          <h1 className="text-lg mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
+          <h1 className="text-md mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
             #1 Searching tool for {/* <span>*/}
             <a
               className="underline underline-offset-2 decoration-blue-2 ring-0 outline-0"
@@ -291,23 +293,47 @@ const Home: React.FC<HmpageProps> = () => {
           data={currentImage}
         />
       )}
-      <div className="w-full flex flex-col items-center border-t border-white">
-        <div className="max-w-xl mobile:max-w-full">
-          {/* <h2 className="text-2xl font-[500] my-4">FAQs</h2> */}
-          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+      <div className="w-full flex flex-col gap-4 items-start px-40 tablet:px-10">
+        <div className="max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5">
+          <Link
+            href={"/blog/generative-ai-for-images-a-revolutionary-innovation"}
+          >
+            <Image
+              src={
+                "https://api.picsy.art/image/990816855088328734/1075328060997517322/birdlg_neural_network_chatbot_603f9e9b-c34f-4538-b59d-1fc9d559dd10.png"
+              }
+              height={200}
+              width={350}
+              alt="Image by picsy"
+              className="object-cover w-full h-80 rounded-xl tablet:h-60"
+            />
+            <div className="pt-3">
+              <h2 className="text-2xl mobile:text-md text-blue-1 font-[500] mb-4">
+                Generative AI for Images - A Revolutionary Innovation
+              </h2>
+              <p className="text-gray-300 text-md mobile:text-sm">
+                Generative AI for images, also known as GANs, is a rapidly
+                evolving field that has made a significant impact on the
+                creative industry.
+              </p>
+            </div>
+          </Link>
+        </div>
+        <div className="max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5">
+          <h2 className="text-2xl mobile:text-md text-blue-1 font-[500] mb-4">
             Powerful image searching tool for Midjourney Images
-          </h3>
-          <p className="text-lg mobile:text-sm text-white">
+          </h2>
+          <p className="text-md mobile:text-sm text-gray-300">
             Picsy is an image searching tool for Midjourney generated images,
             that provides an inteface to search and download the images it for
             general purposes including research, education, and personal
             experience. Picsy holds data of more than 6 millon images with
             different kind of genres.
           </p>
-          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+          <h2 className="text-2xl mobile:text-md text-blue-1 font-[500] my-4">
             What is Midjourney?
-          </h3>
-          <p className="text-lg mobile:text-sm text-white">
+          </h2>
+          <p className="text-md mobile:text-sm text-gray-300">
             Midjourney is an independent research lab that has invented an
             artificial intelligence program with the same name to produce images
             from verbal portrayals, similar to{" "}
@@ -330,10 +356,10 @@ const Home: React.FC<HmpageProps> = () => {
             speculated that the underlying technology is based on Stable
             Diffusion.
           </p>
-          <h3 className="text-2xl mobile:text-lg text-blue-1 font-[500] my-4">
+          <h2 className="text-2xl mobile:text-md text-blue-1 font-[500] my-4">
             What is Generative AI?
-          </h3>
-          <p className="text-lg mobile:text-sm text-white">
+          </h2>
+          <p className="text-md mobile:text-sm text-gray-300">
             Generative Artificial Intelligence (AI) is a term used for the
             algorithms that are utilized to develop new information resembling
             human-generated sources, such as sound, coding, photographs, text,

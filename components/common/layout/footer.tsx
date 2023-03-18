@@ -1,32 +1,34 @@
-import { HeartIcon } from '@heroicons/react/20/solid'
-import Link from 'next/link'
-import React, { Component } from 'react'
+import { HeartIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
+import React, { Component } from "react";
 
 class Footer extends Component {
-  render () {
+  render() {
     return (
-      <div className='bg-gray-4 font-satoshi border border-t-blue-300 bg-blue-50'>
-        <div className='container mx-auto pt-5 pb-3 mobile:pl-3'>
-          <div className='flex items-center justify-between mobile:flex-col mobile:items-start'>
-            <div className='justify-start cursor-pointer'>
-              <Link href='/'>
-                <HeartIcon className='w-10 h-10 text-blue-500' />
+      <div className="font-satoshi border-t border-t-blue-300 bg-black-1">
+        <div className="container mx-auto py-4 px-4 mobile:p-3">
+          <div className="flex items-center justify-between mobile:flex-col mobile:items-start">
+            <div className="justify-start cursor-pointer">
+              <Link href="/">
+                <img
+                  src={"/full-logo.svg"}
+                  alt="Picsy"
+                  className="object-cover h-[40px] mobile:h-[20px]"
+                />
               </Link>
             </div>
-            <div className='mr-3 justify-start mobile:pl-2'>
-              <div className='flex'>
-                <div className='flex mobile:flex-col mobile:items-start items-center border-none text-dark text-sm font-bold'>
-                  <Link href='/about'>
-                    <div className='mr-5 hover:text-blue-500'>Facebook</div>
+            <div className="mr-3 justify-start mobile:mt-2">
+              <div className="flex">
+                <div className="flex gap-5 mobile:flex-col mobile:items-start items-center border-none text-dark text-sm font-bold">
+                  <Link href="/blog">
+                    <div className="text-blue-2 hover:text-blue-1">Blogs</div>
                   </Link>
-                  <Link href='/blog'>
-                    <div className='mr-5 hover:text-blue-500 mobile:my-3'>
-                      Twitter
-                    </div>
+                  {/* <Link href="/blog">
+                    <div className="text-blue-2 hover:text-blue-1">Twitter</div>
                   </Link>
-                  <Link href='/privacy-policy'>
-                    <div className='mr-5 hover:text-blue-500'>Reddit</div>
-                  </Link>
+                  <Link href="/privacy-policy">
+                    <div className="text-blue-2 hover:text-blue-1">Reddit</div>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -39,8 +41,8 @@ class Footer extends Component {
           </div> */}
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Footer
+export default Footer;
