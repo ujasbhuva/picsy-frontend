@@ -162,7 +162,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               className="cursor-pointer w-10 h-10 mobile:w-8 mobile:h-8 p-1 border-none bg-white bg-opacity-40 mobile:border-none border-white rounded-full"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `https://picsy.art/image/${data.id}`
+                  `https://picsy.art/image/${data.idx}`
                 );
                 setLinkCopied(true);
                 setTimeout(() => {
