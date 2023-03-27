@@ -21,7 +21,7 @@ export const sessionLoginThroughNextAPI = (data: {
 }): Promise<UserSecure> => {
   return new Promise((resolve, reject) => {
     axios({
-      url: `/api/session-login`,
+      url: `/api/auth-login`,
       method: "post",
       data,
     })

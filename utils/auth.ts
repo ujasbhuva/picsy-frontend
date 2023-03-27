@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-const TokenKey: string = "Writesonic_Token";
+const TokenKey: string = "PiscyArt_Auth";
 
 export function getToken(): string | undefined {
   return Cookies.get(TokenKey);
