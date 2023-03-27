@@ -1,30 +1,28 @@
-import { useEffect, useState } from 'react'
+import {
+  ArrowUpIcon,
+  ChevronDownIcon, PhotoIcon
+} from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 import {
   getImageByID,
   getImagesThroughNextAPI,
   iImage,
   iImagePayload
 } from '../../../apiHelper/images'
-import Loader from '../../common/loader/GlobalLoader'
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
-import {
-  ArrowUpIcon,
-  ChevronDownIcon,
-  EnvelopeIcon,
-  PhotoIcon
-} from '@heroicons/react/20/solid'
 import ImageDialog from '../../common/imageDialog'
-import { toast } from 'react-hot-toast'
+import Loader from '../../common/loader/GlobalLoader'
 // import baseImages from "../../../data.json";
-import { CommonLoader } from '../../common/loader/CommonLoader'
-import ImageBox from './ImageBox'
 import axios from 'axios'
-import Link from 'next/link'
 import Image from 'next/image'
-import GoogleButton from '../../../utils/googleButton'
+import Link from 'next/link'
 import { sessionLogin, SignInWith } from '../../../apiHelper/user'
 import { getToken } from '../../../utils/auth'
+import GoogleButton from '../../../utils/googleButton'
+import { CommonLoader } from '../../common/loader/CommonLoader'
+import ImageBox from './ImageBox'
 
 interface HmpageProps {
   imageId?: string
@@ -66,7 +64,7 @@ const Home: React.FC<HmpageProps> = () => {
     if (imgId) {
       const img = await getImageByID({ id: imgId as string })
       if (img.data.length > 0) {
-        setCurrentImage(img[0])
+        setCurrentImage(img.data[0])
         setIsOpenDialog(true)
       }
     }

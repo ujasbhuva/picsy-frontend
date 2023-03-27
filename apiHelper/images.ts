@@ -35,16 +35,13 @@ export const getImagesThroughNextAPI = (data?: {
   });
 };
 
-export const getImageByID = (data?: {
+export const getImageByID = (data: {
   id: string;
 }): Promise<any> => {
-  console.log("data", data);
-  
   return new Promise((resolve, reject) => {
     axios({
-      url: baseURL + "search/id",
+      url: baseURL + "search/" + data.id,
       method: "post",
-      data,
     })
       .then(({ data }) => {
         resolve(data);
