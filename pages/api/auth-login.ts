@@ -14,6 +14,7 @@ async function sessionLoginRoute(req: NextApiRequest, res: NextApiResponse) {
       data,
       params: {
         sign_in_with: signInWith,
+        is_web: true
       },
     });
     res.send(userSecure);
