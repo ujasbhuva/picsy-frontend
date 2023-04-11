@@ -1,6 +1,7 @@
 import {
   ArrowUpIcon,
-  ChevronDownIcon, PhotoIcon
+  ChevronDownIcon,
+  PhotoIcon
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -19,16 +20,14 @@ import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { sessionLogin, SignInWith } from '../../../apiHelper/user'
-import { getToken } from '../../../utils/auth'
-import GoogleButton from '../../../utils/googleButton'
 import { CommonLoader } from '../../common/loader/CommonLoader'
 import ImageBox from './ImageBox'
 
-interface HmpageProps {
+interface HomepageProps {
   imageId?: string
 }
 
-const Home: React.FC<HmpageProps> = () => {
+const Home: React.FC<HomepageProps> = () => {
   const router = useRouter()
 
   const [IPv4, setIPv4] = useState<string>('')
@@ -75,10 +74,8 @@ const Home: React.FC<HmpageProps> = () => {
   }, [router])
 
   useEffect(() => {
-    if (!searchText) {
-      getData()
-    }
-  }, [searchText])
+    getData()
+  }, [])
 
   const getBrowser = async () => {
     const res = await axios.get('https://geolocation-db.com/json/')
@@ -90,8 +87,11 @@ const Home: React.FC<HmpageProps> = () => {
     getBrowser()
   }, [])
 
+  let fetching = false
+
   const getData = async (start?: boolean) => {
     try {
+      fetching = true
       let inputs = searchText
         ? start
           ? {
@@ -105,14 +105,10 @@ const Home: React.FC<HmpageProps> = () => {
               location: country,
               ip: IPv4
             }
-        : start
-        ? {
-            type: 'random',
-            search_after: images[images.length - 1].id.toString()
-          }
         : {
             type: 'random'
           }
+
       setIsLoading(true)
       const data = await getImagesThroughNextAPI(inputs)
       const arr = data?.images
@@ -123,11 +119,33 @@ const Home: React.FC<HmpageProps> = () => {
         return start ? offset + arr?.length : arr?.length
       })
     } catch (err: any) {
+      console.log(err)
+
       toast.error('Sorry, we cannot proceed your request')
     } finally {
+      fetching = false
       setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        document.documentElement.offsetHeight -
+          (window.innerHeight + document.documentElement.scrollTop) >=
+          200 &&
+        document.documentElement.offsetHeight -
+          (window.innerHeight + document.documentElement.scrollTop) <=
+          2500
+      ) {
+        if (!fetching) {
+          getData(true)
+        }
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [searchText, images, country, IPv4])
 
   const onGoogle = async (idToken: string) => {
     try {
@@ -146,16 +164,16 @@ const Home: React.FC<HmpageProps> = () => {
 
   return (
     <>
-      {!getToken() && (
-        <div className='w-full flex justify-end'>
+      {/* {!getToken() && (
+        <div className='w-full flex justify-end bg-none'>
           <GoogleButton
             handleSignIn={onGoogle}
             isLoading={isLoadingWithGoogle}
             disabled={isLoadingWithGoogle}
-            buttonWidth={280}
+            buttonWidth={200}
           />
         </div>
-      )}
+      )} */}
       {isLoading && <Loader loading={isLoading} />}
       <div className='flex flex-col items-start mt-10 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>
@@ -179,17 +197,8 @@ const Home: React.FC<HmpageProps> = () => {
           </div> */}
         </div>
         <div className='items-center text-blue-1 mobile:mt-1 gap-1'>
-          <h1 className='text-md mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500'>
-            #1 Searching tool for {/* <span>*/}
-            <a
-              className='underline underline-offset-2 decoration-blue-2 ring-0 outline-0'
-              href='https://midjourney.com/home/'
-              target={'_blank'}
-            >
-              Midjourney
-            </a>{' '}
-            {/*</span> */}
-            generated images
+          <h1 className='text-2xl mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500'>
+            #1 Searching tool for AI generated images
           </h1>
         </div>
       </div>
@@ -207,44 +216,42 @@ const Home: React.FC<HmpageProps> = () => {
             }
           }}
         />
-        {searchText && (
-          <div className='flex absolute mr-2 itams-center text-white bg-black-2 '>
-            <button disabled={isLoading}>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 25 25'
-                strokeWidth={1.5}
-                stroke='currentColor'
-                className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
-                onClick={() => getData(false)}
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
-                />
-              </svg>
-            </button>
-            <button disabled={isLoading}>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='currentColor'
-                className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
-                onClick={() => setSearchText('')}
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M6 18L18 6M6 6l12 12'
-                />
-              </svg>
-            </button>
-          </div>
-        )}
+        <div className='flex absolute mr-2 itams-center text-white bg-black-2 '>
+          <button disabled={isLoading}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 25 25'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
+              onClick={() => getData(false)}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
+              />
+            </svg>
+          </button>
+          <button disabled={isLoading || !searchText}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
+              onClick={() => setSearchText('')}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M6 18L18 6M6 6l12 12'
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       {/* {totalResult && totalResult > 0 ? (
         <p className="mt-4 text-blue-2">{totalResult} Results found,</p>

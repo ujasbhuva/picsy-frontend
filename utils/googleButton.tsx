@@ -59,7 +59,7 @@ class GoogleButton extends React.Component<GoogleButtonProps> {
     if (buttonElement) {
       wnd.google.accounts.id.renderButton(buttonElement, {
         theme: 'outline',
-        size: 'large',
+        size: 'medium',
         width: `${this.props?.buttonWidth ?? 199}px`,
         text: 'signin_with'
       })
