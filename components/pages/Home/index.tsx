@@ -266,8 +266,8 @@ const Home: React.FC<HomepageProps> = () => {
               750: 3,
               900: 4,
               1300: 5,
-              1500: 7,
-              1800: 8
+              1500: 6,
+              1800: 7
             }}
           >
             <Masonry gutter='5px'>
