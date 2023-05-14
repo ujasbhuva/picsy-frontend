@@ -166,7 +166,7 @@ const Home: React.FC<HomepageProps> = () => {
 
   return (
     <>
-      {!getToken() && (
+      {/* {!getToken() && (
         <div className='w-full flex justify-end bg-none'>
           <GoogleButton
             handleSignIn={onGoogle}
@@ -175,7 +175,7 @@ const Home: React.FC<HomepageProps> = () => {
             buttonWidth={200}
           />
         </div>
-      )}
+      )} */}
       {isLoading && <Loader loading={isLoading} />}
       <div className='flex flex-col items-start mt-10 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>

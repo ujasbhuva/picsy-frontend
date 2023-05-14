@@ -58,12 +58,13 @@ class GoogleButton extends React.Component<GoogleButtonProps> {
     const buttonElement = document.getElementById('sign-with-google')
     if (buttonElement) {
       wnd.google.accounts.id.renderButton(buttonElement, {
-        theme: 'outline',
+        theme: 'filled_blue',
         size: 'medium',
         width: `${this.props?.buttonWidth ?? 199}px`,
-        text: 'signin_with'
+        text: 'continue_with',
+        shape:'circle'
       })
-      wnd.google.accounts.id.prompt() // also display the One Tap dialog
+      // wnd.google.accounts.id.prompt() // also display the One Tap dialog
     }
   }
 
