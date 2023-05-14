@@ -47,7 +47,7 @@ export default function Layout({
       >
         {children}
       </main>
-      <Footer />
+      {/* <Footer /> */}
       {/* <WaitlistDialog isOpen={openWaitList} setIsOpen={setOpenWaitList} /> */}
     </div>
   );

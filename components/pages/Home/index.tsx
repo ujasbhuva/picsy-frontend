@@ -1,6 +1,5 @@
 import {
   ArrowUpIcon,
-  ChevronDownIcon,
   PhotoIcon
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
@@ -15,12 +14,8 @@ import {
 } from '../../../apiHelper/images'
 import ImageDialog from '../../common/imageDialog'
 import Loader from '../../common/loader/GlobalLoader'
-// import baseImages from "../../../data.json";
 import axios from 'axios'
-import Image from 'next/image'
-import Link from 'next/link'
 import { sessionLogin, SignInWith } from '../../../apiHelper/user'
-import { CommonLoader } from '../../common/loader/CommonLoader'
 import ImageBox from './ImageBox'
 
 interface HomepageProps {
@@ -39,6 +34,7 @@ const Home: React.FC<HomepageProps> = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const [images, setImages] = useState<iImagePayload[]>([])
   const [showButton, setShowButton] = useState(false)
+  const [isLast, setIsLast] = useState(false)
   const [isLoadingWithGoogle, setIsLoadingWithGoogle] = useState<boolean>(false)
 
   useEffect(() => {
@@ -90,41 +86,45 @@ const Home: React.FC<HomepageProps> = () => {
   let fetching = false
 
   const getData = async (start?: boolean) => {
-    try {
-      fetching = true
-      let inputs = searchText
-        ? start
-          ? {
-              query: searchText,
-              search_after: images[images.length - 1].id.toString(),
-              location: country,
-              ip: IPv4
-            }
+    if (!isLast) {
+      try {
+        fetching = true
+        let inputs = searchText
+          ? start
+            ? {
+                query: searchText,
+                search_after: images[images.length - 1].id.toString(),
+                location: country,
+                ip: IPv4
+              }
+            : {
+                query: searchText,
+                location: country,
+                ip: IPv4
+              }
           : {
-              query: searchText,
-              location: country,
-              ip: IPv4
+              type: 'random'
             }
-        : {
-            type: 'random'
-          }
 
-      setIsLoading(true)
-      const data = await getImagesThroughNextAPI(inputs)
-      const arr = data?.images
-      setImages((preval: any) => {
-        return start ? [...preval, ...arr] : arr
-      })
-      setOffset(() => {
-        return start ? offset + arr?.length : arr?.length
-      })
-    } catch (err: any) {
-      console.log(err)
-
-      toast.error('Sorry, we cannot proceed your request')
-    } finally {
-      fetching = false
-      setIsLoading(false)
+        setIsLoading(true)
+        const data = await getImagesThroughNextAPI(inputs)
+        const arr = data?.images
+        setImages((preval: any) => {
+          return start ? [...preval, ...arr] : arr
+        })
+        setOffset(() => {
+          return start ? offset + arr?.length : arr?.length
+        })
+        setIsLast(() => {
+          return data.is_last
+        })
+      } catch (err: any) {
+        console.log(err)
+        toast.error('Sorry, we cannot proceed your request')
+      } finally {
+        fetching = false
+        setIsLoading(false)
+      }
     }
   }
 
@@ -212,6 +212,7 @@ const Home: React.FC<HomepageProps> = () => {
           disabled={isLoading}
           onKeyDown={e => {
             if (e.key === 'Enter') {
+              setIsLast(false)
               getData(false)
             }
           }}
@@ -225,7 +226,10 @@ const Home: React.FC<HomepageProps> = () => {
               strokeWidth={1.5}
               stroke='currentColor'
               className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
-              onClick={() => getData(false)}
+              onClick={() => {
+                setIsLast(false)
+                getData(false)
+              }}
             >
               <path
                 strokeLinecap='round'
@@ -301,7 +305,7 @@ const Home: React.FC<HomepageProps> = () => {
           </>
         )}
       </div>
-      {images.length > 0 && (
+      {/* {images.length > 0 && (
         <button
           className='text-white cursor-pointer flex items-center py-2 px-5 bg-blue-2 bg-opacity-40 rounded-xl mb-10'
           onClick={() => {
@@ -319,7 +323,7 @@ const Home: React.FC<HomepageProps> = () => {
             />
           )}
         </button>
-      )}
+      )} */}
       {isOpenDialog && (
         <ImageDialog
           isOpen={isOpenDialog}
@@ -328,7 +332,7 @@ const Home: React.FC<HomepageProps> = () => {
         />
       )}
       <div className='w-full flex flex-col gap-4 items-start px-40 tablet:px-10 mobile:px-4'>
-        <div className='w-1/2 mobile:w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5'>
+        {/* <div className='w-1/2 mobile:w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5'>
           <Link
             href={'/blog/generative-ai-for-images-a-revolutionary-innovation'}
           >
@@ -352,20 +356,32 @@ const Home: React.FC<HomepageProps> = () => {
               </p>
             </div>
           </Link>
-        </div>
-        <div className='max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5'>
+        </div> */}
+        <div className='max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-tr-xl rounded-br-xl bg-white bg-opacity-20 p-5'>
           <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] mb-4'>
-            Powerful image searching tool for Midjourney Images
+            Powerful image searching tool for AI generated Images
           </h2>
           <p className='text-md mobile:text-sm text-gray-300'>
-            Picsy is an image searching tool for Midjourney generated images,
+            Picsy is an image searching tool for AI generated generated images,
             that provides an inteface to search and download the images it for
             general purposes including research, education, and personal
-            experience. Picsy holds data of more than 6 millon images with
+            experience. Picsy holds data of more than 7 millon images with
             different kind of genres.
           </p>
           <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] my-4'>
-            What is Midjourney?
+            What is Generative AI?
+          </h2>
+          <p className='text-md mobile:text-sm text-gray-300'>
+            Generative Artificial Intelligence (AI) is a term used for the
+            algorithms that are utilized to develop new information resembling
+            human-generated sources, such as sound, coding, photographs, text,
+            models and videos. This technology is trained with preexisting
+            content and data, allowing for various applications like natural
+            language interpretation, computer vision, metaverse, and voice
+            synthesis.
+          </p>
+          <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] my-4'>
+            Example of Generative AI - Midjourney
           </h2>
           <p className='text-md mobile:text-sm text-gray-300'>
             Midjourney is an independent research lab that has invented an
@@ -389,18 +405,6 @@ const Home: React.FC<HomepageProps> = () => {
             headed by David Holz, who was a co-founder of Leap Motion. . It is
             speculated that the underlying technology is based on Stable
             Diffusion.
-          </p>
-          <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] my-4'>
-            What is Generative AI?
-          </h2>
-          <p className='text-md mobile:text-sm text-gray-300'>
-            Generative Artificial Intelligence (AI) is a term used for the
-            algorithms that are utilized to develop new information resembling
-            human-generated sources, such as sound, coding, photographs, text,
-            models and videos. This technology is trained with preexisting
-            content and data, allowing for various applications like natural
-            language interpretation, computer vision, metaverse, and voice
-            synthesis.
           </p>
         </div>
       </div>

@@ -17,7 +17,11 @@ async function getImages(req: NextApiRequest, res: NextApiResponse<any>) {
             : ele.content,
       };
     });
-    res.send({ images: images, total: data.data.total_results ?? 0 });
+    res.send({
+      images: images,
+      total: data.data.total_results ?? 0,
+      is_last: data.data.is_last,
+    });
   } catch (error: any) {
     console.log(error);
     res
