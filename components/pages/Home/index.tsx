@@ -17,6 +17,8 @@ import Loader from '../../common/loader/GlobalLoader'
 import axios from 'axios'
 import { sessionLogin, SignInWith } from '../../../apiHelper/user'
 import ImageBox from './ImageBox'
+import GoogleButton from '../../../utils/googleButton'
+import { getToken } from '../../../utils/auth'
 
 interface HomepageProps {
   imageId?: string
@@ -164,7 +166,7 @@ const Home: React.FC<HomepageProps> = () => {
 
   return (
     <>
-      {/* {!getToken() && (
+      {!getToken() && (
         <div className='w-full flex justify-end bg-none'>
           <GoogleButton
             handleSignIn={onGoogle}
@@ -173,7 +175,7 @@ const Home: React.FC<HomepageProps> = () => {
             buttonWidth={200}
           />
         </div>
-      )} */}
+      )}
       {isLoading && <Loader loading={isLoading} />}
       <div className='flex flex-col items-start mt-10 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>
