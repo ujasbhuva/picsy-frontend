@@ -4,8 +4,20 @@ const nextConfig = {
   swcMinify: true,
   images: {
     unoptimized: true,
-    domains: ["*"],
+    domains: ['*']
   },
+  async rewrites () {
+    return [
+      {
+        source: '/privacy-policy',
+        destination: '/privacy-policy.html'
+      },
+      {
+        source: '/terms-of-use',
+        destination: '/terms-of-use.html'
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig
