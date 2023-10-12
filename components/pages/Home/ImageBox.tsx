@@ -51,7 +51,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         </div>
       )}
       <div className='w-full flex invisible justify-between mobile:visible flex-row absolute bottom-0 right-0 p-2 bg-gradient-to-b from-transparent to-black/80 group-hover:visible gap-1 rounded-b-xl items-end'>
-        <p className='line-clamp-2'>{promptModifier(data.content)}</p>
+        <p className='line-clamp-2 leading-4'>{promptModifier(data.content)}</p>
         <div className='flex gap-1'>
           <button
             className='z-[2] w-8 h-8 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
