@@ -58,7 +58,7 @@ class GoogleButton extends React.Component<GoogleButtonProps> {
     const buttonElement = document.getElementById('sign-with-google')
     if (buttonElement) {
       wnd.google.accounts.id.renderButton(buttonElement, {
-        theme: 'filled_blue',
+        theme: 'filled_black',
         size: 'medium',
         width: `${this.props?.buttonWidth ?? 199}px`,
         text: 'continue_with',
@@ -66,6 +66,7 @@ class GoogleButton extends React.Component<GoogleButtonProps> {
       })
       // wnd.google.accounts.id.prompt() // also display the One Tap dialog
     }
+    buttonElement?.classList.add('black-google-button');
   }
 
   handleGoogleSignIn = (res: CredentialResponse) => {

@@ -1,7 +1,4 @@
-import {
-  ArrowUpIcon,
-  PhotoIcon
-} from '@heroicons/react/20/solid'
+import { ArrowUpIcon, PhotoIcon } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -15,10 +12,9 @@ import {
 import ImageDialog from '../../common/imageDialog'
 import Loader from '../../common/loader/GlobalLoader'
 import axios from 'axios'
-import { sessionLogin, SignInWith } from '../../../apiHelper/user'
 import ImageBox from './ImageBox'
-import GoogleButton from '../../../utils/googleButton'
 import { getToken } from '../../../utils/auth'
+import LoginDialog from '../../common/loginDialog'
 
 interface HomepageProps {
   imageId?: string
@@ -37,7 +33,7 @@ const Home: React.FC<HomepageProps> = () => {
   const [images, setImages] = useState<iImagePayload[]>([])
   const [showButton, setShowButton] = useState(false)
   const [isLast, setIsLast] = useState(false)
-  const [isLoadingWithGoogle, setIsLoadingWithGoogle] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -76,9 +72,13 @@ const Home: React.FC<HomepageProps> = () => {
   }, [])
 
   const getBrowser = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
-    setCountry(res.data.country_name)
-    setIPv4(res.data.IPv4)
+    try {
+      const res = await axios.get('https://geolocation-db.com/json/')
+      setCountry(res.data.country_name)
+      setIPv4(res.data.IPv4)
+    } catch (err: any) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
@@ -149,35 +149,24 @@ const Home: React.FC<HomepageProps> = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [searchText, images, country, IPv4])
 
-  const onGoogle = async (idToken: string) => {
-    try {
-      setIsLoadingWithGoogle(true)
-      const signInWith = SignInWith.SIGN_WITH_GOOGLE
-      const { email: _email } = await sessionLogin({
-        idToken,
-        signInWith
-      })
-    } catch (error: any) {
-      toast.error('Failed to login')
-    } finally {
-      setIsLoadingWithGoogle(false)
-    }
-  }
-
   return (
     <>
-      {/* {!getToken() && (
-        <div className='w-full flex justify-end bg-none'>
-          <GoogleButton
-            handleSignIn={onGoogle}
-            isLoading={isLoadingWithGoogle}
-            disabled={isLoadingWithGoogle}
-            buttonWidth={200}
-          />
-        </div>
-      )} */}
+      <button
+        className='flex font-bold gap-1.5 items-center justify-end w-full p-2 z-[200000] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0'
+        onClick={() => {
+          if (getToken()) {
+            router.push('/generateimage')
+          } else {
+            setIsOpen(true)
+          }
+        }}
+      >
+        <p>Just Launched! Explore Our New Image Generator</p>
+        <ImageIcon /> <ArrowRightIcon />
+      </button>
+      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       {isLoading && <Loader loading={isLoading} />}
-      <div className='flex flex-col items-start mt-10 mobile:mt-6'>
+      <div className='flex flex-col items-start mt-20 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>
           <img
             src={'/full-logo.svg'}
@@ -188,15 +177,6 @@ const Home: React.FC<HomepageProps> = () => {
               router.reload()
             }}
           />
-          {/* <div className="flex flex-col ml-5 mobile:ml-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500">
-            <h1
-              className="text-[3rem] mobile:text-[2rem] font-[500]"
-              onClick={() => {
-                router.push("/");
-              }}
-            >
-            </h1>
-          </div> */}
         </div>
         <div className='items-center text-blue-1 mobile:mt-1 gap-1'>
           <h1 className='text-2xl mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500'>
@@ -259,9 +239,6 @@ const Home: React.FC<HomepageProps> = () => {
           </button>
         </div>
       </div>
-      {/* {totalResult && totalResult > 0 ? (
-        <p className="mt-4 text-blue-2">{totalResult} Results found,</p>
-      ) : null} */}
 
       <div className='w-full mb-10 mt-3'>
         {images?.length > 0 ? (
@@ -307,25 +284,6 @@ const Home: React.FC<HomepageProps> = () => {
           </>
         )}
       </div>
-      {/* {images.length > 0 && (
-        <button
-          className='text-white cursor-pointer flex items-center py-2 px-5 bg-blue-2 bg-opacity-40 rounded-xl mb-10'
-          onClick={() => {
-            getData(true)
-          }}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Loading...' : 'Load more'}
-          {!isLoading ? (
-            <ChevronDownIcon className='w-6 h-6' />
-          ) : (
-            <CommonLoader
-              parentClassName='ml-2 flex w-full items-end'
-              childClassName=' h-6 w-6 border-2'
-            />
-          )}
-        </button>
-      )} */}
       {isOpenDialog && (
         <ImageDialog
           isOpen={isOpenDialog}
@@ -334,31 +292,6 @@ const Home: React.FC<HomepageProps> = () => {
         />
       )}
       <div className='w-full flex flex-col gap-4 items-start px-40 tablet:px-10 mobile:px-4'>
-        {/* <div className='w-1/2 mobile:w-full border-l border-blue-1 rounded-xl bg-white bg-opacity-20 p-5'>
-          <Link
-            href={'/blog/generative-ai-for-images-a-revolutionary-innovation'}
-          >
-            <Image
-              src={
-                'https://api.picsy.art/image/990816855088328734/1075328060997517322/birdlg_neural_network_chatbot_603f9e9b-c34f-4538-b59d-1fc9d559dd10.png'
-              }
-              height={200}
-              width={300}
-              alt='Image by picsy'
-              className='object-cover w-full h-80 rounded-xl tablet:h-60 mobile:w-full'
-            />
-            <div className='pt-3'>
-              <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] mb-4'>
-                Generative AI for Images - A Revolutionary Innovation
-              </h2>
-              <p className='text-gray-300 text-md mobile:text-sm w-auto mobile:w-full'>
-                Generative AI for images, also known as GANs, is a rapidly
-                evolving field that has made a significant impact on the
-                creative industry.
-              </p>
-            </div>
-          </Link>
-        </div> */}
         <div className='max-w-1/2 mobile:max-w-full border-l border-blue-1 rounded-tr-xl rounded-br-xl bg-white bg-opacity-20 p-5'>
           <h2 className='text-2xl mobile:text-md text-blue-1 font-[500] mb-4'>
             Powerful image searching tool for AI generated Images
@@ -423,3 +356,41 @@ const Home: React.FC<HomepageProps> = () => {
 }
 
 export default Home
+
+const ImageIcon = () => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={2.5}
+      stroke='currentColor'
+      className='w-6 h-6'
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z'
+      />
+    </svg>
+  )
+}
+
+const ArrowRightIcon = () => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={2.5}
+      stroke='currentColor'
+      className='w-6 h-6'
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'
+      />
+    </svg>
+  )
+}

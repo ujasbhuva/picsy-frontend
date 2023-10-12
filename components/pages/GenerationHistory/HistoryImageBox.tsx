@@ -1,3 +1,4 @@
+import { use, useEffect, useState } from 'react'
 import {
   ArrowDownIcon,
   CheckCircleIcon,
@@ -6,12 +7,11 @@ import {
 } from '@heroicons/react/20/solid'
 import { saveAs } from 'file-saver'
 import Image from 'next/image'
-import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { CommonLoader } from '../../common/loader/CommonLoader'
 import { promptModifier } from '../../../utils/promptmodifier'
 
-const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
+const HistoryImageBox = ({ setIsOpenDialog, data, current }: any) => {
   const [copied, setCopied] = useState(false)
   const [downloading, setDownloading] = useState(false)
 
@@ -31,33 +31,29 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
       <Image
         onClick={() => {
           setIsOpenDialog(true)
-          setCurrentImage(data)
         }}
         className='w-full object-cover rounded-xl'
-        src={
-          current?.url +
-          `?width=${current?.width / 4}&height=${current?.height / 4}`
-        }
-        alt={promptModifier(data.content).slice(0, 50)}
+        src={current}
+        alt={promptModifier(data?.prompt ?? '').slice(0, 50)}
         unoptimized
-        width={current?.width / 3}
-        height={current?.height / 3}
+        width={data?.inputs?.width / 3}
+        height={data?.inputs?.height / 3}
       />
-      {data.images.length > 1 && (
-        <div className='flex invisible mobile:visible flex-row w-full justify-end bg-gradient-to-t from-transparent to-black/80 absolute top-0 right-0 rounded-t-xl group-hover:visible gap-1 mobile:hidden py-2'>
+      {data?.output?.images.length > 1 && (
+        <div className='flex w-full bg-gradient-to-t from-transparent to-black/70 invisible mobile:visible flex-row absolute top-0 right-0 rounded-t-xl group-hover:visible gap-1 mobile:hidden justify-end py-2'>
           <p className='flex items-center gap-1 text-sm px-2'>
-            <PhotoIcon className='w-4 h-4' />x {data.images.length}
+            <PhotoIcon className='w-4 h-4' />x {data?.output?.images.length}
           </p>
         </div>
       )}
-      <div className='w-full flex invisible justify-between mobile:visible flex-row absolute bottom-0 right-0 p-2 bg-gradient-to-b from-transparent to-black/80 group-hover:visible gap-1 rounded-b-xl items-end'>
-        <p className='line-clamp-2'>{promptModifier(data.content)}</p>
+      <div className='w-full flex invisible justify-between items-end mobile:visible flex-row absolute rounded-b-xl bottom-0 p-2 group-hover:visible gap-1 bg-gradient-to-b from-transparent to-black/70 leading-4 text-sm'>
+        <p className='line-clamp-2'>{promptModifier(data?.prompt ?? '')}</p>
         <div className='flex gap-1'>
           <button
-            className='z-[2] w-8 h-8 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
+            className='z-[2] w-6 h-6 justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-none'
             onClick={e => {
               e.preventDefault()
-              navigator.clipboard.writeText(data.content)
+              navigator.clipboard.writeText(data.prompt)
               setCopied(true)
               setTimeout(() => {
                 setCopied(false)
@@ -71,8 +67,8 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
             )}
           </button>
           <button
-            className='relative z-[2] w-8 h-8 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
-            onClick={() => downloadImage(current.url)}
+            className='relative z-[2] w-6 h-6 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-none'
+            onClick={() => downloadImage(current)}
           >
             {downloading ? (
               <CommonLoader
@@ -89,4 +85,4 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
   )
 }
 
-export default ImageBox
+export default HistoryImageBox

@@ -121,3 +121,8 @@
     filter: invert(1);
   }
 }
+
+.black-google-button {
+  background-color: black; /* Set the background color to black */
+  color: white; /* Set the text color to white or any other color you prefer */
+}

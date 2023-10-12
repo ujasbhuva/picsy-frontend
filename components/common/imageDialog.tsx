@@ -16,6 +16,7 @@ import { iImage } from '../../apiHelper/images'
 import Image from 'next/image'
 import { CommonLoader } from './loader/CommonLoader'
 import { uuid } from 'uuidv4'
+import { promptModifier } from '../../utils/promptmodifier'
 
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false)
@@ -35,12 +36,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
     }
   }, [data])
 
-  const prompt = data.content
-    .replaceAll('- Upscaled by', '')
-    .replaceAll('*', '')
-    .replaceAll(/ *\([^)]*\) */g, '')
-    .replaceAll(/ - .*@.*/g, '')
-    .replaceAll(/<.*>/g, '')
+  const prompt = promptModifier(data.content)
 
   const downloadImage = () => {
     try {
@@ -52,7 +48,6 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
       setDownloading(false)
     }
   }
-console.log(downloading);
 
   const changeImage = (setIndex: number) => {
     setCurrentIndex(setIndex)
@@ -275,7 +270,7 @@ console.log(downloading);
                         {(!loaded || !loadedSecond) && (
                           <CommonLoader
                             parentClassName='absolute p-40 '
-                            childClassName='h-20 w-20 border-2'
+                            childClassName='h-20 w-20 border-[3px]'
                           />
                         )}
                         <Image
