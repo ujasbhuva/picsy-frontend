@@ -1,16 +1,16 @@
 import {
   ArrowsPointingOutIcon,
-  Cog6ToothIcon,
   PhotoIcon,
   ScaleIcon,
-  SparklesIcon
+  SparklesIcon,
+  XMarkIcon
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { generateImages } from '../../../apiHelper/images'
 import { getToken } from '../../../utils/auth'
 import ImageRatioCombobox from '../../combobox/imageRatioCombobox'
 import SchedulerCombobox from '../../combobox/schedulerCombobox'
-import { generateImages } from '../../../apiHelper/images'
 import { CommonLoader } from '../../common/loader/CommonLoader'
 
 export const ratios: any[] = [
@@ -103,7 +103,7 @@ export default function GenerateImage () {
   return (
     <>
       <div className='w-full pb-5 flex gap-3 font-satoshi mobile:p-2 z-10'>
-        <h1 className='text-[1.5rem] flex gap-2 items-center mobile:text-[1.5rem] tablet:text-[1.5rem]'>
+        <h1 className='text-[1.5rem] flex gap-2 items-center mobile:text-[1.5rem] tablet:text-[1.5rem] font-bold'>
           Generate Images <SparklesIcon className='w-6 h-6' />
         </h1>
       </div>
@@ -111,7 +111,7 @@ export default function GenerateImage () {
         <div className='w-9/12 flex flex-col items-start gap-6'>
           <div className='w-full flex rounded-xl justify-center items-center gap-3 z-10'>
             <textarea
-              className={`scrollbar-hide overflow-scroll w-full p-3.5 py-1.5 rounded-2xl outline-none bg-blue-1 bg-opacity-10 placeholder:opacity-70 h-14 max-h-30 border-[2px] mr-2 text-md ${
+              className={`scrollbar-hide overflow-scroll w-full p-3.5 py-1.5 rounded-2xl outline-none bg-[#131f29] placeholder:opacity-70 h-14 max-h-30 border-[2px] mr-2 text-md ${
                 inputError?.prompt
                   ? 'border-orange-500 border-opacity-70'
                   : 'border-white border-opacity-20'
@@ -152,9 +152,7 @@ export default function GenerateImage () {
             </p>
           )}
           <div className='w-full flex items-center justify-center mt-4'>
-            <div
-              className={`w-full flex justify-center items-center`}
-            >
+            <div className={`w-full flex justify-center items-center`}>
               {output?.data?.output.images.length > 0 ? (
                 <>
                   <div
@@ -169,16 +167,24 @@ export default function GenerateImage () {
                     } gap-2`}
                   >
                     {output?.data?.output.images.map((data: string) => {
-                      return <img src={data} className='rounded-xl max-h-[calc(100vh-208px)]' />
+                      return (
+                        <img
+                          src={data}
+                          className='rounded-xl max-h-[calc(100vh-208px)]'
+                        />
+                      )
                     })}
                   </div>
                 </>
               ) : (
                 <>
                   <div
-                    className={`w-full flex items-center justify-center bg-blue-1 bg-opacity-10 h-[calc(100vh-208px)] rounded-xl`}
+                    className={`w-full flex items-center text-2xl justify-center z-[5] h-[calc(100vh-208px)] opacity-20`}
                   >
-                    <PhotoIcon className='w-16 h-16 text-blue-1 opacity-20' />
+                    <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center p-24 border-2 border-blue-1 border-opacity-20 gap-4'>
+                    <PhotoIcon className='w-16 h-16 text-blue-1' />{' '}
+                    <XMarkIcon className='w-8 h-8' /> {inputs.count}
+                    </div>
                   </div>
                 </>
               )}
@@ -186,8 +192,8 @@ export default function GenerateImage () {
           </div>
         </div>
 
-        <div className='w-3/12 flex flex-col items-center justify-center gap-6'>
-          <div className='w-full animate-roll-in rounded-xl bg-blue-1 bg-opacity-10 p-4 max-h-[calc(100vh-110px)] overflow-y-auto scrollbar scrollbar-thumb-blue-1 scrollbar-track-black-1 scrollbar-w-1 scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+        <div className='w-3/12 flex flex-col items-center justify-center gap-6 z-[5]'>
+          <div className='w-full animate-roll-in rounded-xl bg-[#131f29] p-4 max-h-[calc(100vh-110px)] border-2 border-blue-1 border-opacity-10 overflow-y-auto scrollbar scrollbar-thumb-blue-1 scrollbar-track-black-1 scrollbar-w-1 scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
             <div className='w-2/3 sm:w-full'>
               <p className='text-md flex items-center gap-2 font-bold'>
                 <span>

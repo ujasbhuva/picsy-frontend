@@ -38,7 +38,7 @@ export default function authRequest(
         !!!authPages?.find((path) => path === Router.pathname)
       ) {
         clearAllCookie();
-        Router.push("/login");
+        Router.push("/");
       }
       return Promise.reject(error);
     }

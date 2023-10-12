@@ -30,7 +30,7 @@ export default function ImageRatioCombobox ({
               <div className={`flex content-start justify-start gap-2`}>
                 <div className='w-7 flex items-center justify-center'>
                   <div
-                    className={`rounded-[2px] border-[2px] ${selected.class} border-white bg-gradient-to-r from-blue-1 to-teal-500`}
+                    className={`rounded-[2px] ${selected.class} bg-gradient-to-r from-blue-1 to-teal-500`}
                   />
                 </div>
                 <p className='w-auto text-sm'>{selected.name}</p>
@@ -81,11 +81,7 @@ export default function ImageRatioCombobox ({
                         >
                           <div className='w-7 flex items-center justify-center'>
                             <div
-                              className={`rounded-[2px] border-[2px] ${
-                                ratio.class
-                              }  ${
-                                selected ? 'border-blue-1' : 'border-white'
-                              } bg-gradient-to-r from-blue-1 to-teal-500`}
+                              className={`rounded-[2px] ${ratio.class} bg-gradient-to-r from-blue-1 to-teal-500`}
                             />
                           </div>
                           <p className='w-auto'>{ratio.name}</p>

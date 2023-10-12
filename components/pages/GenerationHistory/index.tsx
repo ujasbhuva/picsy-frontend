@@ -1,7 +1,8 @@
 import {
   ArrowUpIcon,
   PhotoIcon,
-  QueueListIcon
+  QueueListIcon,
+  RectangleStackIcon
 } from '@heroicons/react/20/solid'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -49,31 +50,9 @@ export default function ImageGenerationHistory () {
     })
   }
 
-  // let fetching = false
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (
-  //       document.documentElement.offsetHeight -
-  //         (window.innerHeight + document.documentElement.scrollTop) >=
-  //         200 &&
-  //       document.documentElement.offsetHeight -
-  //         (window.innerHeight + document.documentElement.scrollTop) <=
-  //         2500
-  //     ) {
-  //       if (!fetching) {
-  //         ImageGenerationHistory()
-  //       }
-  //     }
-  //   }
-  //   window.addEventListener('scroll22', handleScroll)
-  //   return () => window.removeEventListener('scroll22', handleScroll)
-  // }, [images])
-
   const ImageGenerationHistory = async () => {
     if (!isLast) {
       try {
-        // fetching = true
         setIsLoading(true)
         const res = await getImagesHistory(offset)
         setImages((preval: any) => {
@@ -88,7 +67,6 @@ export default function ImageGenerationHistory () {
       } catch (err: any) {
         console.log(err)
       } finally {
-        // fetching = false
         setIsLoading(false)
       }
     }
@@ -96,9 +74,9 @@ export default function ImageGenerationHistory () {
 
   return (
     <>
-      <div className='w-full pb-5 flex gap-3 font-satoshi mobile:p-2 z-10'>
-        <h1 className='text-[1.5rem] flex gap-2 items-center mobile:text-[1.5rem] tablet:text-[1.5rem]'>
-          Image Generation History <QueueListIcon className='w-6 h-6' />
+      <div className='w-full pb-5 flex gap-3 font-satoshi mobile:p-2'>
+        <h1 className='text-[1.5rem] flex gap-2 items-center mobile:text-[1.5rem] tablet:text-[1.5rem] font-bold'>
+          Image Generation History <RectangleStackIcon className='w-6 h-6 -rotate-90' />
         </h1>
       </div>
 
@@ -143,17 +121,17 @@ export default function ImageGenerationHistory () {
         ) : (
           <>
             {!isLoading && (
-              <div className='flex flex-col items-center justify-center text-center w-full h-full'>
-                <p className='flex flex-col items-center text-2xl text-blue-2 my-40'>
-                  <PhotoIcon className='w-20 h-20 my-3' />
-                  No results found! Try search something different
+              <div className='flex flex-col items-center justify-center text-center w-full h-full my-40'>
+                <p className='flex flex-col items-center text-md opacity-40'>
+                  <PhotoIcon className='w-8 h-8 my-3' />
+                  No results found! Try generating some images
                 </p>
               </div>
             )}
           </>
         )}
       </div>
-      {!isLast && (
+      {!isLast && (images?.length > 0) && (
         <button
           className={`h-14 rounded-2xl px-8 py-2 border-[2px] font-bold text-md outline-none w-34 disabled:cursor-not-allowed ${
             !isLoading

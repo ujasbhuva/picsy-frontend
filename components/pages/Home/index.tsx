@@ -161,7 +161,11 @@ const Home: React.FC<HomepageProps> = () => {
           }
         }}
       >
-        <p>Just Launched! Explore Our New Image Generator</p>
+        <p>
+          {getToken()
+            ? 'Continue to dashboard'
+            : 'Just Launched! Explore Our New Image Generator'}
+        </p>
         <ImageIcon /> <ArrowRightIcon />
       </button>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
