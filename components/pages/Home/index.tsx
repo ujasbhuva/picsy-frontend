@@ -151,7 +151,7 @@ const Home: React.FC<HomepageProps> = () => {
 
   return (
     <>
-      <button
+      {/* <button
         className='flex font-bold gap-1.5 items-center justify-end w-full p-2 z-[200000] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0'
         onClick={() => {
           if (getToken()) {
@@ -168,7 +168,7 @@ const Home: React.FC<HomepageProps> = () => {
         </p>
         <ImageIcon /> <ArrowRightIcon />
       </button>
-      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} /> */}
       {isLoading && <Loader loading={isLoading} />}
       <div className='flex flex-col items-start mt-20 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>
