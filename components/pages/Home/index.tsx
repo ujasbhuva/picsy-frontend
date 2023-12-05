@@ -94,19 +94,19 @@ const Home: React.FC<HomepageProps> = () => {
         let inputs = searchText
           ? start
             ? {
-                query: searchText,
-                search_after: images[images.length - 1].id.toString(),
-                location: country,
-                ip: IPv4
-              }
-            : {
-                query: searchText,
-                location: country,
-                ip: IPv4
-              }
-          : {
-              type: 'random'
+              query: searchText,
+              search_after: images[images.length - 1].id.toString(),
+              location: country,
+              ip: IPv4
             }
+            : {
+              query: searchText,
+              location: country,
+              ip: IPv4
+            }
+          : {
+            type: 'random'
+          }
 
         setIsLoading(true)
         const data = await getImagesThroughNextAPI(inputs)
@@ -134,11 +134,11 @@ const Home: React.FC<HomepageProps> = () => {
     const handleScroll = () => {
       if (
         document.documentElement.offsetHeight -
-          (window.innerHeight + document.documentElement.scrollTop) >=
-          200 &&
+        (window.innerHeight + document.documentElement.scrollTop) >=
+        200 &&
         document.documentElement.offsetHeight -
-          (window.innerHeight + document.documentElement.scrollTop) <=
-          2500
+        (window.innerHeight + document.documentElement.scrollTop) <=
+        2500
       ) {
         if (!fetching) {
           getData(true)
@@ -169,6 +169,21 @@ const Home: React.FC<HomepageProps> = () => {
         <ImageIcon /> <ArrowRightIcon />
       </button>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+      <a
+        className='flex font-bold gap-1.5 items-center justify-end w-full p-2 z-[200000] absolute top-0 left-0 right-0'
+        target='_blank'
+        href='https://play.google.com/store/apps/details?id=art.picsy.deltabits&pcampaignid=web_share'
+      >
+        <div className='flex px-5 py-1.5 rounded-full border-2 border-gray-200 items-center gap-2'>
+          <p>
+            Get android app now
+          </p>
+          <img
+            className='w-8 h-8'
+            src="/images/google-play.png" />
+        </div>
+      </a>
+      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       {isLoading && <Loader loading={isLoading} />}
       <div className='flex flex-col items-start mt-20 mobile:mt-6'>
         <div className='flex flex-col justify-center cursor-pointer'>
