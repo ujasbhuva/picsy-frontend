@@ -75,7 +75,9 @@ const Home: React.FC<HomepageProps> = () => {
   }, [])
 
   useEffect(() => {
-    getData(false)
+    if (!fetching) {
+      getData(false)
+    }
   }, [isCategorySearch])
 
   const getBrowser = async () => {
@@ -245,7 +247,7 @@ const Home: React.FC<HomepageProps> = () => {
                 key={index}
                 className='flex relative items-center justify-center gap-2 cursor-pointer'
                 onClick={() => {
-                  setSearchText(()=> {return category.title});
+                  setSearchText(() => { return category.title });
                   setIsCategorySearch(!isCategorySearch)
                 }}
               >
