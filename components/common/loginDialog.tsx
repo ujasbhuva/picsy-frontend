@@ -4,7 +4,7 @@ import {
   ClockIcon,
   UserPlusIcon,
   XMarkIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import Cookies from 'js-cookie'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'

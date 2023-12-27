@@ -1,4 +1,4 @@
-import { ArrowUpIcon, PhotoIcon } from '@heroicons/react/20/solid'
+import { ArrowUpIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -170,16 +170,16 @@ const Home: React.FC<HomepageProps> = () => {
       </button>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} /> */}
       <a
-        className='flex font-bold gap-1.5 items-center justify-end w-full p-2 z-[200000] absolute top-0 left-0 right-0'
+        className='flex font-bold gap-1.5 items-center justify-end w-full py-3 z-[200000] absolute top-0 left-0 right-0 mobile:relative'
         target='_blank'
         href='https://play.google.com/store/apps/details?id=art.picsy.deltabits&pcampaignid=web_share'
       >
-        <div className='flex px-5 py-1.5 rounded-full border-2 border-gray-200 items-center gap-2'>
+        <div className='flex px-5 py-1.5 rounded-full border-2 items-center gap-2 mobile:border mobile:font-thin mobile:text-[14px] mobile:px-2 mobile:py-1 text-gray-400 border-gray-400'>
           <p>
             Get android app now
           </p>
           <img
-            className='w-8 h-8'
+            className='w-8 h-8 mobile:w-4 mobile:h-4'
             src="/images/google-play.png" />
         </div>
       </a>
@@ -203,9 +203,9 @@ const Home: React.FC<HomepageProps> = () => {
           </h1>
         </div>
       </div>
-      <div className='mb-16 w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:my-8'>
+      <div className='mb-16 w-2/5 sm:w-2/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:my-8 gap-4'>
         <input
-          className=' w-full p-3 text-white bg-blue-2 bg-opacity-20 rounded-xl border-0 outline-0 focus:ring-2 focus:ring-opacity-40 focus:ring-blue-2'
+          className='w-full py-2 px-5 text-white bg-blue-2 bg-opacity-20 rounded-full border-0 outline-0 focus:ring-2 focus:ring-opacity-40 focus:ring-blue-2'
           placeholder='Search images'
           onChange={e => setSearchText(e.target.value)}
           value={searchText}
@@ -218,45 +218,9 @@ const Home: React.FC<HomepageProps> = () => {
             }
           }}
         />
-        <div className='flex absolute mr-2 itams-center text-white bg-black-2 '>
-          <button disabled={isLoading}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 25 25'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
-              onClick={() => {
-                setIsLast(false)
-                getData(false)
-              }}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
-              />
-            </svg>
-          </button>
-          <button disabled={isLoading || !searchText}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='cursor-pointer h-7 w-7 bg-blue-2 bg-opacity-10'
-              onClick={() => setSearchText('')}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M6 18L18 6M6 6l12 12'
-              />
-            </svg>
-          </button>
-        </div>
+        <button className='rounded-full px-6 py-2 bg-blue-2 outline-none'>
+          Search
+        </button>
       </div>
 
       <div className='w-full mb-10 mt-3'>

@@ -3,7 +3,7 @@ import {
   PhotoIcon,
   QueueListIcon,
   RectangleStackIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'

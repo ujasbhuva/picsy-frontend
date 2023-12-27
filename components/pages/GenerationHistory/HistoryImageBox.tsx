@@ -4,7 +4,7 @@ import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
   PhotoIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import { saveAs } from 'file-saver'
 import Image from 'next/image'
 import { v4 as uuid } from 'uuid'

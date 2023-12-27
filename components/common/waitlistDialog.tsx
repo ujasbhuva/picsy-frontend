@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckCircleIcon, UserPlusIcon } from "@heroicons/react/20/solid";
+import { CheckCircleIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";

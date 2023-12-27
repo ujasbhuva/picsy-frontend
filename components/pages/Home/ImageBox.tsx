@@ -3,7 +3,7 @@ import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
   PhotoIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import { saveAs } from 'file-saver'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -51,10 +51,10 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
         </div>
       )}
       <div className='w-full flex invisible justify-between mobile:visible flex-row absolute bottom-0 right-0 p-2 bg-gradient-to-b from-transparent to-black/80 group-hover:visible gap-1 rounded-b-xl items-end'>
-        <p className='line-clamp-2 leading-4'>{promptModifier(data.content)}</p>
+        <p className='line-clamp-2 mobile:line-clamp-1 leading-4 mobile:text-sm'>{promptModifier(data.content)}</p>
         <div className='flex gap-1'>
           <button
-            className='z-[2] w-8 h-8 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
+            className='z-[2] w-8 h-8 mobile:w-6 mobile:h-6 flex justify-center items-center rounded-full p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
             onClick={e => {
               e.preventDefault()
               navigator.clipboard.writeText(data.content)
@@ -71,7 +71,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
             )}
           </button>
           <button
-            className='relative z-[2] w-8 h-8 flex justify-center items-center rounded-full mobile:w-fit p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
+            className='relative z-[2] w-8 h-8 mobile:w-6 mobile:h-6 flex justify-center items-center rounded-full p-1 bg-white bg-opacity-30 hover:bg-opacity-50 ring-0 outline-0'
             onClick={() => downloadImage(current.url)}
           >
             {downloading ? (

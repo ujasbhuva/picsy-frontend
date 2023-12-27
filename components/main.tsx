@@ -1,7 +1,7 @@
 import {
   CheckCircleIcon,
   ExclamationCircleIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import { NextComponentType, NextPage, NextPageContext } from 'next'
 import { ReactElement, ReactNode, useEffect, useState } from 'react'
 import { Toaster, resolveValue } from 'react-hot-toast'
@@ -34,7 +34,7 @@ const Main: React.FC<MainProps> = ({ Component, pageProps }) => {
         const res = await axios.get('https://geolocation-db.com/json/')
         setCountry(res.data.country_name)
         setIPv4(res.data.IPv4)
-        setFp(fingerprint)
+        setFp(fingerprint.toString())
       })
     } catch (err: any) {
       console.log(err)

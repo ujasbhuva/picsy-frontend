@@ -9,7 +9,7 @@ import {
   DocumentDuplicateIcon,
   LinkIcon,
   XMarkIcon
-} from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline'
 import { Fragment, useEffect, useState } from 'react'
 import { saveAs } from 'file-saver'
 import { iImage } from '../../apiHelper/images'
@@ -133,9 +133,9 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   }}
                 >
                   {copied ? (
-                    <CheckCircleIcon className='text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6' />
+                    <CheckCircleIcon className='text-blue-1 w-6 h-6 mobile:w-6 mobile:h-6' />
                   ) : (
-                    <DocumentDuplicateIcon className='w-8 h-8 mobile:w-6 mobile:h-6' />
+                    <DocumentDuplicateIcon className='w-6 h-6 mobile:w-6 mobile:h-6' />
                   )}
                 </button>
                 <button
@@ -151,16 +151,16 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                   }}
                 >
                   {linkCopied ? (
-                    <CheckCircleIcon className='text-blue-1 w-8 h-8 mobile:w-6 mobile:h-6' />
+                    <CheckCircleIcon className='text-blue-1 w-6 h-6 mobile:w-6 mobile:h-6' />
                   ) : (
-                    <LinkIcon className='w-8 h-8 mobile:w-6 mobile:h-6' />
+                    <LinkIcon className='w-6 h-6 mobile:w-6 mobile:h-6' />
                   )}
                 </button>
                 <button
                   className='text-white flex justify-center items-center rounded-full mobile:rounded-full w-fit bg-white bg-opacity-20 ring-0 outline-0 p-2 mobile:p-1.5'
                   onClick={downloadImage}
                 >
-                  <ArrowDownIcon className='w-8 h-8 mobile:w-6 mobile:h-6' />
+                  <ArrowDownIcon className='w-6 h-6 mobile:w-6 mobile:h-6' />
                 </button>
               </div>
             </div>
@@ -178,7 +178,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             <button
               disabled={currentIndex === 0}
               className={
-                'outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center items-center rounded-t-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-full mobile:rounded-l-none mobile:h-full mobile:w-fit '
+                'outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center items-center rounded-t-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-full mobile:rounded-l-none mobile:h-full mobile:w-fit mobile:p-1'
               }
               onClick={() => changeImage(currentIndex - 1)}
             >
@@ -195,7 +195,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
             <button
               disabled={currentIndex === totalImages - 1}
               className={
-                'outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center items-center rounded-b-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-xl mobile:rounded-r-none mobile:h-full mobile:w-fit '
+                'outline-0 ring-0 text-white bg-white bg-opacity-40 w-full flex justify-center items-center rounded-b-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mobile:rounded-full mobile:rounded-r-none mobile:h-full mobile:w-fit mobile:p-1'
               }
               onClick={() => changeImage(currentIndex + 1)}
             >
@@ -218,7 +218,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
             as='div'
-            className='relative z-10'
+            className='relative z-[200001]'
             onClose={() => handleClose()}
           >
             <Transition.Child
@@ -256,7 +256,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                       {loaded && (
                         <>
                           <XMarkIcon
-                            className='w-8 h-8 text-white opacity-50 absolute right-1 top-1 cursor-pointer z-10'
+                            className='w-6 h-6 text-white opacity-50 absolute right-1 top-1 cursor-pointer z-10'
                             onClick={() => {
                               setIsOpen(false)
                             }}
