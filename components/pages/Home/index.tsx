@@ -36,7 +36,7 @@ const Home: React.FC<HomepageProps> = () => {
   const [showButton, setShowButton] = useState(false)
   const [isLast, setIsLast] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [isCategorySearch, setIsCategorySearch] = useState(false)
+  const [isCategorySearch, setIsCategorySearch] = useState(0)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -248,7 +248,7 @@ const Home: React.FC<HomepageProps> = () => {
                 className='flex relative items-center justify-center gap-2 cursor-pointer'
                 onClick={() => {
                   setSearchText(() => { return category.title });
-                  setIsCategorySearch(!isCategorySearch)
+                  setIsCategorySearch(() => { return isCategorySearch + 1 })
                 }}
               >
                 <div
