@@ -43,7 +43,7 @@ export default function Layout({
         </div>
       </div> */}
       <main
-        className={`flex flex-col items-center min-h-[100vh] px-5 pb-[4rem] mobile:px-3 bg-gradient-to-br to-black from-gray-900`}
+        className={`flex flex-col items-center min-h-[100vh] pb-[4rem] mobile:px-3 bg-gradient-to-br to-black from-gray-900`}
       >
         {children}
       </main>
