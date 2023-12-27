@@ -75,7 +75,7 @@ const Home: React.FC<HomepageProps> = () => {
   }, [])
 
   useEffect(() => {
-    if (!fetching || !isLoading) {
+    if (!isLoading) {
       getData(false)
     }
   }, [isCategorySearch])
