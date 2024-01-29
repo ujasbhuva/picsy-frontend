@@ -17,7 +17,16 @@ const nextConfig = {
         destination: '/terms-of-use.html'
       }
     ]
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/app-ads.txt',
+        destination: '/ads.txt',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
