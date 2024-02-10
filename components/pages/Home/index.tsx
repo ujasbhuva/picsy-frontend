@@ -36,7 +36,7 @@ const Home: React.FC<HomepageProps> = () => {
   const [showButton, setShowButton] = useState(false)
   const [isLast, setIsLast] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [isCategorySearch, setIsCategorySearch] = useState(0)
+  const [isCategorySearch, setIsCategorySearch] = useState(false)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -55,24 +55,21 @@ const Home: React.FC<HomepageProps> = () => {
     })
   }
 
-  const getImage = async () => {
-    const { imageId: imgId } = router.query
-    if (imgId) {
-      const img = await getImageByID({ id: imgId as string })
-      if (img.data.length > 0) {
-        setCurrentImage(img.data[0])
-        setIsOpenDialog(true)
-      }
+  const getImage = async (imgId: string) => {
+
+    const img = await getImageByID({ id: imgId as string })
+    if (img.data.length > 0) {
+      setCurrentImage(img.data[0])
+      setIsOpenDialog(true)
     }
   }
 
   useEffect(() => {
-    getImage()
+    const { imageId: imgId } = router.query
+    if (imgId) {
+      getImage(imgId as string)
+    }
   }, [router])
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   useEffect(() => {
     if (!isLoading) {
@@ -248,7 +245,7 @@ const Home: React.FC<HomepageProps> = () => {
                 className='flex relative items-center justify-center gap-2 cursor-pointer'
                 onClick={() => {
                   setSearchText(() => { return category.title });
-                  setIsCategorySearch(() => { return isCategorySearch + 1 })
+                  setIsCategorySearch(!isCategorySearch)
                 }}
               >
                 <div
