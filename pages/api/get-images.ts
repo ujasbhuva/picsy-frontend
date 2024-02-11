@@ -7,18 +7,8 @@ async function getImages(req: NextApiRequest, res: NextApiResponse<any>) {
       req.body && req.body?.type === "random" ? "search/random" : "search";
     const URL = process.env.NEXT_PUBLIC_API_URL + endpoint;
     const data = await axios.post(URL, req.body);
-    let fetchImages = data.data.data ?? [];
-    const images = fetchImages.map((ele: any) => {
-      return {
-        ...ele,
-        content:
-          ele && ele.content
-            ? ele.content?.replace("- Upscaled by", "")
-            : ele.content,
-      };
-    });
     res.send({
-      images: images,
+      images: data.data.data,
       total: data.data.total_results ?? 0,
       is_last: data.data.is_last,
     });

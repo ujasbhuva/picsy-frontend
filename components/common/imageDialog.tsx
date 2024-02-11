@@ -17,6 +17,7 @@ import Image from 'next/image'
 import { CommonLoader } from './loader/CommonLoader'
 import { uuid } from 'uuidv4'
 import { promptModifier } from '../../utils/promptmodifier'
+import Head from 'next/head'
 
 const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
   const [copied, setCopied] = useState(false)
@@ -67,21 +68,18 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
               key={index}
               src={
                 ele.url +
-                `?width=${
-                  data.images.sort(
-                    (a: iImage, b: iImage) =>
-                      Number(b.upscaled) - Number(a.upscaled)
-                  )[0]?.width / 4
-                }&height=${
-                  data.images.sort(
-                    (a: iImage, b: iImage) =>
-                      Number(b.upscaled) - Number(a.upscaled)
-                  )[0]?.height / 4
+                `?width=${data.images.sort(
+                  (a: iImage, b: iImage) =>
+                    Number(b.upscaled) - Number(a.upscaled)
+                )[0]?.width / 4
+                }&height=${data.images.sort(
+                  (a: iImage, b: iImage) =>
+                    Number(b.upscaled) - Number(a.upscaled)
+                )[0]?.height / 4
                 }`
               }
-              className={`w-16 m-[6px] object-cover mobile:w-16 cursor-pointer rounded-lg ${
-                currentImage?.url === ele.url ? 'ring-2 ring-blue-2' : ''
-              }`}
+              className={`w-16 m-[6px] object-cover mobile:w-16 cursor-pointer rounded-lg ${currentImage?.url === ele.url ? 'ring-2 ring-blue-2' : ''
+                }`}
               onClick={() => {
                 if (currentImage?.url !== ele.url) {
                   setLoadedSecond(false)
@@ -101,24 +99,22 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
       <>
         {currentImage && (
           <div
-            className={`w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 ${
-              currentImage?.width > currentImage?.height
-                ? 'mr-[15rem]'
-                : 'mr-[17rem]'
-            }`}
+            className={`w-full mobile:whitespace-normal whitespace-pre-line flex right-0 justify-start absolute mobile:justify-center mobile:relative mobile:ml-0 ${currentImage?.width > currentImage?.height
+              ? 'mr-[15rem]'
+              : 'mr-[17rem]'
+              }`}
           >
             <div className='flex flex-col shadow-inner self-stretch items-center mobile:h-auto mobile:w-full'>
               <div className='relative flex bg-white bg-opacity-30 mobile:bg-opacity-0 rounded-2xl flex-col p-4 mobile:p-3 bg-none overflow-hidden mobile:w-full'>
                 {currentImage && (
-                  <p
-                    className={`mobile:w-full mobile:text-white text-white text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${
-                      currentImage?.width > currentImage?.height
-                        ? 'w-[12rem]'
-                        : 'w-[14rem]'
-                    }`}
+                  <h1
+                    className={`mobile:w-full mobile:text-white text-white text-start text-md mobile:text-sm line-clamp-[15] mobile:line-clamp-[5] ${currentImage?.width > currentImage?.height
+                      ? 'w-[12rem]'
+                      : 'w-[14rem]'
+                      }`}
                   >
                     {prompt}
-                  </p>
+                  </h1>
                 )}
               </div>
               <div className='w-full flex gap-4 mobile:gap-2 justify-center mt-3 mobile:mr-2 mobile:mt-0 mobile:mb-2 mobile:justify-end'>
@@ -214,6 +210,40 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
 
   return (
     <>
+      <Head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={prompt} />
+
+        <title>Picsy - art search | {prompt.slice(0, 50)}</title>
+
+        <meta itemProp="name" content={`Picsy.art | ${prompt}`}/>
+        <meta itemProp="description" content={prompt} />
+        <meta itemProp="image" content={currentImage?.url}/>
+
+        <meta property="og:title" content={`Picsy.art | ${prompt}`} />
+        <meta property="og:description" content={prompt} />
+        <meta property="og:image" content={currentImage?.url} />
+        <meta property="og:type" content="picsy.art" />
+
+        <meta name="twitter:card" content={prompt} />
+        <meta name="twitter:title" content={`Picsy.art | ${prompt}`} />
+        <meta name="twitter:description" content={prompt} />
+        <meta name="twitter:image" content={currentImage?.url} />
+
+        <meta property="og:url" content={`https://picsy.art/image/${data.idx}`}/>
+
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "http://schema.org",
+            "@type": "ImageObject",
+            "name": `Picsy.art | ${prompt}`,
+            "description": `${prompt}`,
+            "contentUrl": `${currentImage?.url}`,
+            "url": `https://picsy.art/image/${data.idx}`
+          })
+        }} />
+      </Head>
       {currentImage && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
@@ -276,7 +306,7 @@ const ImageDialog = ({ isOpen, setIsOpen, data }: any) => {
                         <Image
                           className={`eas-in-out duration-500 w-auto object-contain rounded-2xl mobile:h-auto transition max-h-[calc(100vh-170px)]`}
                           src={currentImage.url}
-                          alt={data.content.replaceAll('- Upscaled by', '')}
+                          alt={data.content}
                           width={currentImage.width}
                           height={currentImage.height}
                           priority={true}

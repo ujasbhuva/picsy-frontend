@@ -34,7 +34,7 @@ const HistoryImageBox = ({ setIsOpenDialog, data, current }: any) => {
         }}
         className='w-full object-cover rounded-xl'
         src={current}
-        alt={promptModifier(data?.prompt ?? '').slice(0, 50)}
+        alt={promptModifier(data?.prompt ?? '')}
         unoptimized
         width={data?.inputs?.width / 3}
         height={data?.inputs?.height / 3}

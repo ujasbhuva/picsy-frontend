@@ -38,7 +38,7 @@ const ImageBox = ({ setIsOpenDialog, setCurrentImage, data, current }: any) => {
           current?.url +
           `?width=${current?.width / 4}&height=${current?.height / 4}`
         }
-        alt={promptModifier(data.content).slice(0, 50)}
+        alt={promptModifier(data.content)}
         unoptimized
         width={current?.width / 3}
         height={current?.height / 3}
