@@ -8,3 +8,5 @@ datawrkz.com, mwpmcm153, DIRECT
 google.com, pub-8856559311549217, RESELLER, f08c47fec0942fa0
 
 facebook.com, 335814113860815, DIRECT, c3e20eee3f780d68
+
+google.com, pub-8020793389292824, DIRECT, f08c47fec0942fa0
