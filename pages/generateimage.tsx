@@ -4,7 +4,6 @@ import GenerateImage from '../components/pages/GenerateImage'
 import AuthLayout from '../components/common/authLayout'
 
 export default function Index () {
-  const router = useRouter()
   return (
     <>
       <Head>

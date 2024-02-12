@@ -1,18 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
 import {
-  CheckCircleIcon,
-  ClockIcon,
-  UserPlusIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
-import Cookies from 'js-cookie'
-import { Fragment, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { Fragment, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { joinBetaWaitlist } from '../../apiHelper/joinBeta'
+import { SignInWith, sessionLogin } from '../../apiHelper/user'
 import { getToken } from '../../utils/auth'
 import GoogleButton from '../../utils/googleButton'
-import { SignInWith, sessionLogin } from '../../apiHelper/user'
-import { useRouter } from 'next/router'
 import { CheckIcon } from '../icons/CheckIcon'
 
 const LoginDialog = ({ isOpen, setIsOpen }: any) => {
@@ -41,7 +36,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as='div'
-          className='relative z-10'
+          className='relative'
           onClose={() => setIsOpen(false)}
         >
           <Transition.Child
@@ -53,7 +48,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Overlay className='fixed inset-0 backdrop-blur-lg bg-black bg-opacity-60 transition-opacity' />
+            <Dialog.Overlay className='fixed inset-0 backdrop-blur-lg bg-black bg-opacity-10 transition-opacity' />
           </Transition.Child>
           <span
             className='hidden sm:inline-block sm:align-middle sm:h-screen'
@@ -61,7 +56,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
           >
             &#8203;
           </span>
-          <div className='fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi '>
+          <div className='fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi text-black'>
             <div className='relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center mobile:items-start'>
               <Transition.Child
                 as={Fragment}
@@ -73,7 +68,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
                 leaveTo='opacity-0 scale-95'
               >
                 <Dialog.Panel
-                  className={`relative flex flex-col mobile:justify-start justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white bg-opacity-20 transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full p-12 mobile:p-3`}
+                  className={`relative flex flex-col mobile:justify-start justify-center rounded-2xl mobile:w-full mobile:max-h-full transform scrollbar-hide shadow-xl bg-white transition-all group  max-w-[calc(100%-400px)] mobile:max-w-full p-12 mobile:p-3`}
                 >
                   <button
                     className='absolute right-2 top-2'

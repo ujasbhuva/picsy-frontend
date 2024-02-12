@@ -1,7 +1,5 @@
 import {
-  ArrowsPointingOutIcon,
   PhotoIcon,
-  ScaleIcon,
   SparklesIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
@@ -9,8 +7,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { generateImages } from '../../../apiHelper/images'
 import { getToken } from '../../../utils/auth'
-import ImageRatioCombobox from '../../combobox/imageRatioCombobox'
-import SchedulerCombobox from '../../combobox/schedulerCombobox'
 import { CommonLoader } from '../../common/loader/CommonLoader'
 
 export const ratios: any[] = [
@@ -58,11 +54,36 @@ export const ratios: any[] = [
   }
 ]
 
-export default function GenerateImage () {
+export default function GenerateImage() {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [output, setOutput] = useState<any>()
+  const [output, setOutput] = useState<any>(
+//     {
+//     "success": true,
+//     "data": {
+//         "id": "fa5ef715-ca08-4d5a-a2f3-f42b875f4d9f",
+//         "inputs": {
+//             "prompt": "as"
+//         },
+//         "is_deleted": false,
+//         "output": {
+//             "images": [
+//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/2953764635194639401_3041938615_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=111&ccb=9-4&oh=00_AfCs5wlx1d8OT3lKVReo8s9kt3cqnMAqG1yhkl7kug1NuA&oe=65CC2DAB&_nc_sid=5b3566",
+//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/7661150324055641698_1962846189_12-02-2024-07-14-48.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=101&ccb=9-4&oh=00_AfCREewoB-27Zru2ymniCuSmggN9OZmnxKmpAK3nuRzXPg&oe=65CC1FC0&_nc_sid=5b3566",
+//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1672713993720226291_2077214939_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=104&ccb=9-4&oh=00_AfAaDbceVgiPTxQhuAI7oX54SbH3yfFhuaNt9nN5rQwlsw&oe=65CBA718&_nc_sid=5b3566",
+//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1317249287242287716_2694235981_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=103&ccb=9-4&oh=00_AfBz78712Vb2AweeHMhubt75y9SXbGlWNAJOgJO80EG-KQ&oe=65CBF849&_nc_sid=5b3566"
+//             ]
+//         },
+//         "prompt": "as",
+//         "updated_at": "2024-02-12 18:09:35.876970+00:00",
+//         "created_at": "2024-02-12 18:09:35.876968+00:00"
+//     },
+//     "message": "Images generated successfully"
+// }
+)
+  // const [currentURI, setCurrentURI] = useState(output?.data?.output.images[0])
+  const [currentURI, setCurrentURI] = useState("")
   const [inputError, setInputError] = useState<any>({})
   const [inputs, setInputs] = useState<any>({
     prompt: '',
@@ -92,6 +113,7 @@ export default function GenerateImage () {
       } else {
         const res = await generateImages(inputs)
         setOutput(res)
+        setCurrentURI(res?.data?.output.images[0])
       }
     } catch (err: any) {
       console.log(err)
@@ -107,15 +129,14 @@ export default function GenerateImage () {
           Generate Images <SparklesIcon className='w-6 h-6' />
         </h1>
       </div>
-      <div className='w-full flex items-start justify-start gap-5'>
-        <div className='w-9/12 flex flex-col items-start gap-6'>
-          <div className='w-full flex rounded-xl justify-center items-center gap-3 z-10'>
+      <div className='w-full flex items-center justify-center gap-5'>
+        <div className='w-9/12 flex flex-col items-start gap-3 mobile:w-full mobile:flex-col tablet:w-full'>
+          <div className='w-full flex rounded-xl justify-center items-center gap-3 z-10 mobile:flex-col'>
             <textarea
-              className={`scrollbar-hide overflow-scroll w-full p-3.5 py-1.5 rounded-2xl outline-none bg-[#131f29] placeholder:opacity-70 h-14 max-h-30 border-[2px] mr-2 text-md ${
-                inputError?.prompt
-                  ? 'border-orange-500 border-opacity-70'
-                  : 'border-white border-opacity-20'
-              }`}
+              className={`scrollbar-hide overflow-scroll w-full p-3.5 py-1.5 rounded-2xl outline-none bg-[#131f29] placeholder:opacity-70 h-14 max-h-[150px] min-h-[55px] border mr-2 text-md mobile:rounded-xl mobile:mr-0 mobile:mt-8 ${inputError?.prompt
+                ? 'border-orange-500 border-opacity-70'
+                : 'border-white border-opacity-20'
+                }`}
               placeholder='Image description'
               name='prompt'
               value={inputs.prompt}
@@ -129,11 +150,10 @@ export default function GenerateImage () {
               }}
             />
             <button
-              className={`h-14 rounded-2xl px-8 py-2 border-[2px] font-bold text-md outline-none w-34 disabled:cursor-not-allowed ${
-                !isLoading
-                  ? 'bg-gradient-to-tr from-blue-2 to-teal-500 border-blue-1'
-                  : 'bg-gray-800 border-gray-700'
-              }`}
+              className={`h-14 rounded-2xl px-8 py-1.5 border text-md outline-none w-34 disabled:cursor-not-allowed mobile:w-full mobile:h-10 mobile:rounded-xl ${!isLoading
+                ? 'bg-gradient-to-tr from-blue-2 to-teal-500 border-blue-1'
+                : 'bg-gray-800 border-gray-700'
+                }`}
               onClick={generateImage}
               disabled={isLoading}
             >
@@ -151,39 +171,56 @@ export default function GenerateImage () {
               Hold up for a while this may take a minute...
             </p>
           )}
-          <div className='w-full flex items-center justify-center mt-4'>
-            <div className={`w-full flex justify-center items-center`}>
-              {output?.data?.output.images.length > 0 ? (
-                <>
+          <div className='w-full flex items-center justify-center mt-4 mobile:mt-8'>
+            <div className={`w-full flex justify-center items-center mobile:flex-col`}>
+              {output?.data?.output.images.length > 0 ? 
+              (
+                <div className='w-full flex items-center justify-center mobile:flex-col'>
                   <div
-                    className={`w-full grid ${
-                      inputs.count === '5'
-                        ? 'grid-cols-3'
-                        : inputs.count === '1'
-                        ? 'grid-cols-1'
-                        : inputs.count === '3'
-                        ? 'grid-cols-3'
-                        : 'grid-cols-2'
-                    } gap-2`}
+                    className={`w-8/12 flex mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] items-center text-2xl justify-center h-[calc(100vh-208px)] text-blue-1`}
                   >
-                    {output?.data?.output.images.map((data: string) => {
+                    <img
+                      src={currentURI}
+                      className='rounded-xl w-full object-contain'
+                    />
+                  </div>
+                  <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2 mobile:items-center mobile:justify-center'>
+                    {output?.data?.output.images.map((val: string) => {
                       return (
-                        <img
-                          src={data}
-                          className='rounded-xl max-h-[calc(100vh-208px)]'
-                        />
+                        <div
+                          className={`rounded-xl gap-4 mt-2 cursor-pointer flex items-center justify-center ${currentURI === val ? "ring-2 ring-blue-1" : ""}`}
+                          onClick={() => { setCurrentURI(val) }}
+                          key={val}
+                        >
+                          <img
+                            src={val ?? ""}
+                            className='rounded-xl w-28 h-28 mobile:h-20 mobile:w-20 tablet:w-20 tablet:h-20'
+                          />
+                        </div>
                       )
                     })}
                   </div>
-                </>
+                </div>
               ) : (
                 <>
-                  <div
-                    className={`w-full flex items-center text-2xl justify-center z-[5] h-[calc(100vh-208px)] opacity-20`}
-                  >
-                    <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center p-24 border-2 border-blue-1 border-opacity-20 gap-4'>
-                    <PhotoIcon className='w-16 h-16 text-blue-1' />{' '}
-                    <XMarkIcon className='w-8 h-8' /> {inputs.count}
+                  <div className='w-full flex items-center justify-center mobile:flex-col'>
+                    <div
+                      className={`w-8/12 mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] tablet:w-[500px] flex items-center text-2xl justify-center h-[calc(100vh-208px)] opacity-20 text-blue-1`}
+                    >
+                      <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-full h-full border-2 border-blue-1 border-opacity-20 gap-4'>
+                        <PhotoIcon className='w-16 h-16' strokeWidth={0.8} />{' '}
+                        <XMarkIcon className='w-8 h-8' /> 4
+                      </div>
+                    </div>
+                    <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2'>
+                      {[1, 2, 3, 4].map((val: number) => {
+                        return (
+                          <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-28 h-28 border border-blue-1 border-opacity-20 gap-4 mt-2 opacity-40 mobile:h-22 mobile:w-22'
+                          key={val}>
+                            <PhotoIcon className='w-8 h-8' strokeWidth={0.5} />{' '}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 </>
@@ -192,7 +229,7 @@ export default function GenerateImage () {
           </div>
         </div>
 
-        <div className='w-3/12 flex flex-col items-center justify-center gap-6 z-[5]'>
+        {/* <div className='w-3/12 flex flex-col items-center justify-center gap-6 z-[5]'>
           <div className='w-full animate-roll-in rounded-xl bg-[#131f29] p-4 max-h-[calc(100vh-110px)] border-2 border-blue-1 border-opacity-10 overflow-y-auto scrollbar scrollbar-thumb-blue-1 scrollbar-track-black-1 scrollbar-w-1 scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
             <div className='w-2/3 sm:w-full'>
               <p className='text-md flex items-center gap-2 font-bold'>
@@ -363,7 +400,7 @@ export default function GenerateImage () {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       {/* <div className='bg-black h-full'>
           <Image

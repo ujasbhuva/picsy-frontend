@@ -1,21 +1,21 @@
 import { ArrowUpIcon, PhotoIcon } from '@heroicons/react/24/outline'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
+import { getConfigs } from '../../../apiHelper/configs'
 import {
   getImageByID,
   getImagesThroughNextAPI,
   iImage,
   iImagePayload
 } from '../../../apiHelper/images'
+import { getToken } from '../../../utils/auth'
 import ImageDialog from '../../common/imageDialog'
 import Loader from '../../common/loader/GlobalLoader'
-import axios from 'axios'
-import ImageBox from './ImageBox'
-import { getToken } from '../../../utils/auth'
 import LoginDialog from '../../common/loginDialog'
-import { getConfigs } from '../../../apiHelper/configs'
+import ImageBox from './ImageBox'
 
 interface HomepageProps {
   imageId?: string
@@ -164,8 +164,8 @@ const Home: React.FC<HomepageProps> = () => {
   return (
     <>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
-      {/* <button
-        className='flex font-bold gap-1.5 items-center justify-end w-full p-2 z-[200000] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0'
+      <button
+        className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0'
         onClick={() => {
           if (getToken()) {
             router.push('/generateimage')
@@ -181,9 +181,9 @@ const Home: React.FC<HomepageProps> = () => {
         </p>
         <ImageIcon /> <ArrowRightIcon />
       </button>
-      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+
       {isLoading && <Loader loading={isLoading} />}
-      <div className='p-6 w-full flex justify-between mobile:flex-col-reverse gap-5 mobile:p-3'>
+      <div className='p-6 pt-16 w-full flex justify-between mobile:flex-col-reverse gap-5 mobile:p-3'>
         <div className='flex items-end w-full gap-3 mobile:gap-1.5 tablet:gap-0'>
           <div className='flex flex-col justify-start cursor-pointer'>
             <img
@@ -387,7 +387,7 @@ const ImageIcon = () => {
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'
-      strokeWidth={2.5}
+      strokeWidth={1.2}
       stroke='currentColor'
       className='w-6 h-6'
     >
@@ -406,7 +406,7 @@ const ArrowRightIcon = () => {
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'
-      strokeWidth={2.5}
+      strokeWidth={1.2}
       stroke='currentColor'
       className='w-6 h-6'
     >

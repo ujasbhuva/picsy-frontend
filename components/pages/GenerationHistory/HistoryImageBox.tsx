@@ -1,4 +1,3 @@
-import { use, useEffect, useState } from 'react'
 import {
   ArrowDownIcon,
   CheckCircleIcon,
@@ -7,9 +6,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { saveAs } from 'file-saver'
 import Image from 'next/image'
+import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
-import { CommonLoader } from '../../common/loader/CommonLoader'
 import { promptModifier } from '../../../utils/promptmodifier'
+import { CommonLoader } from '../../common/loader/CommonLoader'
 
 const HistoryImageBox = ({ setIsOpenDialog, data, current }: any) => {
   const [copied, setCopied] = useState(false)
@@ -36,8 +36,8 @@ const HistoryImageBox = ({ setIsOpenDialog, data, current }: any) => {
         src={current}
         alt={promptModifier(data?.prompt ?? '')}
         unoptimized
-        width={data?.inputs?.width / 3}
-        height={data?.inputs?.height / 3}
+        width={1024}
+        height={1024}
       />
       {data?.output?.images.length > 1 && (
         <div className='flex w-full bg-gradient-to-t from-transparent to-black/70 invisible mobile:visible flex-row absolute top-0 right-0 rounded-t-xl group-hover:visible gap-1 mobile:hidden justify-end py-2'>
