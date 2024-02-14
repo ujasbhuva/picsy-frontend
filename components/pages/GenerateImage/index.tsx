@@ -59,29 +59,29 @@ export default function GenerateImage() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [output, setOutput] = useState<any>(
-//     {
-//     "success": true,
-//     "data": {
-//         "id": "fa5ef715-ca08-4d5a-a2f3-f42b875f4d9f",
-//         "inputs": {
-//             "prompt": "as"
-//         },
-//         "is_deleted": false,
-//         "output": {
-//             "images": [
-//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/2953764635194639401_3041938615_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=111&ccb=9-4&oh=00_AfCs5wlx1d8OT3lKVReo8s9kt3cqnMAqG1yhkl7kug1NuA&oe=65CC2DAB&_nc_sid=5b3566",
-//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/7661150324055641698_1962846189_12-02-2024-07-14-48.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=101&ccb=9-4&oh=00_AfCREewoB-27Zru2ymniCuSmggN9OZmnxKmpAK3nuRzXPg&oe=65CC1FC0&_nc_sid=5b3566",
-//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1672713993720226291_2077214939_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=104&ccb=9-4&oh=00_AfAaDbceVgiPTxQhuAI7oX54SbH3yfFhuaNt9nN5rQwlsw&oe=65CBA718&_nc_sid=5b3566",
-//                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1317249287242287716_2694235981_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=103&ccb=9-4&oh=00_AfBz78712Vb2AweeHMhubt75y9SXbGlWNAJOgJO80EG-KQ&oe=65CBF849&_nc_sid=5b3566"
-//             ]
-//         },
-//         "prompt": "as",
-//         "updated_at": "2024-02-12 18:09:35.876970+00:00",
-//         "created_at": "2024-02-12 18:09:35.876968+00:00"
-//     },
-//     "message": "Images generated successfully"
-// }
-)
+    //     {
+    //     "success": true,
+    //     "data": {
+    //         "id": "fa5ef715-ca08-4d5a-a2f3-f42b875f4d9f",
+    //         "inputs": {
+    //             "prompt": "as"
+    //         },
+    //         "is_deleted": false,
+    //         "output": {
+    //             "images": [
+    //                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/2953764635194639401_3041938615_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=111&ccb=9-4&oh=00_AfCs5wlx1d8OT3lKVReo8s9kt3cqnMAqG1yhkl7kug1NuA&oe=65CC2DAB&_nc_sid=5b3566",
+    //                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/7661150324055641698_1962846189_12-02-2024-07-14-48.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=101&ccb=9-4&oh=00_AfCREewoB-27Zru2ymniCuSmggN9OZmnxKmpAK3nuRzXPg&oe=65CC1FC0&_nc_sid=5b3566",
+    //                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1672713993720226291_2077214939_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=104&ccb=9-4&oh=00_AfAaDbceVgiPTxQhuAI7oX54SbH3yfFhuaNt9nN5rQwlsw&oe=65CBA718&_nc_sid=5b3566",
+    //                 "https://scontent-iad3-1.xx.fbcdn.net/o1/v/t0/f1/m247/1317249287242287716_2694235981_12-02-2024-07-14-47.jpeg?_nc_ht=scontent-iad3-1.xx.fbcdn.net&_nc_cat=103&ccb=9-4&oh=00_AfBz78712Vb2AweeHMhubt75y9SXbGlWNAJOgJO80EG-KQ&oe=65CBF849&_nc_sid=5b3566"
+    //             ]
+    //         },
+    //         "prompt": "as",
+    //         "updated_at": "2024-02-12 18:09:35.876970+00:00",
+    //         "created_at": "2024-02-12 18:09:35.876968+00:00"
+    //     },
+    //     "message": "Images generated successfully"
+    // }
+  )
   // const [currentURI, setCurrentURI] = useState(output?.data?.output.images[0])
   const [currentURI, setCurrentURI] = useState("")
   const [inputError, setInputError] = useState<any>({})
@@ -125,8 +125,9 @@ export default function GenerateImage() {
   return (
     <>
       <div className='w-full pb-5 flex gap-3 font-satoshi mobile:p-2 z-10'>
-        <h1 className='text-[1.5rem] flex gap-2 items-center mobile:text-[1.5rem] tablet:text-[1.5rem] font-bold'>
+        <h1 className='text-[1.5rem] flex gap-2 mobile:text-[1.5rem] tablet:text-[1.5rem] font-bold items-end'>
           Generate Images <SparklesIcon className='w-6 h-6' />
+          <i className='font-thin text-gray-500 text-sm'>powered by <strong>Meta</strong></i>
         </h1>
       </div>
       <div className='w-full flex items-center justify-center gap-5'>
@@ -173,58 +174,58 @@ export default function GenerateImage() {
           )}
           <div className='w-full flex items-center justify-center mt-4 mobile:mt-8'>
             <div className={`w-full flex justify-center items-center mobile:flex-col`}>
-              {output?.data?.output.images.length > 0 ? 
-              (
-                <div className='w-full flex items-center justify-center mobile:flex-col'>
-                  <div
-                    className={`w-8/12 flex mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] items-center text-2xl justify-center h-[calc(100vh-208px)] text-blue-1`}
-                  >
-                    <img
-                      src={currentURI}
-                      className='rounded-xl w-full object-contain'
-                    />
-                  </div>
-                  <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2 mobile:items-center mobile:justify-center'>
-                    {output?.data?.output.images.map((val: string) => {
-                      return (
-                        <div
-                          className={`rounded-xl gap-4 mt-2 cursor-pointer flex items-center justify-center ${currentURI === val ? "ring-2 ring-blue-1" : ""}`}
-                          onClick={() => { setCurrentURI(val) }}
-                          key={val}
-                        >
-                          <img
-                            src={val ?? ""}
-                            className='rounded-xl w-28 h-28 mobile:h-20 mobile:w-20 tablet:w-20 tablet:h-20'
-                          />
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : (
-                <>
+              {output?.data?.output.images.length > 0 ?
+                (
                   <div className='w-full flex items-center justify-center mobile:flex-col'>
                     <div
-                      className={`w-8/12 mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] tablet:w-[500px] flex items-center text-2xl justify-center h-[calc(100vh-208px)] opacity-20 text-blue-1`}
+                      className={`w-8/12 flex mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] items-center text-2xl justify-center h-[calc(100vh-208px)] text-blue-1`}
                     >
-                      <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-full h-full border-2 border-blue-1 border-opacity-20 gap-4'>
-                        <PhotoIcon className='w-16 h-16' strokeWidth={0.8} />{' '}
-                        <XMarkIcon className='w-8 h-8' /> 4
-                      </div>
+                      <img
+                        src={currentURI}
+                        className='rounded-xl w-full object-contain'
+                      />
                     </div>
-                    <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2'>
-                      {[1, 2, 3, 4].map((val: number) => {
+                    <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2 mobile:items-center mobile:justify-center'>
+                      {output?.data?.output.images.map((val: string) => {
                         return (
-                          <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-28 h-28 border border-blue-1 border-opacity-20 gap-4 mt-2 opacity-40 mobile:h-22 mobile:w-22'
-                          key={val}>
-                            <PhotoIcon className='w-8 h-8' strokeWidth={0.5} />{' '}
+                          <div
+                            className={`rounded-xl gap-4 mt-2 cursor-pointer flex items-center justify-center ${currentURI === val ? "ring-2 ring-blue-1" : ""}`}
+                            onClick={() => { setCurrentURI(val) }}
+                            key={val}
+                          >
+                            <img
+                              src={val ?? ""}
+                              className='rounded-xl w-28 h-28 mobile:h-20 mobile:w-20 tablet:w-20 tablet:h-20'
+                            />
                           </div>
                         )
                       })}
                     </div>
                   </div>
-                </>
-              )}
+                ) : (
+                  <>
+                    <div className='w-full flex items-center justify-center mobile:flex-col'>
+                      <div
+                        className={`w-8/12 mobile:w-full mobile:h-[calc(100vw)] tablet:h-[500px] tablet:w-[500px] flex items-center text-2xl justify-center h-[calc(100vh-208px)] opacity-20 text-blue-1`}
+                      >
+                        <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-full h-full border-2 border-blue-1 border-opacity-20 gap-4'>
+                          <PhotoIcon className='w-16 h-16' strokeWidth={0.8} />{' '}
+                          <XMarkIcon className='w-8 h-8' /> 4
+                        </div>
+                      </div>
+                      <div className='flex flex-col ml-6 gap-3 mobile:flex-row mobile:w-full mobile:mx-2'>
+                        {[1, 2, 3, 4].map((val: number) => {
+                          return (
+                            <div className='rounded-xl bg-blue-1 bg-opacity-20 flex items-center justify-center w-28 h-28 border border-blue-1 border-opacity-20 gap-4 mt-2 opacity-40 mobile:h-22 mobile:w-22'
+                              key={val}>
+                              <PhotoIcon className='w-8 h-8' strokeWidth={0.5} />{' '}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
             </div>
           </div>
         </div>
