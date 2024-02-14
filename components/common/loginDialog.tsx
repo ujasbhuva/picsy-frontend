@@ -56,8 +56,8 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
           >
             &#8203;
           </span>
-          <div className='fixed inset-0 overflow-y-auto px-20 py-10 mobile:py-5 mobile:px-2 font-satoshi text-black'>
-            <div className='relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center mobile:items-start'>
+          <div className='fixed inset-0 overflow-y-auto px-20 py-10 mobile:p-1 font-satoshi text-black'>
+            <div className='relative flex min-h-full items-center max-h-[calc(100vh-100px)] justify-center mobile:p-2 text-center mobile:items-start mobile:h-screen mobile:flex-col mobile:flex mobile:justify-center'>
               <Transition.Child
                 as={Fragment}
                 enter='ease-out duration-300'
@@ -83,7 +83,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: any) => {
                     It's all free, no credit card required!
                   </Dialog.Description>
                   <div className='w-full flex justify-center mt-8'>
-                    <div className='flex flex-end m-2 relative rounded-full w-[205px] p-[3px] pt-[2.5px] h-9 overflow-hidden'>
+                    <div className='flex flex-end m-2 relative rounded-full w-[205px] p-[3px] pt-[2.5px] h-12 overflow-hidden'>
                       {!getToken() && (
                         <div className='absolute flex justify-center bg-none'>
                           <GoogleButton
