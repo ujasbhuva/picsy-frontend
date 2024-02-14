@@ -151,7 +151,7 @@ export default function GenerateImage() {
             />
             <button
               className={`h-14 rounded-2xl px-8 py-1.5 border text-md outline-none w-34 disabled:cursor-not-allowed mobile:w-full mobile:h-10 mobile:rounded-xl ${!isLoading
-                ? 'bg-gradient-to-tr from-blue-2 to-teal-500 border-blue-1'
+                ? 'bg-gradient-to-tr from-blue-2 to-teal-500 border-blue-1 flex items-center justify-center'
                 : 'bg-gray-800 border-gray-700'
                 }`}
               onClick={generateImage}

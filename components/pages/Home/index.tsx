@@ -165,7 +165,7 @@ const Home: React.FC<HomepageProps> = () => {
     <>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       <button
-        className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0'
+        className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0 mobile:text-sm'
         onClick={() => {
           if (getToken()) {
             router.push('/generateimage')
