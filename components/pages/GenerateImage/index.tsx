@@ -136,7 +136,7 @@ export default function GenerateImage() {
             >
               {isLoading ? (
                 <>
-                  <CommonLoader childClassName='w-7 h-7 border-[3px]' />
+                  <CommonLoader childClassName='w-7 h-7 border-[3px]' parentClassName='w-full justify-center items-center flex' />
                 </>
               ) : (
                 'Generate'
