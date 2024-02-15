@@ -164,37 +164,41 @@ const Home: React.FC<HomepageProps> = () => {
   return (
     <>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
-      <button
-        className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0 mobile:text-sm'
-        onClick={() => {
-          if (getToken()) {
-            router.push('/generateimage')
-          } else {
+      {getToken() ? (
+        <a
+          className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0 mobile:text-sm'
+          href='/generateimage'
+        >
+          <p>
+            Continue to dashboard
+          </p>
+          <ImageIcon /> <ArrowRightIcon />
+        </a>
+      ) : (
+        <button
+          className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0 mobile:text-sm'
+          onClick={() => {
             setIsOpen(true)
-          }
-        }}
-      >
-        <p>
-          {getToken()
-            ? 'Continue to dashboard'
-            : 'Just Launched! Explore Our New Image Generator'}
-        </p>
-        <ImageIcon /> <ArrowRightIcon />
-      </button>
+          }}
+        >
+          <p>
+            Just Launched! Explore Our New Image Generator
+          </p>
+          <ImageIcon /> <ArrowRightIcon />
+        </button>
+      )}
 
       {isLoading && <Loader loading={isLoading} />}
       <div className='p-6 pt-16 w-full flex justify-between mobile:flex-col-reverse gap-5 mobile:p-3'>
         <div className='flex items-end w-full gap-3 mobile:gap-1.5 tablet:gap-0'>
           <div className='flex flex-col justify-start cursor-pointer'>
-            <img
-              src={'/full-logo.svg'}
-              alt='Picsy'
-              className='object-cover h-[40px] mobile:h-[35px]'
-              onClick={() => {
-                setSearchText('')
-                router.reload()
-              }}
-            />
+            <a href='/'>
+              <img
+                src={'/full-logo.svg'}
+                alt='Picsy'
+                className='object-cover h-[40px] mobile:h-[35px]'
+              />
+            </a>
           </div>
           <h1 className='text-base mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500 whitespace-nowrap'>
             #1 Searching tool for AI generated images

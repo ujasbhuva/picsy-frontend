@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { generateImages } from '../../../apiHelper/images'
 import { getToken } from '../../../utils/auth'
 import { CommonLoader } from '../../common/loader/CommonLoader'
+import toast from 'react-hot-toast'
 
 export const ratios: any[] = [
   {
@@ -92,7 +93,7 @@ export default function GenerateImage() {
         setCurrentURI(res?.data?.output.images[0])
       }
     } catch (err: any) {
-      console.log(err)
+      toast.error(err.response.data.detail)
     } finally {
       setIsLoading(false)
     }
