@@ -164,7 +164,7 @@ const Home: React.FC<HomepageProps> = () => {
   return (
     <>
       <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
-      {getToken() ? (
+      {/* {getToken() ? (
         <a
           className='flex gap-1.5 items-center justify-end w-full p-2 z-[20] bg-gradient-to-r from-blue-2 to-teal-500 absolute top-0 left-0 right-0 mobile:text-sm'
           href='/generateimage'
@@ -186,10 +186,10 @@ const Home: React.FC<HomepageProps> = () => {
           </p>
           <ImageIcon /> <ArrowRightIcon />
         </button>
-      )}
+      )} */}
 
       {isLoading && <Loader loading={isLoading} />}
-      <div className='p-6 pt-16 w-full flex justify-between mobile:flex-col-reverse gap-5 mobile:p-3'>
+      <div className='p-6 pt-5 w-full flex justify-between mobile:flex-col-reverse gap-5 mobile:p-3'>
         <div className='flex items-end w-full gap-3 mobile:gap-1.5 tablet:gap-0'>
           <div className='flex flex-col justify-start cursor-pointer'>
             <a href='/'>
@@ -201,10 +201,10 @@ const Home: React.FC<HomepageProps> = () => {
             </a>
           </div>
           <h1 className='text-base mobile:text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-2 to-teal-500 whitespace-nowrap'>
-            #1 Searching tool for AI generated images
+            #1 Search Engine for AI generated images
           </h1>
         </div>
-        <a
+        {/* <a
           className='flex font-bold gap-1.5 items-center justify-end w-full mobile:justify-start'
           target='_blank'
           href='https://play.google.com/store/apps/details?id=art.picsy.deltabits&pcampaignid=web_share'
@@ -217,7 +217,7 @@ const Home: React.FC<HomepageProps> = () => {
               Get android app now
             </p>
           </div>
-        </a>
+        </a> */}
       </div>
       <div className='mb-16 w-3/5 sm:w-3/5 mobile:w-full tablet:w-3/5 max-w-[600px] flex justify-end items-center relative mt-16 mobile:my-8 gap-4 mobile:gap-2'>
         <input
